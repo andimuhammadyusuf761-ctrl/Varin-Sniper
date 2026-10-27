@@ -1,0 +1,58 @@
+name: Build MC-Sniper.exe
+
+on:
+  push:
+    branches: [main, master]
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip install pyinstaller
+
+      - name: Verify sources compile
+        run: python -m compileall -q main.py checker.py claimer.py proxy.py generator.py utils.py
+
+      - name: Build with PyInstaller
+        run: pyinstaller --clean --noconfirm MC-Sniper.spec
+
+      - name: Show artifact
+        run: |
+          dir dist
+          Get-Item dist/MC-Sniper.exe | Select-Object Name, Length
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MC-Sniper-windows
+          path: dist/MC-Sniper.exe
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Attach exe to release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/MC-Sniper.exe
+          generate_release_notes: true
+          
