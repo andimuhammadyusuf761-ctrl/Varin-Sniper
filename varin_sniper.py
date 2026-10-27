@@ -29,25 +29,70 @@ from typing import Any, Dict, List, Optional
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
+def _show_startup_error(message: str) -> None:
+    """Tampilkan error fatal tanpa bergantung pada customtkinter/tkinter."""
+    try:
+        print(f"[Varin Sniper] {message}", file=sys.stderr)
+    except Exception:  # noqa: BLE001  (exe tanpa konsol: sys.stderr = None)
+        pass
+    try:
+        import ctypes
+        ctypes.windll.user32.MessageBoxW(None, message, "Varin Sniper - gagal start", 0x10)
+        return
+    except Exception:  # noqa: BLE001
+        pass
+    try:
+        import tkinter as _tk
+        from tkinter import messagebox as _mb
+        _root = _tk.Tk()
+        _root.withdraw()
+        _mb.showerror("Varin Sniper", message)
+        _root.destroy()
+    except Exception:  # noqa: BLE001
+        pass
+
+
 def ensure_dependencies() -> None:
-    """Install package requirements when the GUI dependency is missing."""
+    """Pastikan customtkinter tersedia sebelum GUI diimpor.
+
+    Menjalankan dari source: requirements.txt boleh dipasang otomatis.
+    Menjalankan sebagai .exe (frozen): dependency WAJIB sudah dibundel saat
+    build. `pip install` dari dalam exe tidak mungkin berhasil karena
+    sys.executable menunjuk ke exe itu sendiri, dan percobaan itu hanya
+    membuat aplikasi gagal start dengan "unhandled exception" sebelum
+    jendela sempat muncul.
+    """
     try:
         import customtkinter  # noqa: F401
         return
     except ModuleNotFoundError:
-        repo_root = os.path.dirname(os.path.abspath(__file__))
-        requirements_path = os.path.join(repo_root, "requirements.txt")
-        print("[Varin Sniper] Missing dependency 'customtkinter'. Installing requirements...", file=sys.stderr)
-        try:
-            subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", requirements_path])
-            import customtkinter  # noqa: F401
-            return
-        except Exception as exc:  # noqa: BLE001
-            raise RuntimeError(
-                "Missing dependency 'customtkinter'. Install it with:\n"
-                f"  {sys.executable} -m pip install -r \"{requirements_path}\"\n"
-                f"Original error: {exc}"
-            ) from exc
+        pass
+
+    if getattr(sys, "frozen", False):
+        _show_startup_error(
+            "GUI tidak bisa dibuka: file .exe ini tidak memuat dependency "
+            "'customtkinter'.\n\n"
+            "Artinya exe dibangun tanpa memasang requirements (mis. build lokal "
+            "tanpa `pip install -r requirements.txt`), sehingga komponen GUI "
+            "ikut terlewat.\n\n"
+            "Solusi: unduh ulang Varin-Sniper.exe dari build terbaru di GitHub "
+            "Actions, atau jalankan build.bat setelah dependency terpasang."
+        )
+        raise SystemExit(1)
+
+    repo_root = os.path.dirname(os.path.abspath(__file__))
+    requirements_path = os.path.join(repo_root, "requirements.txt")
+    print("[Varin Sniper] Missing dependency 'customtkinter'. Installing requirements...", file=sys.stderr)
+    try:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", requirements_path])
+        import customtkinter  # noqa: F401
+        return
+    except Exception as exc:  # noqa: BLE001
+        raise RuntimeError(
+            "Missing dependency 'customtkinter'. Install it with:\n"
+            f"  {sys.executable} -m pip install -r \"{requirements_path}\"\n"
+            f"Original error: {exc}"
+        ) from exc
 
 
 ensure_dependencies()

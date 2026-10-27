@@ -33,8 +33,27 @@ jobs:
       - name: Verify sources compile
         run: python -m compileall -q varin_sniper.py checker.py claimer.py proxy.py generator.py utils.py scan_history.py
 
+      - name: Verify GUI dependencies are importable before freezing
+        run: python -c "import tkinter, customtkinter; print('tkinter', tkinter.TkVersion, '| customtkinter', customtkinter.__version__)"
+
       - name: Build with PyInstaller
         run: pyinstaller --clean --noconfirm Varin-Sniper.spec
+
+      - name: Verify customtkinter is bundled inside the exe
+        shell: pwsh
+        run: |
+          $exe = "dist/Varin-Sniper.exe"
+          $bytes = [System.IO.File]::ReadAllBytes((Resolve-Path $exe))
+          $text = [System.Text.Encoding]::GetEncoding(28591).GetString($bytes)
+          if (-not $text.Contains("customtkinter")) {
+            Write-Error "customtkinter tidak ada di dalam $exe - GUI akan crash saat dibuka."
+            exit 1
+          }
+          Write-Host "OK: customtkinter terbundel di dalam exe ($($bytes.Length) bytes)"
+          foreach ($needle in @("_tkinter", "_tcl_data", "_tk_data")) {
+            if ($text.Contains($needle)) { Write-Host "OK  : $needle terbundel" }
+            else { Write-Host "WARN: $needle tidak terdeteksi - periksa bila GUI tampil kosong" }
+          }
 
       - name: Show artifact
         run: |

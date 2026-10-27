@@ -13,8 +13,30 @@ import os
 import sys
 from PyInstaller.utils.hooks import collect_all
 
+# --- Guard: tanpa customtkinter, exe akan crash saat dibuka. ----------------
+# Lebih baik build GAGAL di sini daripada mengirim exe yang tidak bisa start.
+try:
+    import customtkinter
+except ModuleNotFoundError as exc:
+    raise SystemExit(
+        "[SPEC] customtkinter tidak terpasang di environment build.\n"
+        "       Jalankan dulu: python -m pip install -r requirements.txt\n"
+        f"       Detail: {exc}"
+    )
+
 # Kumpulkan semua data, biner, dan hidden-import customtkinter
 ctk_datas, ctk_binaries, ctk_hiddenimports = collect_all("customtkinter")
+
+if not ctk_hiddenimports and not ctk_datas:
+    raise SystemExit(
+        "[SPEC] customtkinter ada di environment, tapi collect_all tidak "
+        "menghasilkan apa pun.\n"
+        "       Exe tanpa customtkinter pasti crash saat dibuka — build dihentikan."
+    )
+
+print(f"[SPEC] customtkinter {getattr(customtkinter, '__version__', '?')}: "
+      f"{len(ctk_datas)} data, {len(ctk_binaries)} binary, "
+      f"{len(ctk_hiddenimports)} hidden import")
 
 datas = list(ctk_datas)
 binaries = list(ctk_binaries)
