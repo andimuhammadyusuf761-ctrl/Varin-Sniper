@@ -5,28 +5,57 @@
 # Hasil:  dist/Varin-Sniper.exe
 #
 # Catatan:
-# - --collect-all customtkinter WAJIB, karena tema/bundel data CTk tidak
-#   terdeteksi otomatis oleh PyInstaller (GUI jadi putih/error tanpa ini).
+# - customtkinter WAJIB dikoleksi lengkap (tema, aset, dan Tcl/Tk DLL)
+#   agar GUI tidak putih / gagal diimpor setelah dibekukan.
 # - console=False -> tanpa jendela hitam; log sudah tampil di GUI.
 
+import os
+import sys
 from PyInstaller.utils.hooks import collect_all
 
-datas = []
-binaries = []
-hiddenimports = []
+# Kumpulkan semua data, biner, dan hidden-import customtkinter
+ctk_datas, ctk_binaries, ctk_hiddenimports = collect_all("customtkinter")
 
-for pkg in ("customtkinter", "darkdetect"):
-    d, b, h = collect_all(pkg)
-    datas += d
-    binaries += b
-    hiddenimports += h
+datas = list(ctk_datas)
+binaries = list(ctk_binaries)
+hiddenimports = list(ctk_hiddenimports)
 
-hiddenimports += ["playsound3"]
+# Pastikan customtkinter dan tkinter dapat diimpor saat frozen
+hiddenimports += [
+    "customtkinter",
+    "customtkinter.widgets",
+    "tkinter",
+    "tkinter.ttk",
+    "tkinter.font",
+]
 
 # Sertakan file suara optional jika ada di folder proyek
-from os.path import exists
-if exists("success.mp3"):
+if os.path.exists("success.mp3"):
     datas.append(("success.mp3", "."))
+
+# --- Tcl/Tk runtime DLLs (Windows) agar tkinter/customtkinter berjalan ---
+def _tcltk_binaries():
+    out = []
+    try:
+        import tkinter
+        tk_path = os.path.dirname(tkinter.__file__)
+        # Cari tcl86t.dll dan tk86t.dll di sekitar instalasi Python
+        candidates = [
+            os.path.join(sys.prefix, "DLLs"),
+            os.path.join(sys.prefix, "Library", "bin"),
+            tk_path,
+        ]
+        for dll in ("tcl86t.dll", "tk86t.dll"):
+            for base in candidates:
+                p = os.path.join(base, dll)
+                if os.path.exists(p):
+                    out.append((p, os.path.join("DLLs", os.path.basename(p))))
+                    break
+    except Exception:
+        pass
+    return out
+
+binaries += _tcltk_binaries()
 
 a = Analysis(
     ["varin_sniper.py"],
