@@ -1,4 +1,4 @@
-name: Build MC-Sniper.exe
+name: Build Varin-Sniper.exe
 
 on:
   push:
@@ -31,21 +31,21 @@ jobs:
           python -m pip install pyinstaller
 
       - name: Verify sources compile
-        run: python -m compileall -q main.py checker.py claimer.py proxy.py generator.py utils.py
+        run: python -m compileall -q varin_sniper.py checker.py claimer.py proxy.py generator.py utils.py scan_history.py
 
       - name: Build with PyInstaller
-        run: pyinstaller --clean --noconfirm MC-Sniper.spec
+        run: pyinstaller --clean --noconfirm Varin-Sniper.spec
 
       - name: Show artifact
         run: |
           dir dist
-          Get-Item dist/MC-Sniper.exe | Select-Object Name, Length
+          Get-Item dist/Varin-Sniper.exe | Select-Object Name, Length
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: MC-Sniper-windows
-          path: dist/MC-Sniper.exe
+          name: Varin-Sniper-windows
+          path: dist/Varin-Sniper.exe
           if-no-files-found: error
           retention-days: 30
 
@@ -53,6 +53,5 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/MC-Sniper.exe
+          files: dist/Varin-Sniper.exe
           generate_release_notes: true
-          

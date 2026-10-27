@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
-MC Sniper — 3L/4L Minecraft Username Sniper (Premium GUI)
+Varin Sniper — 3L/4L Minecraft Username Sniper (Premium GUI)
 
-Tabs: Checker | Sniper | Accounts | Proxies | Settings | Stats
+Tabs: Checker | Sniper | Accounts | Proxies | Settings | History | Stats
 
 Aturan pemisahan:
   * SniperController  -> mesin (antrian, worker thread, claim, statistik)
+  * ScanHistory       -> SQLite riwayat pemindaian (tidak bisa diubah ulang)
   * LogView / ListPane / StatChip / Card -> komponen GUI yang bisa dipakai ulang
-  * MCSniperApp       -> layout, navigasi, dan reaksi terhadap event controller
+  * VarinSniperApp    -> layout, navigasi, dan reaksi terhadap event controller
 
 Semua update GUI dari thread lain dilewatkan queue `controller.events`
 dan dipompa oleh `.after()` di thread utama, jadi GUI tetap responsif.
@@ -40,41 +41,44 @@ from generator import (
 )
 from proxy import Proxy, ProxyManager
 import claimer as clm
+from scan_history import ScanHistory, STATUS_AVAILABLE, STATUS_TAKEN, STATUS_ERROR, STATUS_UNKNOWN, STATUS_RATE_LIMITED, STATUS_CLAIMED
 
-logger = logging.getLogger("MinecraftSniper.GUI")
+logger = logging.getLogger("VarinSniper.GUI")
 
 # --------------------------------------------------------------------------- #
-# Theme
+# Theme — Dark Purple Gradient (Galaksi Ungu)
 # --------------------------------------------------------------------------- #
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
-APP_NAME = "MC Sniper"
-APP_VERSION = "v2.2 Pro"
-WINDOW_TITLE = "MC Sniper | 3L/4L Username Sniper"
+APP_NAME = "Varin Sniper"
+APP_VERSION = "v3.0 Premium"
+WINDOW_TITLE = "Varin Sniper | 3L/4L Minecraft Username Sniper"
 
-BG = "#0d0d12"          # background utama
-SIDEBAR = "#111118"     # panel sidebar
-PANEL = "#1a1a24"       # panel / card
-CARD = "#1e1e2a"        # isi card
-CARD_HI = "#242431"     # card hover / aktif
-BORDER = "#262636"      # garis halus
-BORDER_HI = "#33405e"   # garis saat aktif
+# Palette galaksi ungu (dark purple gradient)
+BG = "#0a0512"            # background utama (gelap pekat)
+SIDEBAR = "#120724"       # panel sidebar
+SIDEBAR_HI = "#1a0a33"    # sidebar hover
+PANEL = "#140a24"         # panel / card
+CARD = "#1b0e2e"          # isi card
+CARD_HI = "#23143c"       # card hover / aktif
+BORDER = "#2e1b4d"        # garis halus
+BORDER_HI = "#7b2ff0"     # garis saat aktif (ungu neon)
 
-ACCENT = "#00f0ff"      # neon cyan
-ACCENT2 = "#5b8bff"     # electric blue
-ACCENT_DIM = "#0a3d47"
-OK = "#00ff9f"          # success
-BAD = "#ff4d6d"         # error
-WARN = "#ffd166"        # warning
-INFO = "#5b8bff"
+ACCENT = "#b366ff"        # ungu neon utama
+ACCENT2 = "#8a2be2"       # blue-violet
+ACCENT_GLOW = "#9d4edd"
+OK = "#00ff9f"            # success
+BAD = "#ff4d6d"           # error
+WARN = "#ffd166"          # warning
+INFO = "#7b2ff0"
 TEXT = "#eef2f7"
-TEXT2 = "#8b8ba7"
-TEXT3 = "#5d5d75"
-TAKEN_C = "#7e7e96"
+TEXT2 = "#b8a8d8"
+TEXT3 = "#7d6fb0"
+TAKEN_C = "#8a8aa8"
 CLAIM_C = "#7ff6ff"
 
-RADIUS = 12
+RADIUS = 14
 PAD = 14
 
 # File paths
@@ -83,15 +87,26 @@ CLAIMED_FILE = "claimed.txt"
 FAILED_FILE = "failed.txt"
 HISTORY_FILE = "claim_history.json"
 
-TABS = ("Checker", "Sniper", "Accounts", "Proxies", "Settings", "Stats")
+TABS = ("Checker", "Sniper", "Accounts", "Proxies", "Settings", "History", "Stats")
 NAV = (
     ("Checker", "🎯", "Checker"),
     ("Sniper", "⚡", "Sniper"),
     ("Accounts", "👤", "Accounts"),
     ("Proxies", "🛡", "Proxies"),
     ("Settings", "⚙", "Settings"),
+    ("History", "🕒", "History"),
     ("Stats", "📊", "Stats"),
 )
+
+# --------------------------------------------------------------------------- #
+# Animation toggle
+# --------------------------------------------------------------------------- #
+ANIMATIONS_ENABLED = True
+
+
+def set_animations(enabled: bool) -> None:
+    global ANIMATIONS_ENABLED
+    ANIMATIONS_ENABLED = bool(enabled)
 
 
 def now_hms() -> str:
@@ -103,6 +118,115 @@ def font(size: int = 12, weight: str = "normal", family: str = "Segoe UI") -> ct
 
 
 MONO = "Consolas"
+
+
+# --------------------------------------------------------------------------- #
+# Galaxy wallpaper (live, Canvas-based, di-render di thread latar belakang)
+# --------------------------------------------------------------------------- #
+class GalaxyWallpaper:
+    """Live wallpaper galaksi ungu di Canvas: bintang berserabut, nebula, partikel."""
+    def __init__(self, canvas: tk.Canvas, width: int, height: int):
+        self.canvas = canvas
+        self.width = width
+        self.height = height
+        self.running = False
+        self.thread: Optional[threading.Thread] = None
+        self.stars: List[Dict[str, Any]] = []
+        self.nebulae: List[Dict[str, Any]] = []
+        self._after_id: Optional[str] = None
+        self._init_stars()
+
+    def _init_stars(self) -> None:
+        import random
+        random.seed(42)
+        self.stars = []
+        for _ in range(160):
+            self.stars.append({
+                "x": random.uniform(0, self.width),
+                "y": random.uniform(0, self.height),
+                "r": random.uniform(0.5, 2.0),
+                "speed": random.uniform(0.15, 0.9),
+                "alpha_phase": random.uniform(0, 6.28),
+                "alpha_speed": random.uniform(0.01, 0.05),
+            })
+        self.nebulae = []
+        for _ in range(6):
+            self.nebulae.append({
+                "x": random.uniform(-100, self.width + 100),
+                "y": random.uniform(-100, self.height + 100),
+                "rx": random.uniform(120, 320),
+                "ry": random.uniform(80, 200),
+                "color": random.choice(["#4b1d6e", "#2d0a44", "#6a3fd9", "#1a0a33"]),
+                "drift_x": random.uniform(-0.12, 0.12),
+                "drift_y": random.uniform(-0.12, 0.12),
+                "phase": random.uniform(0, 6.28),
+            })
+
+    def start(self) -> None:
+        self.running = True
+        self.thread = threading.Thread(target=self._loop, daemon=True, name="GalaxyWallpaper")
+        self.thread.start()
+
+    def stop(self) -> None:
+        self.running = False
+        if self._after_id is not None:
+            try:
+                self.canvas.after_cancel(self._after_id)
+            except Exception:  # noqa: BLE001
+                pass
+
+    def _loop(self) -> None:
+        import math, random
+        t = 0.0
+        while self.running:
+            t += 0.02
+            time.sleep(0.04)
+            if not self.running:
+                break
+            try:
+                self.canvas.after(0, lambda tt=t: self._redraw(tt))
+            except Exception:  # noqa: BLE001
+                break
+
+    def _redraw(self, t: float) -> None:
+        try:
+            self.canvas.delete("all")
+        except Exception:  # noqa: BLE001
+            return
+        import math
+        for nb in self.nebulae:
+            nb["x"] += nb["drift_x"]
+            nb["y"] += nb["drift_y"]
+            if nb["x"] < -200:
+                nb["x"] = self.width + 200
+            if nb["y"] < -200:
+                nb["y"] = self.height + 200
+            try:
+                self.canvas.create_oval(
+                    nb["x"] - nb["rx"], nb["y"] - nb["ry"],
+                    nb["x"] + nb["rx"], nb["y"] + nb["ry"],
+                    fill=nb["color"], outline="", tags="nebula")
+            except Exception:  # noqa: BLE001
+                pass
+        for st in self.stars:
+            st["alpha_phase"] += st["alpha_speed"]
+            alpha = 0.4 + 0.6 * abs(math.sin(st["alpha_phase"]))
+            gray = int(200 + 55 * alpha)
+            color = f"#{gray:02x}{gray:02x}{int(255 * alpha):02x}"
+            try:
+                self.canvas.create_oval(
+                    st["x"], st["y"], st["x"] + st["r"], st["y"] + st["r"],
+                    fill=color, outline="", tags="star")
+            except Exception:  # noqa: BLE001
+                pass
+        try:
+            self.canvas.after(40, lambda: self._redraw(t + 0.02))
+        except Exception:  # noqa: BLE001
+            pass
+
+    def resize(self, width: int, height: int) -> None:
+        self.width = width
+        self.height = height
 
 
 # --------------------------------------------------------------------------- #
@@ -155,6 +279,7 @@ class SniperController:
         self.claim_history: List[Dict[str, Any]] = []
         self.load_history()
         self.notifier = DiscordNotifier(self.config)
+        self.scan_history = ScanHistory()
 
     # -- persistence -------------------------------------------------------
     def load_history(self) -> None:
@@ -186,6 +311,10 @@ class SniperController:
         if not (3 <= len(name) <= 16):
             return False
         if not all(ch.isalnum() or ch == "_" for ch in name):
+            return False
+        # Smart: cegah pemindaian nama yang sudah ada di riwayat (selama belum claimed/error)
+        existing = self.scan_history.get_status(name)
+        if existing and existing.get("status") in (STATUS_AVAILABLE, STATUS_TAKEN):
             return False
         with self._lock:
             if name in self.pending or name in self.taken:
@@ -291,6 +420,15 @@ class SniperController:
                 result = checker.check(name)
                 self.stats.increment("total")
 
+                # Simpan ke SQLite riwayat scan
+                status_map = {
+                    NameStatus.AVAILABLE: STATUS_AVAILABLE,
+                    NameStatus.TAKEN: STATUS_TAKEN,
+                    NameStatus.RATE_LIMITED: STATUS_RATE_LIMITED,
+                }
+                scan_status = status_map.get(result.status, STATUS_ERROR)
+                self.scan_history.record(name, scan_status, result.reason.split(":")[0] if result.reason else "", result.reason or "")
+
                 if result.status == NameStatus.AVAILABLE:
                     self.stats.increment("available")
                     append_to_file(AVAILABLE_FILE, result.name)
@@ -365,6 +503,7 @@ class SniperController:
                     )
                     self.save_history()
                     self.remove_from_queue(name)
+                    self.scan_history.mark_claimed(name)
                     self.emit("claimed", (name, acc.label()))
                     self.notifier.notify_claimed(name, acc.label())
                     if self.config.get("sound_notifications", False):
@@ -398,7 +537,6 @@ class SniperController:
         try:
             if os.path.exists("success.mp3"):
                 from playsound import playsound  # type: ignore
-
                 playsound("success.mp3")
                 return
         except Exception:  # noqa: BLE001
@@ -413,7 +551,7 @@ class SniperController:
 # Reusable widgets
 # --------------------------------------------------------------------------- #
 class Card(ctk.CTkFrame):
-    """Panel dengan judul + area isi."""
+    """Panel dengan judul + area isi, tema ungu."""
 
     def __init__(self, master: Any, title: str = "", subtitle: str = "", **kwargs: Any):
         kwargs.setdefault("fg_color", PANEL)
@@ -526,7 +664,6 @@ class LogView(tk.Frame):
         if tag == "claim":
             suffix = "claim_bold"
         self.text.insert("end", message + "\n", (tag, suffix) if suffix else (tag,))
-        # batasi ukuran log agar tidak menggerus memori saat berjalan lama
         if int(self.text.index("end-1c").split(".")[0]) > 900:
             self.text.delete("1.0", "300.0")
         self.text.configure(state="disabled")
@@ -577,15 +714,109 @@ class ListPane(tk.Frame):
 
 
 # --------------------------------------------------------------------------- #
+# History List (SQLite) widget
+# --------------------------------------------------------------------------- #
+class HistoryList(tk.Frame):
+    """Daftar riwayat pemindaian dari SQLite dengan filter & rescan manual."""
+
+    def __init__(self, master: Any, controller: SniperController, **kwargs: Any):
+        super().__init__(master, bg=CARD, highlightthickness=0, **kwargs)
+        self.controller = controller
+        self.sh = controller.scan_history
+        self._build()
+
+    def _build(self) -> None:
+        top = ctk.CTkFrame(self, fg_color="transparent")
+        top.pack(fill="x", padx=8, pady=(6, 4))
+        ctk.CTkLabel(top, text="Filter status", font=font(10, "bold"),
+                     text_color=TEXT3, width=70, anchor="w").pack(side="left")
+        self.opt_filter = ctk.CTkOptionMenu(
+            top, values=["Semua", STATUS_AVAILABLE, STATUS_TAKEN, STATUS_ERROR,
+                         STATUS_UNKNOWN, STATUS_RATE_LIMITED, STATUS_CLAIMED],
+            width=150, height=30, corner_radius=8, font=font(10),
+            fg_color=CARD, button_color=CARD_HI, button_hover_color=BORDER_HI,
+            command=self._on_filter)
+        self.opt_filter.set("Semua")
+        self.opt_filter.pack(side="left", padx=(6, 10))
+        ctk.CTkButton(top, text="🔄 Rescan Terpilih", width=120, height=30,
+                      corner_radius=8, fg_color=ACCENT, hover_color=ACCENT_GLOW,
+                      text_color="#04222b", font=font(10, "bold"),
+                      command=self._rescan_selected).pack(side="left", padx=4)
+        ctk.CTkButton(top, text="🗑 Hapus", width=80, height=30,
+                      corner_radius=8, fg_color=CARD, hover_color="#33202a",
+                      text_color=BAD, border_width=1, border_color="#43222c",
+                      font=font(10), command=self._delete_selected).pack(side="left")
+
+        self.text = tk.Text(
+            self, bg=CARD, fg=TEXT, relief="flat", bd=0, highlightthickness=0,
+            wrap="none", font=(MONO, 10), padx=12, pady=10,
+            selectbackground="#2b3550", selectforeground=TEXT, state="disabled",
+        )
+        self.scroll = ctk.CTkScrollbar(self, command=self.text.yview, width=12,
+                                       button_color=BORDER_HI, fg_color=CARD)
+        self.text.configure(yscrollcommand=self.scroll.set)
+        self.text.pack(side="left", fill="both", expand=True, padx=(8, 0), pady=4)
+        self.scroll.pack(side="right", fill="y", padx=(0, 8), pady=4)
+
+        self._status_filter = "Semua"
+        self.text.tag_configure("avail", foreground=OK)
+        self.text.tag_configure("taken", foreground=TAKEN_C)
+        self.text.tag_configure("error", foreground=BAD)
+        self.text.tag_configure("unknown", foreground=WARN)
+        self.text.tag_configure("rate", foreground=WARN)
+        self.text.tag_configure("claimed", foreground=CLAIM_C)
+        self.reload()
+
+    def reload(self) -> None:
+        rows = self.sh.list_all() if self._status_filter == "Semua" else self.sh.list_by_status(self._status_filter)
+        self.text.configure(state="normal")
+        self.text.delete("1.0", "end")
+        for r in rows:
+            name = r["name"]
+            status = r["status"]
+            stamp = time.strftime("%Y-%m-%d %H:%M", time.localtime(r.get("scanned_at", 0)))
+            tag = "claimed" if status == STATUS_CLAIMED else status
+            if tag not in ("avail", "taken", "error", "unknown", "rate", "claimed"):
+                tag = "muted"
+            self.text.insert("end", f"{stamp}  {name:<16}  {status}\n", (tag,))
+        self.text.configure(state="disabled")
+        self.text.see("end")
+
+    def _on_filter(self, value: str) -> None:
+        self._status_filter = value
+        self.reload()
+
+    def _rescan_selected(self) -> None:
+        rows = self.sh.list_all() if self._status_filter == "Semua" else self.sh.list_by_status(self._status_filter)
+        names = [r["name"] for r in rows if r["status"] in (STATUS_ERROR, STATUS_UNKNOWN, STATUS_RATE_LIMITED)]
+        if not names:
+            self.controller.emit("log", ("info", "Tidak ada nama yang perlu di-rescan"))
+            return
+        added = self.controller.enqueue_many(names)
+        self.controller.emit("log", ("ok", f"Rescan {added} nama dari history"))
+        self.reload()
+
+    def _delete_selected(self) -> None:
+        rows = self.sh.list_all() if self._status_filter == "Semua" else self.sh.list_by_status(self._status_filter)
+        removed = 0
+        for r in rows:
+            if r["status"] in (STATUS_ERROR, STATUS_UNKNOWN):
+                self.sh.delete(r["name"])
+                removed += 1
+        self.controller.emit("log", ("warn", f"{removed} entri history dihapus"))
+        self.reload()
+
+
+# --------------------------------------------------------------------------- #
 # Application
 # --------------------------------------------------------------------------- #
-class MCSniperApp(ctk.CTk):
+class VarinSniperApp(ctk.CTk):
     def __init__(self) -> None:
         super().__init__(fg_color=BG)
         self.title(WINDOW_TITLE)
-        self.geometry("1440x880")
-        self.minsize(1180, 720)
-        self._center(1440, 880)
+        self.geometry("1500x920")
+        self.minsize(1200, 760)
+        self._center(1500, 920)
         self._set_icon()
 
         self.controller = SniperController()
@@ -595,11 +826,12 @@ class MCSniperApp(ctk.CTk):
         self.nav_items: Dict[str, Dict[str, Any]] = {}
         self.views: Dict[str, ctk.CTkFrame] = {}
         self.chips: Dict[str, StatChip] = {}
-        self.stats_labels: Dict[str, ctk.CTkLabel] = {}
+        self.stats_labels: Dict[str, StatChip] = {}
         self._toast_widget: Optional[ctk.CTkFrame] = None
         self._spinner_frames = "⠋⠙⠹⸨⠸⠼⠴⠦⠧⠇⠏"
         self._spinner_idx = 0
         self._last_queue_ui = 0.0
+        self.galaxy: Optional[GalaxyWallpaper] = None
 
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
@@ -610,6 +842,7 @@ class MCSniperApp(ctk.CTk):
         self.protocol("WM_DELETE_WINDOW", self._on_close)
         self.bind("<Control-Return>", lambda _e: self._start())
         self.bind("<Escape>", lambda _e: self._stop())
+        self.bind("<Configure>", self._on_resize)
 
         self.after(80, self._pump_events)
         self.after(500, self._tick_stats)
@@ -628,14 +861,14 @@ class MCSniperApp(ctk.CTk):
             pass
 
     def _set_icon(self) -> None:
-        for name in ("assets/icon.ico", "icon.ico"):
+        for name in ("assets/icon.ico", "icon.ico", "varin_icon.ico"):
             if os.path.exists(name):
                 try:
                     self.iconbitmap(name)
                     return
                 except Exception:  # noqa: BLE001
                     pass
-        for name in ("assets/icon.png", "icon.png"):
+        for name in ("assets/icon.png", "icon.png", "varin_icon.png"):
             if os.path.exists(name):
                 try:
                     self.iconphoto(True, tk.PhotoImage(file=name))
@@ -643,21 +876,28 @@ class MCSniperApp(ctk.CTk):
                 except Exception:  # noqa: BLE001
                     pass
 
+    def _on_resize(self, event: Any) -> None:
+        if self.galaxy is not None:
+            try:
+                self.galaxy.resize(event.width, event.height)
+            except Exception:  # noqa: BLE001
+                pass
+
     # -- sidebar -----------------------------------------------------------
     def _build_sidebar(self) -> None:
-        side = ctk.CTkFrame(self, width=248, corner_radius=0, fg_color=SIDEBAR)
+        side = ctk.CTkFrame(self, width=250, corner_radius=0, fg_color=SIDEBAR)
         side.grid(row=0, column=0, sticky="nsw")
         side.grid_propagate(False)
         side.pack_propagate(False)
 
-        # logo
+        # logo area
         logo = ctk.CTkFrame(side, fg_color="transparent")
-        logo.pack(fill="x", padx=22, pady=(26, 8))
+        logo.pack(fill="x", padx=20, pady=(24, 10))
         row = ctk.CTkFrame(logo, fg_color="transparent")
         row.pack(anchor="w")
-        ctk.CTkLabel(row, text="⚡", font=font(22), text_color=ACCENT).pack(side="left", padx=(0, 8))
-        ctk.CTkLabel(row, text="MC SNIPER", font=font(20, "bold"), text_color=TEXT).pack(side="left")
-        ctk.CTkLabel(logo, text="3L / 4L  USERNAME HUNTER", font=font(9, "bold"),
+        ctk.CTkLabel(row, text="🌌", font=font(24), text_color=ACCENT).pack(side="left", padx=(0, 10))
+        ctk.CTkLabel(row, text="VARIN SNIPER", font=font(20, "bold"), text_color=TEXT).pack(side="left")
+        ctk.CTkLabel(logo, text="3L / 4L  MINECRAFT USERNAME SNIPER", font=font(9, "bold"),
                      text_color=ACCENT2).pack(anchor="w", pady=(2, 0))
 
         ctk.CTkFrame(side, height=1, fg_color=BORDER).pack(fill="x", padx=18, pady=(18, 12))
@@ -672,13 +912,24 @@ class MCSniperApp(ctk.CTk):
             bar.pack(side="left", fill="y", padx=(0, 6), pady=8)
 
             btn = ctk.CTkButton(
-                wrap, text=f"  {icon}   {label}", anchor="w", height=40, corner_radius=9,
-                fg_color="transparent", hover_color=CARD, text_color=TEXT2,
+                wrap, text=f"  {icon}   {label}", anchor="w", height=40, corner_radius=10,
+                fg_color="transparent", hover_color=CARD_HI, text_color=TEXT2,
                 font=font(13), border_width=0,
                 command=lambda k=key: self._switch_tab(k),
             )
             btn.pack(side="left", fill="both", expand=True)
             self.nav_items[key] = {"bar": bar, "btn": btn}
+
+        # animation toggle
+        anim_row = ctk.CTkFrame(side, fg_color="transparent")
+        anim_row.pack(fill="x", padx=18, pady=(6, 0))
+        self.sw_anim = ctk.CTkSwitch(
+            anim_row, text="Animasi galaxy", font=font(11),
+            progress_color=ACCENT, button_color=TEXT, button_hover_color=TEXT,
+            text_color=TEXT2, command=self._toggle_animation,
+        )
+        self.sw_anim.pack(anchor="w")
+        self.sw_anim.select()
 
         # bottom status
         bottom = ctk.CTkFrame(side, fg_color="transparent")
@@ -699,6 +950,18 @@ class MCSniperApp(ctk.CTk):
 
         self._switch_tab("Checker")
 
+    def _toggle_animation(self) -> None:
+        enabled = bool(self.sw_anim.get())
+        set_animations(enabled)
+        if enabled and self.galaxy is None:
+            self._start_galaxy()
+        elif not enabled and self.galaxy is not None:
+            self.galaxy.stop()
+            self.galaxy = None
+
+    def _start_galaxy(self) -> None:
+        pass
+
     # -- main area ---------------------------------------------------------
     def _build_main(self) -> None:
         main = ctk.CTkFrame(self, fg_color=BG)
@@ -708,7 +971,7 @@ class MCSniperApp(ctk.CTk):
 
         self._build_header(main)
 
-        self.content = ctk.CTkFrame(main, fg_color=BG)
+        self.content = ctk.CTkFrame(main, fg_color="transparent")
         self.content.grid(row=1, column=0, sticky="nsew", padx=(18, 18), pady=(4, 0))
         self.content.grid_rowconfigure(0, weight=1)
         self.content.grid_columnconfigure(0, weight=1)
@@ -719,6 +982,7 @@ class MCSniperApp(ctk.CTk):
             "Accounts": self._tab_accounts,
             "Proxies": self._tab_proxies,
             "Settings": self._tab_settings,
+            "History": self._tab_history,
             "Stats": self._tab_stats,
         }
         for name in TABS:
@@ -730,23 +994,23 @@ class MCSniperApp(ctk.CTk):
         self._build_footer(main)
 
     def _build_header(self, parent: ctk.CTkFrame) -> None:
-        header = ctk.CTkFrame(parent, fg_color=BG, height=104)
+        header = ctk.CTkFrame(parent, fg_color=BG, height=110)
         header.grid(row=0, column=0, sticky="ew", padx=18, pady=(14, 0))
         header.pack_propagate(False)
 
         left = ctk.CTkFrame(header, fg_color="transparent")
         left.pack(side="left", fill="y")
-        ctk.CTkLabel(left, text="MC Sniper", font=font(24, "bold"), text_color=TEXT).pack(
+        ctk.CTkLabel(left, text="Varin Sniper", font=font(26, "bold"), text_color=TEXT).pack(
             anchor="w", pady=(14, 0)
         )
-        self.header_sub = ctk.CTkLabel(left, text="Ready · proxyless · multi-source checker",
+        self.header_sub = ctk.CTkLabel(left, text="Ready · galaxy theme · SQLite history",
                                        font=font(11), text_color=TEXT2)
         self.header_sub.pack(anchor="w")
 
         # status pill
-        self.status_pill = ctk.CTkFrame(left, fg_color=CARD, corner_radius=8, border_width=1,
+        self.status_pill = ctk.CTkFrame(left, fg_color=CARD, corner_radius=10, border_width=1,
                                         border_color=BORDER)
-        self.status_pill.pack(anchor="w", pady=(8, 0))
+        self.status_pill.pack(anchor="w", pady=(10, 0))
         self.status_dot = ctk.CTkLabel(self.status_pill, text="●", font=font(12),
                                        text_color=WARN)
         self.status_dot.pack(side="left", padx=(10, 4), pady=3)
@@ -762,14 +1026,14 @@ class MCSniperApp(ctk.CTk):
         actions.pack(side="right", fill="y", padx=(10, 0), pady=12)
 
         self.btn_start = ctk.CTkButton(
-            actions, text="▶  START", width=132, height=52, corner_radius=11,
+            actions, text="▶  START", width=136, height=54, corner_radius=12,
             fg_color=OK, hover_color="#00d988", text_color="#05231a",
             font=font(14, "bold"), command=self._start,
         )
         self.btn_start.pack(side="left", padx=(0, 8))
 
         self.btn_stop = ctk.CTkButton(
-            actions, text="■  STOP", width=118, height=52, corner_radius=11,
+            actions, text="■  STOP", width=122, height=54, corner_radius=12,
             fg_color=CARD, hover_color="#33202a", text_color=BAD,
             border_width=1, border_color="#43222c", font=font(14, "bold"),
             command=self._stop, state="disabled",
@@ -790,7 +1054,7 @@ class MCSniperApp(ctk.CTk):
             self.chips[key] = chip
 
     def _build_footer(self, parent: ctk.CTkFrame) -> None:
-        footer = ctk.CTkFrame(parent, fg_color=BG, height=28)
+        footer = ctk.CTkFrame(parent, fg_color=BG, height=30)
         footer.grid(row=2, column=0, sticky="ew", padx=18, pady=(6, 10))
         footer.pack_propagate(False)
 
@@ -823,18 +1087,39 @@ class MCSniperApp(ctk.CTk):
                 view.grid(row=0, column=0, sticky="nsew")
             else:
                 view.grid_remove()
+            if key == "History" and name == "History":
+                self._ensure_history_loaded()
+
+    def _ensure_history_loaded(self) -> None:
+        view = self.views.get("History")
+        if view is not None:
+            for child in view.winfo_children():
+                if isinstance(child, HistoryList):
+                    child.reload()
+                    break
+
+    def _log(self, tag: str, message: str) -> None:
+        if hasattr(self, "sniper_log_box") and self.sniper_log_box is not None:
+            self.sniper_log_box.write(tag, message)
 
     # ------------------------------------------------------------------ #
     # Tab: Checker
     # ------------------------------------------------------------------ #
     def _tab_checker(self, tab: ctk.CTkFrame) -> None:
         tab.grid_columnconfigure(0, weight=1)
-        tab.grid_rowconfigure(2, weight=1)
+        tab.grid_rowconfigure(3, weight=1)
+
+        wall = tk.Canvas(tab, bg=BG, highlightthickness=0)
+        wall.grid(row=0, column=0, sticky="nsew", pady=(0, 0))
+        wall.configure(width=self.winfo_width(), height=160)
+        self.galaxy = GalaxyWallpaper(wall, self.winfo_width(), 160)
+        if bool(self.sw_anim.get()):
+            self.galaxy.start()
 
         # --- input card ---
         entry_card = Card(tab, "Target & Queue",
                           "playerdb → minecraftservices → mojang → ashcon → namemc → mcchecker")
-        entry_card.grid(row=0, column=0, sticky="ew", pady=(2, 10))
+        entry_card.grid(row=1, column=0, sticky="ew", pady=(10, 10))
         body = entry_card.content()
 
         row = ctk.CTkFrame(body, fg_color="transparent")
@@ -852,7 +1137,7 @@ class MCSniperApp(ctk.CTk):
                       border_width=1, border_color=BORDER_HI, font=font(12, "bold"),
                       command=self._check_single).pack(side="left", padx=(0, 8))
         ctk.CTkButton(row, text="＋ Add", width=100, height=44, corner_radius=10,
-                      fg_color=ACCENT, hover_color="#00cfdd", text_color="#04222b",
+                      fg_color=ACCENT, hover_color=ACCENT_GLOW, text_color="#04222b",
                       font=font(12, "bold"), command=self._add_target).pack(side="left")
 
         gen = ctk.CTkFrame(body, fg_color="transparent")
@@ -862,7 +1147,7 @@ class MCSniperApp(ctk.CTk):
             ("3L × 500", lambda: self._gen_names(3), CARD, TEXT),
             ("4L × 500", lambda: self._gen_names(4), CARD, TEXT),
             ("⚡ 3L FULL", self._gen_full_3l, CARD_HI, ACCENT),
-            ("Smart Gen", self._gen_smart, CARD, TEXT),
+            ("Smart Gen (rare)", self._gen_smart_rare, CARD, TEXT),
         ):
             ctk.CTkButton(gen, text=text, height=34, corner_radius=9, fg_color=color,
                           hover_color=CARD_HI, text_color=tc, border_width=1,
@@ -886,7 +1171,7 @@ class MCSniperApp(ctk.CTk):
 
         # --- queue strip ---
         queue_card = Card(tab, "Queue", "")
-        queue_card.grid(row=1, column=0, sticky="ew", pady=(0, 10))
+        queue_card.grid(row=2, column=0, sticky="ew", pady=(0, 10))
         qbody = queue_card.content()
         qrow = ctk.CTkFrame(qbody, fg_color="transparent")
         qrow.pack(fill="x")
@@ -904,7 +1189,7 @@ class MCSniperApp(ctk.CTk):
 
         # --- results ---
         results = ctk.CTkFrame(tab, fg_color="transparent")
-        results.grid(row=2, column=0, sticky="nsew")
+        results.grid(row=3, column=0, sticky="nsew")
         results.grid_columnconfigure((0, 1), weight=1, uniform="res")
         results.grid_rowconfigure(0, weight=1)
 
@@ -983,7 +1268,7 @@ class MCSniperApp(ctk.CTk):
                                       border_color=BORDER, font=font(12))
         self.ent_watch.pack(side="left", fill="x", expand=True, padx=(0, 8))
         ctk.CTkButton(wrow, text="Watch", width=90, height=36, corner_radius=9,
-                      fg_color=ACCENT, hover_color="#00cfdd", text_color="#04222b",
+                      fg_color=ACCENT, hover_color=ACCENT_GLOW, text_color="#04222b",
                       font=font(11, "bold"), command=self._add_watch).pack(side="left")
 
         self.watch_box = ListPane(wbody, height=10, color=WARN)
@@ -1002,11 +1287,12 @@ class MCSniperApp(ctk.CTk):
         tab.grid_columnconfigure(0, weight=1)
         tab.grid_rowconfigure(1, weight=1)
 
-        add = Card(tab, "Tambah Akun Microsoft", "login langsung — tanpa Azure, tanpa OAuth2")
+        add = Card(tab, "Tambah Akun Microsoft (OAuth via Microsoft.com)",
+                   "login resmi lewat login.microsoftonline.com — token & callback aman")
         add.grid(row=0, column=0, sticky="ew", pady=(2, 10))
         body = add.content()
 
-        # Email/Password Microsoft login (alur launcher, client id bawaan)
+        # OAuth login (email + password)
         ep_row = ctk.CTkFrame(body, fg_color="transparent")
         ep_row.pack(fill="x", pady=(0, 8))
         ctk.CTkLabel(ep_row, text="Email", font=font(10, "bold"), text_color=TEXT3,
@@ -1023,7 +1309,7 @@ class MCSniperApp(ctk.CTk):
             fg_color=CARD, border_color=BORDER, font=font(12), show="•",
         )
         self.ent_ep_password.pack(side="left", fill="x", expand=True, padx=(0, 8))
-        ctk.CTkButton(ep_row, text="🔑  Login Microsoft", width=150, height=40,
+        ctk.CTkButton(ep_row, text="🔑  Login Microsoft (OAuth)", width=170, height=40,
                       corner_radius=9, fg_color=OK, hover_color="#00d988",
                       text_color="#05231a", font=font(12, "bold"),
                       command=self._add_email_password_account).pack(side="left")
@@ -1043,7 +1329,7 @@ class MCSniperApp(ctk.CTk):
         ctk.CTkLabel(row2, text="Token", font=font(10, "bold"), text_color=TEXT3,
                      width=60, anchor="w").pack(side="left")
         self.ent_token = ctk.CTkEntry(
-            row2, placeholder_text="mc token (eyJ…) / MS refresh (M.C…) / MS token (M.R…, eyJ…)",
+            row2, placeholder_text="mc token (eyJ…) / MS token (M.C…, M.R…, eyJ…)",
             height=40, corner_radius=9, fg_color=CARD, border_color=BORDER,
             font=font(11),
         )
@@ -1059,7 +1345,7 @@ class MCSniperApp(ctk.CTk):
         row3 = ctk.CTkFrame(body, fg_color="transparent")
         row3.pack(fill="x")
         ctk.CTkButton(row3, text="➕  Add via Token", width=170, height=40, corner_radius=9,
-                      fg_color=ACCENT, hover_color="#00cfdd", text_color="#04222b",
+                      fg_color=ACCENT, hover_color=ACCENT_GLOW, text_color="#04222b",
                       font=font(12, "bold"),
                       command=self._add_token_account).pack(side="left", padx=(0, 8))
         self.lbl_acc_hint = ctk.CTkLabel(row3, text="", font=font(10), text_color=TEXT3)
@@ -1103,7 +1389,7 @@ class MCSniperApp(ctk.CTk):
         row = ctk.CTkFrame(body, fg_color="transparent")
         row.pack(fill="x")
         ctk.CTkButton(row, text="📁  Load proxies.txt", width=180, height=38,
-                      corner_radius=9, fg_color=ACCENT, hover_color="#00cfdd",
+                      corner_radius=9, fg_color=ACCENT, hover_color=ACCENT_GLOW,
                       text_color="#04222b", font=font(11, "bold"),
                       command=self._load_proxies).pack(side="left", padx=(0, 8))
         ctk.CTkButton(row, text="🔍  Test All", width=130, height=38, corner_radius=9,
@@ -1148,7 +1434,7 @@ class MCSniperApp(ctk.CTk):
         pbody = perf.content()
 
         self.sld_threads, self.lbl_threads = self._slider(pbody, "Threads", 1, 100,
-                                                          int(self.cfg.get("threads", 15)))
+                                                           int(self.cfg.get("threads", 15)))
         self.lbl_timeout = self._entry(pbody, "Timeout (detik)", str(self.cfg.get("timeout", 10.0)))
 
         behavior = Card(tab, "Behavior", "checker dan claim")
@@ -1183,7 +1469,7 @@ class MCSniperApp(ctk.CTk):
         save_row = ctk.CTkFrame(tab, fg_color="transparent")
         save_row.grid(row=2, column=0, columnspan=2, sticky="ew", pady=(0, 2))
         ctk.CTkButton(save_row, text="💾  Save Settings", width=200, height=44,
-                      corner_radius=10, fg_color=ACCENT, hover_color="#00cfdd",
+                      corner_radius=10, fg_color=ACCENT, hover_color=ACCENT_GLOW,
                       text_color="#04222b", font=font(13, "bold"),
                       command=self._save_all_settings).pack(side="left")
         self.lbl_saved = ctk.CTkLabel(save_row, text="", font=font(11), text_color=OK)
@@ -1208,7 +1494,7 @@ class MCSniperApp(ctk.CTk):
         ctk.CTkLabel(row, text=label, font=font(11), text_color=TEXT2, width=130,
                      anchor="w").pack(side="left")
         slider = ctk.CTkSlider(row, from_=lo, to=hi, height=16, corner_radius=8,
-                               button_color=ACCENT, button_hover_color="#00cfdd",
+                               button_color=ACCENT, button_hover_color=ACCENT_GLOW,
                                progress_color=ACCENT2, fg_color=CARD)
         slider.set(value)
         slider.pack(side="left", fill="x", expand=True, padx=(0, 10))
@@ -1228,12 +1514,26 @@ class MCSniperApp(ctk.CTk):
         sw = ctk.CTkSwitch(parent, text=label, font=font(11), progress_color=color,
                            button_color=TEXT, button_hover_color=TEXT, text_color=TEXT2,
                            command=lambda: self._save_setting(key, bool(sw.get())))
-        if key == "discord_webhook_url":
-            pass
         sw.pack(anchor="w", pady=3)
         if self.cfg.get(key):
             sw.select()
         return sw
+
+    # ------------------------------------------------------------------ #
+    # Tab: History
+    # ------------------------------------------------------------------ #
+    def _tab_history(self, tab: ctk.CTkFrame) -> None:
+        tab.grid_columnconfigure(0, weight=1)
+        tab.grid_rowconfigure(0, weight=1)
+
+        hist_card = Card(tab, "Riwayat Pemindaian (SQLite)",
+                         "Semua nama & status tersimpan di scan_history.db; tetap tersimpan setelah ditutup")
+        hist_card.grid(row=0, column=0, sticky="nsew", pady=(2, 2))
+        hbody = hist_card.content()
+        hbody.grid_columnconfigure(0, weight=1)
+        hbody.grid_rowconfigure(0, weight=1)
+        self.history_list = HistoryList(hbody, self.controller)
+        self.history_list.grid(row=0, column=0, sticky="nsew")
 
     # ------------------------------------------------------------------ #
     # Tab: Stats
@@ -1312,7 +1612,8 @@ class MCSniperApp(ctk.CTk):
         if kind == "log":
             tag, text = payload
             self._log(tag, text)
-            self.activity_box.write(tag, text)
+            if hasattr(self, "activity_box") and self.activity_box is not None:
+                self.activity_box.write(tag, text)
         elif kind == "result":
             res: CheckResult = payload
             if res.status == NameStatus.AVAILABLE:
@@ -1326,15 +1627,21 @@ class MCSniperApp(ctk.CTk):
             self.avail_box.append(name)
             self.avail_box.text.see("end")
             self.lbl_avail_count.configure(text=f"{self.avail_box.count} found")
-            self.activity_box.write("avail", f"AVAILABLE  {name}")
+            if hasattr(self, "activity_box") and self.activity_box is not None:
+                self.activity_box.write("avail", f"AVAILABLE  {name}")
             self._toast(f"Nama tersedia: {name}", ACCENT)
+            if hasattr(self, "history_list") and self.history_list is not None:
+                self.history_list.reload()
         elif kind == "claimed":
             name, acc = payload
             self.claimed_box.append(f"{name}  ·  {acc}")
             self.lbl_claimed_count.configure(text=f"{self.claimed_box.count} claimed")
-            self.activity_box.write("claim", f"CLAIMED  {name}  via {acc}")
+            if hasattr(self, "activity_box") and self.activity_box is not None:
+                self.activity_box.write("claim", f"CLAIMED  {name}  via {acc}")
             self._reload_history()
             self._show_claim_modal(name, acc)
+            if hasattr(self, "history_list") and self.history_list is not None:
+                self.history_list.reload()
         elif kind == "status":
             running = "RUNNING" in str(payload)
             self.status_text.configure(text=str(payload))
@@ -1351,9 +1658,6 @@ class MCSniperApp(ctk.CTk):
                 self.progress.stop()
                 self.progress.configure(mode="determinate")
                 self.progress.set(0)
-
-    def _log(self, tag: str, message: str) -> None:
-        self.sniper_log_box.write(tag, message)
 
     def _tick_stats(self) -> None:
         stats = self.controller.stats.get_stats()
@@ -1400,12 +1704,6 @@ class MCSniperApp(ctk.CTk):
             text=f"checks/s {stats['checks_per_sec']:.2f}   ·   proxy {alive} alive"
                  f"   ·   discord {'on' if self.cfg.get('use_discord_webhook') else 'off'}"
         )
-
-        # refresh daftar queue sesekali (murah, max 0.4/detik)
-        if time.time() - self._last_queue_ui > 2.0:
-            self._last_queue_ui = time.time()
-            if self.active_tab == "Checker" and queue_len and queue_len <= 400:
-                pass  # queue ditampilkan lewat counter agar tidak flicker
 
         self.after(500, self._tick_stats)
 
@@ -1488,6 +1786,8 @@ class MCSniperApp(ctk.CTk):
     def _single_worker(self, name: str) -> None:
         checker = Checker(delay=0.0)
         res = checker.check(name)
+        # Simpan ke SQLite
+        self.controller.scan_history.record(name, res.status.value, "", res.reason or "")
         if res.status == NameStatus.AVAILABLE:
             append_to_file(AVAILABLE_FILE, res.name)
             self.controller.stats.increment("total")
@@ -1508,7 +1808,7 @@ class MCSniperApp(ctk.CTk):
             self._log("info", f"{name} ditambahkan ke queue")
             self.ent_check.delete(0, "end")
         else:
-            self._toast(f"'{name}' tidak valid / sudah ada di queue", WARN, 2600)
+            self._toast(f"'{name}' tidak valid / sudah ada di queue / riwayat", WARN, 2600)
 
     def _add_watch(self) -> None:
         name = self.ent_watch.get().strip().lower()
@@ -1543,11 +1843,12 @@ class MCSniperApp(ctk.CTk):
         self._log("ok", f"3L FULL: {added} kombinasi masuk queue (urut prioritas)")
         self._toast(f"3L FULL — {added} nama di queue", ACCENT, 3200)
 
-    def _gen_smart(self) -> None:
+    def _gen_smart_rare(self) -> None:
+        # 3L yang jarang disebutkan / rare: prioritas kombinasi unik
         names = generate_smart_random(500, 3)
         added = self.controller.enqueue_many(names)
-        self._log("ok", f"smart gen: {added} nama")
-        self._toast(f"Smart gen — {added} nama", ACCENT, 2600)
+        self._log("ok", f"smart rare 3L: {added} nama")
+        self._toast(f"Smart rare 3L — {added} nama", ACCENT, 2600)
 
     def _gen_pattern(self) -> None:
         pattern = self.ent_pattern.get().strip()
@@ -1652,12 +1953,12 @@ class MCSniperApp(ctk.CTk):
         if not email or not password:
             self._toast("Email dan password wajib diisi", WARN, 3000)
             return
-        self.lbl_acc_hint.configure(text="login Microsoft…", text_color=WARN)
-        self._log("info", f"login microsoft via email: {email}…")
+        self.lbl_acc_hint.configure(text="login Microsoft OAuth…", text_color=WARN)
+        self._log("info", f"login microsoft OAuth: {email}…")
 
         def work() -> None:
             try:
-                acc = clm.login_with_email_password(email, password)
+                acc = clm.login_with_oauth(email, password)
                 self.controller.accounts.append(acc)
                 clm.save_accounts(self.controller.accounts)
                 self.after(0, lambda: self._toast(f"Akun ditambahkan: {acc.label()}", OK, 3200))
@@ -1681,7 +1982,7 @@ class MCSniperApp(ctk.CTk):
             refresh = "refresh ✓" if getattr(acc, "refresh_token", None) else "token-only"
             rows.append(f"[{idx:02d}] {acc.label():<34} {token_state:<8} {refresh}")
         if not rows:
-            rows = ["belum ada akun — login email+password atau tempel token"]
+            rows = ["belum ada akun — login Microsoft OAuth atau tempel token"]
         self.accounts_box.replace(rows, prefix="›")
 
     def _refresh_all_tokens(self) -> None:
@@ -1819,23 +2120,24 @@ class MCSniperApp(ctk.CTk):
         try:
             if self.controller.running:
                 self.controller.stop()
+            self.controller.scan_history.close()
             self._save_all_settings_quiet()
         finally:
             self.destroy()
 
 
-PremiumSniper = MCSniperApp
+PremiumSniper = VarinSniperApp
 
 
 def main() -> int:
     try:
-        app = MCSniperApp()
+        app = VarinSniperApp()
         app.mainloop()
         return 0
     except Exception as exc:  # noqa: BLE001
         logger.exception("fatal")
         try:
-            messagebox.showerror("MC Sniper", f"Gagal menjalankan GUI:\n{exc}")
+            messagebox.showerror("Varin Sniper", f"Gagal menjalankan GUI:\n{exc}")
         except Exception:  # noqa: BLE001
             print(f"Fatal: {exc}", file=sys.stderr)
         return 1
@@ -1843,3 +2145,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

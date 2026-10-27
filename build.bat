@@ -1,8 +1,8 @@
 @echo off
 REM ============================================================
-REM  MC-Sniper - one-click build Windows .exe
+REM  Varin Sniper - one-click build Windows .exe
 REM  Requirements: Python 3.10+ installed and in PATH
-REM  Output      : dist\MC-Sniper.exe
+REM  Output      : dist\Varin-Sniper.exe
 REM ============================================================
 setlocal
 
@@ -15,14 +15,14 @@ if errorlevel 1 goto fail
 
 echo.
 echo [2/3] Building executable (this takes a few minutes)...
-pyinstaller --clean --noconfirm MC-Sniper.spec
+pyinstaller --clean --noconfirm Varin-Sniper.spec
 if errorlevel 1 goto fail
 
 echo.
 echo [3/3] Done!
-echo    Output : %cd%\dist\MC-Sniper.exe
+echo    Output : %cd%\dist\Varin-Sniper.exe
 echo.
-echo  Copy dist\MC-Sniper.exe anywhere (plus success.mp3 if you want
+echo  Copy dist\Varin-Sniper.exe anywhere (plus success.mp3 if you want
 echo  sound notifications) and double-click to run.
 goto end
 

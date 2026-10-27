@@ -1,8 +1,8 @@
 # -*- mode: python ; coding: utf-8 -*-
-# PyInstaller spec untuk MC-Sniper (Windows .exe).
+# PyInstaller spec untuk Varin Sniper (Windows .exe).
 #
-# Build:  pyinstaller --clean MC-Sniper.spec
-# Hasil:  dist/MC-Sniper.exe
+# Build:  pyinstaller --clean Varin-Sniper.spec
+# Hasil:  dist/Varin-Sniper.exe
 #
 # Catatan:
 # - --collect-all customtkinter WAJIB, karena tema/bundel data CTk tidak
@@ -29,7 +29,7 @@ if exists("success.mp3"):
     datas.append(("success.mp3", "."))
 
 a = Analysis(
-    ["main.py"],
+    ["varin_sniper.py"],
     pathex=[],
     binaries=binaries,
     datas=datas,
@@ -49,7 +49,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name="MC-Sniper",
+    name="Varin-Sniper",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -62,6 +62,6 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=None,   # ganti: icon="icon.ico" jika punya file ikon
+    icon=None,   # ganti: icon="varin_icon.ico" jika punya file ikon
     version=None,
 )

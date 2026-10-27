@@ -1,5 +1,5 @@
 @echo off
-:: MC-Sniper — proxyless checker (multi-source, zero-false-flag)
+:: Varin Sniper — proxyless checker (multi-source, zero-false-flag)
 :: Chain: playerdb.co -> api.minecraftservices.com (lookup/name) -> api.mojang.com
 :: Status code dipercaya, BUKAN isi body (body 404 resmi mengandung kata "name").
 :: TANPA proxy. TANPA substring guessing. Bypass 429 = pindah sumber otomatis.
@@ -8,13 +8,12 @@ setlocal enabledelayedexpansion
 
 :retry
 cls
-title Minecraft Name Checker
+title Varin Sniper Name Checker
 echo.
 echo  █▀▄▀█ █ █▄ █ █▀▀ █▀▀ █▀█ ▄▀█ █▀▀ ▀█▀   █▄ █ ▄▀█ █▀▄▀█ █▀▀   █▀▀ █ █ █▀▀ █▀▀ █▄▀ █▀▀ █▀█
 echo  █ ▀ █ █ █ ▀█ ██▄ █▄▄ █▀▄ █▀█ █▀    █    █ ▀█ █▀█ █ ▀ █ ██▄   █▄▄ █▀█ ██▄ █▄▄ █ █ ██▄ █▀▄
 echo.
-echo  Drag the combo file (.txt) to this console
-echo.
+echo  Drag the combo file (.txt) to this consoleecho.
 set /p combo="[?] Path: "
 if not exist "%combo%" echo  [-] File not found & pause>nul & goto retry
 echo  [+] Combo loaded
