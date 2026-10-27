@@ -5,16 +5,17 @@
 # Hasil:  dist/Varin-Sniper.exe
 #
 # Catatan:
-# - customtkinter WAJIB dikoleksi lengkap (tema, aset, dan Tcl/Tk DLL)
-#   agar GUI tidak putih / gagal diimpor setelah dibekukan.
-# - console=False -> tanpa jendela hitam; log sudah tampil di GUI.
+# - customtkinter WAJIB dikoleksi lengkap (tema + aset) supaya GUI tidak blank.
+# - Folder assets/ (ikon aplikasi, ikon nav/tombol) ikut dibundel dan dibaca
+#   lewat ui/icons.resource_path() sehingga aman saat dijalankan sebagai exe.
+# - Kalau customtkinter tidak ada di environment build, build DIGAGALKAN di
+#   sini — lebih baik daripada mengirim exe yang crash saat dibuka.
 
 import os
 import sys
 from PyInstaller.utils.hooks import collect_all
 
 # --- Guard: tanpa customtkinter, exe akan crash saat dibuka. ----------------
-# Lebih baik build GAGAL di sini daripada mengirim exe yang tidak bisa start.
 try:
     import customtkinter
 except ModuleNotFoundError as exc:
@@ -49,19 +50,41 @@ hiddenimports += [
     "tkinter",
     "tkinter.ttk",
     "tkinter.font",
+    # modul aplikasi sendiri (import dinamis tidak akan terdeteksi otomatis)
+    "ui",
+    "ui.theme",
+    "ui.i18n",
+    "ui.icons",
+    "ui.wallpaper",
+    "ui.widgets",
+    "ui.app",
+    "controller",
 ]
+
+# --- Aset aplikasi (ikon app + set ikon GUI) -------------------------------- #
+ASSETS_DIR = os.path.join(os.getcwd(), "assets")
+if os.path.isdir(ASSETS_DIR):
+    datas.append((ASSETS_DIR, "assets"))
+    icon_count = 0
+    for _root, _dirs, _files in os.walk(ASSETS_DIR):
+        icon_count += sum(1 for f in _files if f.lower().endswith(".png"))
+    print(f"[SPEC] assets/ dibundel: {icon_count} file PNG")
+else:
+    raise SystemExit(
+        "[SPEC] folder assets/ tidak ditemukan.\n"
+        "       Jalankan: python tools/make_icons.py"
+    )
 
 # Sertakan file suara optional jika ada di folder proyek
 if os.path.exists("success.mp3"):
     datas.append(("success.mp3", "."))
 
-# --- Tcl/Tk runtime DLLs (Windows) agar tkinter/customtkinter berjalan ---
+# --- Tcl/Tk runtime DLLs (Windows) agar tkinter/customtkinter berjalan ----- #
 def _tcltk_binaries():
     out = []
     try:
         import tkinter
         tk_path = os.path.dirname(tkinter.__file__)
-        # Cari tcl86t.dll dan tk86t.dll di sekitar instalasi Python
         candidates = [
             os.path.join(sys.prefix, "DLLs"),
             os.path.join(sys.prefix, "Library", "bin"),
@@ -76,6 +99,7 @@ def _tcltk_binaries():
     except Exception:
         pass
     return out
+
 
 binaries += _tcltk_binaries()
 
@@ -113,6 +137,6 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=None,   # ganti: icon="varin_icon.ico" jika punya file ikon
+    icon="assets/icon.ico",
     version=None,
 )

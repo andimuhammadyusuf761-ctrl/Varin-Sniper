@@ -40,7 +40,10 @@ jobs:
           fi
 
       - name: Verify sources compile
-        run: python -m compileall -q varin_sniper.py checker.py claimer.py proxy.py generator.py utils.py scan_history.py
+        run: python -m compileall -q .
+
+      - name: Verify UI, translations and icon assets
+        run: python tools/check_ui.py
 
       - name: Verify GUI dependencies are importable before freezing
         run: python -c "import tkinter, customtkinter; print('tkinter', tkinter.TkVersion, '| customtkinter', customtkinter.__version__)"

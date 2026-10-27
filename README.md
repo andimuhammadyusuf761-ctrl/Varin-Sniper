@@ -25,8 +25,9 @@ notifikasi Discord, dan **riwayat pemindaian SQLite** yang tersimpan setelah apl
 | **Proxy** | HTTP/SOCKS4/SOCKS5, scoring, test all, auto-clean proxy mati, rotasi |
 | **Notifikasi** | Toast in-app, modal claim, Discord webhook, sound opsional |
 | **Data** | `available.txt`, `claimed.txt`, `failed.txt`, `claim_history.json`, `scan_history.db`, `ms_tokens.json` |
-| **GUI** | Dark purple gradient galaksi, live galaxy wallpaper, sidebar, dashboard statistik, 7 tab, toast, animasi dinonaktifkan |
-| **Stabilitas** | GUI tidak freeze (semua I/O di thread latar belakang), error ditangani, animasi bisa dinonaktifkan |
+| **GUI** | Dark purple gradient, kartu bevel 3D, live wallpaper 3D (wireframe vault + partikel kedalaman), sidebar ikon vektor, sub-tab kapsul per halaman, toast, efek tekan 3D. Bahasa: **English (default)** & Indonesia, bisa diganti langsung dari GUI |
+| **Performa** | Semua I/O di thread latar; wallpaper 3D punya frame-pacing adaptif (otomatis turun 20–30 FPS) dan pause saat jendela tidak fokus; font/gradient/ikon di-cache; tombol tidak pernah menggeser layout saat hover |
+| **Ikon** | App icon `.png`/`.ico` multi-size + 53 ikon nav/tombol digambar prosedural oleh `tools/make_icons.py` (tanpa Pillow) |
 
 ---
 
@@ -35,6 +36,13 @@ notifikasi Discord, dan **riwayat pemindaian SQLite** yang tersimpan setelah apl
 ```bash
 pip install -r requirements.txt
 python varin_sniper.py
+```
+
+Cek cepat tanpa membuka GUI (dipakai juga di CI):
+
+```bash
+python tools/check_ui.py     # kunci i18n, ikon, matematika wallpaper
+python tools/make_icons.py   # regenerasi assets/ (ikon app + ikon GUI)
 ```
 
 Butuh Python 3.10+. Di Linux, tkinter harus tersedia (`sudo apt install python3-tk`).
@@ -92,6 +100,8 @@ blank setelah dijadikan exe.
 7. **History tab** — riwayat pemindaian dari SQLite, filter status, **Rescan manual**.
 8. **Stats tab** — total checked, available, claimed, taken, error, rate limited,
    success rate, uptime, checks/s, dan riwayat claim.
+9. **Sidebar** — ganti bahasa (**English default / Indonesia**), nyalakan/matikan
+   wallpaper 3D dan efek 3D, lihat status mesin + uptime + antrian.
 
 Shortcut: `Ctrl+Enter` = start, `Esc` = stop.
 
@@ -137,13 +147,23 @@ aplikasi ditutup dan dibuka kembali.
 
 | File | Isi |
 |---|---|
-| `varin_sniper.py` | GUI premium + engine (controller, worker, claim, SQLite history) |
+| `varin_sniper.py` | Entry point: cek dependency, wire controller + UI, jalankan GUI |
+| `controller.py` | Mesin sniper (antrian, worker, claim, notifikasi) — tanpa widget |
+| `ui/theme.py` | Design system: palette dark purple gradient, gradient photo, font cache |
+| `ui/i18n.py` | Terjemahan English (default) + Indonesia |
+| `ui/icons.py` | Pemuat set ikon + ikon jendela (aman untuk exe) |
+| `ui/wallpaper.py` | Live wallpaper 3D hemat CPU |
+| `ui/widgets.py` | Kartu 3D, chip statistik, log, list, sub-tab segmented |
+| `ui/app.py` | Layout, sidebar, navigasi, dan reaksi terhadap event mesin |
+| `tools/make_icons.py` | Generator app icon + set ikon (stdlib, tanpa Pillow) |
+| `tools/check_ui.py` | Verifikasi statis UI: kunci i18n, kelengkapan ikon, matematika wallpaper, helper tema |
 | `checker.py` | Checker multi-source zero-false-flag |
 | `claimer.py` | Login Microsoft OAuth via Microsoft.com, refresh token, claim, smart queue |
 | `scan_history.py` | Database SQLite riwayat pemindaian |
 | `proxy.py` | Proxy model + manager (scoring, test, auto-clean) |
 | `generator.py` | Generator 3L/4L, priority scoring, pattern |
 | `utils.py` | Config manager, stats, Discord webhook, logging |
+| `assets/` | Ikon aplikasi + ikon GUI hasil `tools/make_icons.py` |
 | `Varin-Sniper.spec` / `build.bat` | Konfigurasi PyInstaller |
 | `.github/workflows/build-exe.yml` | Build `.exe` otomatis di GitHub |
 
