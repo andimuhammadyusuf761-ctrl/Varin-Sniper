@@ -230,6 +230,7 @@ class VarinSniperApp(ctk.CTk):
         self._hero = None
         self._hero_wall = None
         self._toast = None
+        self.title(t("app.window_title"))   # judul ikut bahasa baru
         self._build_ui()
         self._sync_state_to_ui()
 

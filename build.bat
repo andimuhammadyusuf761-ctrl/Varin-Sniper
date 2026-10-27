@@ -24,6 +24,8 @@ echo    Output : %cd%\dist\Varin-Sniper.exe
 echo.
 echo  Copy dist\Varin-Sniper.exe anywhere (plus success.mp3 if you want
 echo  sound notifications) and double-click to run.
+echo.
+echo  Verifikasi GUI (opsional): python tools\smoke_gui.py --exe dist\Varin-Sniper.exe
 goto end
 
 :fail

@@ -41,8 +41,9 @@ python varin_sniper.py
 Cek cepat tanpa membuka GUI (dipakai juga di CI):
 
 ```bash
-python tools/check_ui.py     # kunci i18n, ikon, matematika wallpaper
-python tools/make_icons.py   # regenerasi assets/ (ikon app + ikon GUI)
+python tools/check_ui.py            # kunci i18n, ikon, matematika wallpaper
+python tools/make_icons.py          # regenerasi assets/ (ikon app + ikon GUI)
+python tools/smoke_gui.py --source  # buka GUI sungguhan: 7 halaman + ganti bahasa
 ```
 
 Butuh Python 3.10+. Di Linux, tkinter harus tersedia (`sudo apt install python3-tk`).
@@ -58,6 +59,12 @@ Repo ini sudah punya workflow: `.github/workflows/build-exe.yml`.
    (atau cukup push commit, workflow jalan otomatis).
 3. Selesai (~3–5 menit) buka run tersebut → panel **Artifacts** →
    download **Varin-Sniper-windows** → isinya `Varin-Sniper.exe`.
+
+Sebelum artifact diunggah, workflow menjalankan **smoke test** pada exe hasil build
+(`tools/smoke_gui.py`): exe harus benar-benar membuka jendela, memuat aset ikon,
+menggambar live wallpaper, dan berpindah bahasa EN → ID → EN. Kalau exe mati saat
+dibuka, build jadi merah — jadi artifact tidak pernah berisi exe yang tidak jalan.
+Kalau runner tidak punya display, langkah ini hanya memberi peringatan.
 
 Mau file `.exe` permanen di halaman Release? Buat tag:
 
@@ -157,6 +164,7 @@ aplikasi ditutup dan dibuka kembali.
 | `ui/app.py` | Layout, sidebar, navigasi, dan reaksi terhadap event mesin |
 | `tools/make_icons.py` | Generator app icon + set ikon (stdlib, tanpa Pillow) |
 | `tools/check_ui.py` | Verifikasi statis UI: kunci i18n, kelengkapan ikon, matematika wallpaper, helper tema |
+| `tools/smoke_gui.py` | Smoke test GUI: jalankan app (source/exe) dalam mode laporan, tentukan exit code |
 | `checker.py` | Checker multi-source zero-false-flag |
 | `claimer.py` | Login Microsoft OAuth via Microsoft.com, refresh token, claim, smart queue |
 | `scan_history.py` | Database SQLite riwayat pemindaian |

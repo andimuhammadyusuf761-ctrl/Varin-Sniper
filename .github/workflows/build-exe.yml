@@ -72,6 +72,16 @@ jobs:
           dir dist
           Get-Item dist/Varin-Sniper.exe | Select-Object Name, Length
 
+      # Gate terakhir: exe harus BENAR-BENAR membuka jendela GUI-nya. Aplikasi
+      # dijalankan tanpa mainloop (VARIN_SMOKE_TEST=1), membuka semua halaman,
+      # mengganti bahasa, lalu menulis laporan JSON yang dibaca skrip ini.
+      # Kegagalan karena runner tanpa display hanya jadi peringatan.
+      - name: Smoke test the built exe (the GUI must really open)
+        shell: bash
+        run: |
+          set -e
+          python tools/smoke_gui.py --exe dist/Varin-Sniper.exe --timeout 120
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
