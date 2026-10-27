@@ -25,10 +25,19 @@ jobs:
           cache: pip
 
       - name: Install dependencies
+        shell: bash
         run: |
+          set -e
           python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt
+          # Dependency GUI WAJIB berhasil: tanpa ini exe pasti crash saat dibuka.
+          python -m pip install "customtkinter>=5.2.2" "Pillow>=10.0.0" "requests>=2.31.0" "PySocks>=1.7.1"
           python -m pip install pyinstaller
+          python -m pip show customtkinter
+          # Dependency lain (mis. playsound untuk suara) tidak boleh menggagalkan
+          # build, tapi kegagalannya harus tetap terlihat di log.
+          if ! python -m pip install -r requirements.txt; then
+            echo "::warning::Sebagian requirements.txt gagal dipasang (lihat log di atas); dependency GUI sudah terpasang sehingga build dilanjutkan."
+          fi
 
       - name: Verify sources compile
         run: python -m compileall -q varin_sniper.py checker.py claimer.py proxy.py generator.py utils.py scan_history.py
