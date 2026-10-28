@@ -20,7 +20,7 @@ notifikasi Discord, dan **riwayat pemindaian SQLite** yang tersimpan setelah apl
 | **Checker** | Proxyless **multi-source**: `playerdb.co` → `api.minecraftservices.com` (lookup resmi) → `api.mojang.com` → `ashcon` → **NameMC** → **mcchecker.net**. Pacing per-sumber + cooldown otomatis = bypass 429 tanpa proxy. **Zero false flag**: AVAILABLE wajib dikonfirmasi sumber live |
 | **Microsoft Login (OAuth)** | Login resmi lewat `login.microsoftonline.com` (OAuth2 authorization code flow + device code headless). Token & callback ditangani aman. Token yang valid tapi dianggap invalid (429/401) sekarang ditangani dengan benar |
 | **Smart 3-Letter Scanner** | Cegah pemindaian nama yang sama berulang kali. Simpan semua nama & status scan dalam **SQLite** (`scan_history.db`) agar riwayat tetap tersimpan setelah ditutup. Daftar history, filter status, dan opsi rescan manual. Scan mulai dari 3L rare |
-| **Generator** | 3L/4L random, **3L FULL** (17.576 kombinasi terurut prioritas), smart rare gen, pattern |
+| **Generator** | **Rarest 3L** (skor kelangkaan: bobot huruf, struktur, bigram/trigram umum, pola berulang, urutan papan ketik) dengan mode *Rarest / Balanced / Legacy* + opsi *consonants only*, 3L/4L random, **3L FULL** (17.576 kombinasi terurut prioritas), pattern |
 | **Auto Claim** | Claim otomatis saat AVAILABLE, round-robin multi-akun, skip akun cooldown/invalid, log ke `claimed.txt` |
 | **Proxy** | HTTP/SOCKS4/SOCKS5, scoring, test all, auto-clean proxy mati, rotasi |
 | **Notifikasi** | Toast in-app, modal claim, Discord webhook, sound opsional |
@@ -169,7 +169,7 @@ aplikasi ditutup dan dibuka kembali.
 | `claimer.py` | Login Microsoft OAuth via Microsoft.com, refresh token, claim, smart queue |
 | `scan_history.py` | Database SQLite riwayat pemindaian |
 | `proxy.py` | Proxy model + manager (scoring, test, auto-clean) |
-| `generator.py` | Generator 3L/4L, priority scoring, pattern |
+| `generator.py` | Generator 3L/4L, rarity scoring (`generate_rare`), priority scoring, pattern |
 | `utils.py` | Config manager, stats, Discord webhook, logging |
 | `assets/` | Ikon aplikasi + ikon GUI hasil `tools/make_icons.py` |
 | `Varin-Sniper.spec` / `build.bat` | Konfigurasi PyInstaller |

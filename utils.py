@@ -43,6 +43,8 @@ class ConfigManager:
         "language": "en",
         "wallpaper_3d": True,
         "effects_3d": True,
+        "gen_mode": "rarest",
+        "gen_consonants_only": False,
         "max_retries": 3,
         "claim_max_accounts": 0,
         "discord_webhook_url": "",

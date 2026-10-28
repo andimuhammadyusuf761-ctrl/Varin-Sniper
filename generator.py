@@ -2,7 +2,7 @@
 import itertools
 import random
 import string
-from typing import List, Set
+from typing import Dict, List, Optional, Set, Tuple
 
 ALLOWED = string.ascii_lowercase + string.digits + "_"
 LOWERCASE = string.ascii_lowercase
@@ -129,6 +129,164 @@ def generate_smart_random(count: int, length: int) -> List[str]:
     out.sort(key=lambda x: -x[1])
     return [n[0] for n in out]
 
+# --------------------------------------------------------------------------- #
+# Kelangkaan (rarity) — dasar generate_rare()
+# --------------------------------------------------------------------------- #
+VOWELS = "aeiou"
+_VOWEL_SET = frozenset(VOWELS)
+
+# Bobot per huruf: makin besar = makin jarang dipakai orang.
+LETTER_RARITY: Dict[str, float] = {
+    "e": 1.8, "a": 2.0, "o": 2.4, "t": 2.6, "i": 2.8, "s": 3.2, "n": 3.4,
+    "u": 3.5, "r": 3.8, "l": 4.2, "d": 4.5, "h": 4.6, "c": 5.0, "m": 5.5,
+    "b": 6.5, "p": 6.6, "g": 6.8, "y": 7.0, "f": 7.5, "w": 8.0, "k": 9.0,
+    "v": 9.5, "j": 10.5, "x": 11.0, "z": 11.5, "q": 12.0,
+}
+
+# Pasangan/triple huruf yang membuat nama terasa "biasa" di bahasa Inggris.
+COMMON_BIGRAMS = frozenset("""
+    th he in er an re on at en nd ti es or te of ed is it al ar st to nt ng
+    se ha as ou io le ve co me de hi ri ro ic ne ea ra ce li ch ll be ma si
+    om ur ca el ta la ns di fo ho pe ec pr no ct us ac ot il tr ly nc et ut
+    ss so rs un lo wa ge ie wh ee wi em ad ol rt po we na ul ni ts mo ow pa
+    im mi ai sh ir su id os iv ia am fi ci vi pl ig tu ev ld ry
+""".split())
+
+COMMON_TRIGRAMS = frozenset("""
+    the and ing her hat his tha ere for ent ion ter was you ith ver all wit
+    thi tio nde has men est ers eve sti rin not are but oul
+    sch chr str thr spr shr spl scr squ tch ght nth rth
+""".split())
+
+# Pola yang justru sering dipakai orang lain — bukan "langka".
+COMMON_SEQUENCES = frozenset({"abc", "xyz", "qwe", "asd", "zxc", "qaz", "wsx", "edc"})
+
+# Nama nyata/sensitif: lebih baik dilewati (pasti ditolak Minecraft).
+BLOCKED_NAMES = frozenset({
+    "ass", "cum", "gay", "sex", "fag", "nig", "dck", "fck", "sht", "wtf",
+    "tit", "kkk", "nzi", "dic", "pns", "vgn", "gyp", "the", "and", "you",
+    "for", "are", "but", "not", "all", "can", "had", "her", "was", "one",
+    "our", "out", "day", "get", "has", "him", "how", "man", "new", "now",
+    "old", "see", "two", "way", "who", "boy", "did", "its", "let", "put",
+    "say", "she", "too", "use", "yes", "yet", "own", "off", "end", "few",
+})
+
+
+def rarity_score(name: str) -> float:
+    """Skor kelangkaan: makin tinggi = makin jarang dijumpai orang.
+
+    Heuristik, bukan data pemakaian nyata:
+      * huruf jarang (q, x, z, j, v, k) menaikkan skor;
+      * huruf berbeda, tanpa vokal, dan tanpa pasangan huruf umum menaikkan;
+      * pola berulang (aaa, aba), urutan papan ketik (qwe/abc), dan kata
+        nyata/terblokir menurunkannya.
+    """
+    if not name:
+        return 0.0
+    low = name.lower()
+    n = len(low)
+
+    weights = [LETTER_RARITY.get(c, 6.0) for c in low]
+    score = (sum(weights) / n - 1.5) * 1.5
+
+    score += 3.0 * (len(set(low)) - 1)          # makin banyak huruf berbeda
+
+    vowels = sum(1 for c in low if c in _VOWEL_SET)
+    if vowels == 0:
+        score += 4.0
+    elif vowels == 1:
+        score += 1.5
+    else:
+        score -= 2.0 * (vowels - 1)
+
+    bigrams = sum(1 for i in range(n - 1) if low[i:i + 2] in COMMON_BIGRAMS)
+    trigrams = sum(1 for i in range(n - 2) if low[i:i + 3] in COMMON_TRIGRAMS)
+    score -= 3.0 * bigrams + 5.0 * trigrams
+
+    if low in COMMON_SEQUENCES:
+        score -= 12.0
+    if low in BLOCKED_NAMES:
+        score -= 100.0
+    return round(score, 3)
+
+
+_POOL_LIMIT = 60000
+_POOL_CACHE: Dict[Tuple[int, bool, str], Tuple[str, ...]] = {}
+
+
+def rare_pool(length: int = 3, allow_vowels: bool = True,
+              chars: str = LOWERCASE) -> Tuple[str, ...]:
+    """Semua kombinasi `length` terurut dari yang paling langka.
+
+    Kosong kalau ruang kombinasinya terlalu besar (mis. 4L = 194.481 untuk
+    konsonan saja); pemanggil memakai sampling berbobot sebagai gantinya.
+    """
+    key = (int(length), bool(allow_vowels), chars)
+    cached = _POOL_CACHE.get(key)
+    if cached is not None:
+        return cached
+    if len(chars) ** int(length) > _POOL_LIMIT:
+        return ()
+
+    combos = ["".join(t) for t in itertools.product(chars, repeat=int(length))]
+    if not allow_vowels:
+        combos = [c for c in combos if not (_VOWEL_SET & set(c))]
+    combos = [c for c in combos if c not in BLOCKED_NAMES]
+    combos.sort(key=lambda s: (-rarity_score(s), s))
+
+    pool = tuple(combos)
+    _POOL_CACHE[key] = pool
+    return pool
+
+
+def _sample_rare(count: int, length: int, allow_vowels: bool, chars: str,
+                 rng: random.Random) -> List[str]:
+    """Sampling berbobot untuk ruang kombinasi besar (4L ke atas)."""
+    letters = [c for c in chars if allow_vowels or c not in _VOWEL_SET] or list(chars)
+    weights = [max(0.05, LETTER_RARITY.get(c, 6.0)) ** 2 for c in letters]
+
+    seen: Set[str] = set()
+    out: List[str] = []
+    attempts = 0
+    limit = max(2000, count * 300)
+    while len(out) < count and attempts < limit:
+        name = "".join(rng.choices(letters, weights=weights, k=length))
+        attempts += 1
+        if name in seen or name in BLOCKED_NAMES:
+            continue
+        seen.add(name)
+        out.append(name)
+
+    out.sort(key=lambda s: (-rarity_score(s), s))
+    return out
+
+
+def generate_rare(count: int, length: int = 3, allow_vowels: bool = True,
+                  chars: str = LOWERCASE, band: float = 0.45,
+                  seed: Optional[int] = None) -> List[str]:
+    """Hasilkan nama dari wilayah terlangka, urut dari yang paling langka.
+
+    band = porsi kandidat teratas yang boleh diambil (0.45 = 45% terlangka).
+    Sampling acak di dalam band membuat klik berikutnya tidak mengulang nama
+    yang sama, sementara urutan hasil tetap dari terlangka ke lebih umum.
+    """
+    count = int(max(0, count))
+    if count == 0:
+        return []
+
+    rng = random.Random(seed)
+    pool = rare_pool(length, allow_vowels, chars)
+    if pool:
+        take = min(count, len(pool))
+        band = max(0.0, min(1.0, float(band)))
+        band_size = max(take, int(len(pool) * band))
+        picked = rng.sample(pool[:band_size], take)
+        picked.sort(key=lambda s: (-rarity_score(s), s))
+        return picked
+
+    return _sample_rare(count, int(length), allow_vowels, chars, rng)
+
+
 def pattern_combo(pattern: str) -> str:
     """Generate from pattern: x=letter, d=digit, u/_=underscore, a=any"""
     out = []
@@ -173,3 +331,6 @@ if __name__ == "__main__":
     print("Smart 4L:", generate_smart_random(10, 4))
     print("Pattern _dd:", generate_pattern(["_dd"], 5))
     print("Full 3L ordered first 5:", enumerate_ordered(3)[:5])
+    print("Rarest 3L (vokal boleh) :", generate_rare(10, 3, seed=1))
+    print("Rarest 3L (konsonan)    :", generate_rare(10, 3, allow_vowels=False, seed=1))
+    print("Rarest 4L               :", generate_rare(10, 4, allow_vowels=False, seed=1))

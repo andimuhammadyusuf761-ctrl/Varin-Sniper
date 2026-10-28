@@ -30,7 +30,8 @@ from tkinter import filedialog, messagebox
 from checker import Checker, CheckResult, NameStatus
 from controller import AVAILABLE_FILE, CLAIMED_FILE, SniperController, now_hms
 from generator import (
-    enumerate_ordered, generate_pattern, generate_random, generate_smart_random,
+    enumerate_ordered, generate_pattern, generate_random, generate_rare,
+    generate_smart_random,
     get_pattern_examples,
 )
 from proxy import ProxyManager
@@ -157,6 +158,10 @@ class HistoryPane(ctk.CTkFrame):
 
 
 class VarinSniperApp(ctk.CTk):
+    # mode generator: terlangka (pool langka), seimbang (band lebih lebar),
+    # legacy (pola lama: aaa, aab, dst.)
+    GEN_MODES = ("rarest", "balanced", "legacy")
+
     def __init__(self) -> None:
         super().__init__(fg_color=T.BG)
         self.title(t("app.window_title"))
@@ -621,10 +626,30 @@ class VarinSniperApp(ctk.CTk):
                 ("checker.gen_3l", lambda: self._gen_names(3), "ghost", "sparkle"),
                 ("checker.gen_4l", lambda: self._gen_names(4), "ghost", "sparkle"),
                 ("checker.gen_3l_full", self._gen_full_3l, "soft", "sniper"),
-                ("checker.gen_smart", self._gen_smart_rare, "ghost", "sparkle"),
+                ("checker.gen_rare", self._gen_smart_rare, "soft", "sparkle"),
             ):
                 button(gen, t(text_key), cmd, variant, icon=icon, height=34,
                        font_size=11).pack(side="left", padx=(0, 6))
+
+            mode_row = ctk.CTkFrame(body, fg_color="transparent")
+            mode_row.pack(fill="x", pady=(10, 0))
+            ctk.CTkLabel(mode_row, text=t("checker.gen_rarity"), font=T.font(9, "bold"),
+                         text_color=T.TEXT_3).pack(side="left", padx=(0, 10))
+            self._gen_mode_buttons: Dict[str, ctk.CTkButton] = {}
+            for mode in self.GEN_MODES:
+                chip = button(mode_row, t(f"checker.gen_mode_{mode}"),
+                              lambda m=mode: self._set_gen_mode(m), "ghost",
+                              height=28, font_size=10, width=92)
+                chip.pack(side="left", padx=(0, 6))
+                self._gen_mode_buttons[mode] = chip
+            self.sw_gen_cons = ctk.CTkSwitch(
+                mode_row, text=t("checker.gen_consonants"), font=T.font(10),
+                progress_color=T.ACCENT, button_color=T.TEXT, text_color=T.TEXT_2,
+                command=self._toggle_gen_consonants)
+            self.sw_gen_cons.pack(side="left", padx=(8, 0))
+            if self.cfg.get("gen_consonants_only", False):
+                self.sw_gen_cons.select()
+            self._style_gen_modes()
 
             pattern_row = ctk.CTkFrame(body, fg_color="transparent")
             pattern_row.pack(fill="x", pady=(12, 0))
@@ -1315,11 +1340,47 @@ class VarinSniperApp(ctk.CTk):
         self._log("ok", t("log.gen_full", n=added))
         self._toast_message(t("toast.gen_full", n=added), T.ACCENT, 3200)
 
+    def _style_gen_modes(self) -> None:
+        """Tandai chip mode yang aktif tanpa membangun ulang UI."""
+        active = self.cfg.get("gen_mode", "rarest")
+        for mode, chip in getattr(self, "_gen_mode_buttons", {}).items():
+            on = mode == active
+            try:
+                chip.configure(fg_color=T.CARD_HI if on else T.CARD,
+                               hover_color=T.CARD_HI if on else T.HOVER,
+                               border_color=T.BORDER_HI if on else T.BORDER,
+                               text_color=T.ACCENT_3 if on else T.TEXT_2)
+            except Exception:  # noqa: BLE001
+                pass
+
+    def _set_gen_mode(self, mode: str) -> None:
+        if mode not in self.GEN_MODES:
+            return
+        self.cfg["gen_mode"] = mode
+        save_current_config(self.cfg)
+        self._style_gen_modes()
+
+    def _toggle_gen_consonants(self) -> None:
+        self.cfg["gen_consonants_only"] = bool(self.sw_gen_cons.get())
+        save_current_config(self.cfg)
+
     def _gen_smart_rare(self) -> None:
-        names = generate_smart_random(500, 3)
+        mode = self.cfg.get("gen_mode", "rarest")
+        if mode == "legacy":
+            names = generate_smart_random(500, 3)
+            added = self.controller.enqueue_many(names)
+            self._log("ok", t("log.gen_smart", n=added))
+            self._toast_message(t("toast.gen_smart", n=added), T.ACCENT, 2600)
+            return
+
+        consonants_only = bool(self.cfg.get("gen_consonants_only", False))
+        names = generate_rare(500, 3, allow_vowels=not consonants_only,
+                              band=0.45 if mode == "rarest" else 0.85)
         added = self.controller.enqueue_many(names)
-        self._log("ok", t("log.gen_smart", n=added))
-        self._toast_message(t("toast.gen_smart", n=added), T.ACCENT, 2600)
+        label = t(f"checker.gen_mode_{mode}")
+        self._log("ok", t("log.gen_rare", n=added, length=3, mode=label))
+        self._toast_message(t("toast.gen_rare", n=added, length=3, mode=label),
+                            T.ACCENT, 2600)
 
     def _gen_pattern(self) -> None:
         pattern = self.ent_pattern.get().strip()

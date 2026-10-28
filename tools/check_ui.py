@@ -235,6 +235,10 @@ def main() -> int:
     for page in ("checker", "sniper", "accounts", "proxies", "history", "settings", "stats"):
         if f"nav.{page}" not in i18n.TRANSLATIONS["en"]:
             fail(f"i18n: kunci dinamis nav.{page} tidak ada")
+    for mode in ("rarest", "balanced", "legacy"):
+        for lang in i18n.LANGUAGES:
+            if f"checker.gen_mode_{mode}" not in i18n.TRANSLATIONS[lang]:
+                fail(f"i18n[{lang}]: kunci dinamis checker.gen_mode_{mode} tidak ada")
     ok(f"i18n: {len(used)} kunci dipakai, {len(i18n.TRANSLATIONS['en'])} tersedia per bahasa")
 
     # format placeholders tidak error
@@ -246,6 +250,8 @@ def main() -> int:
         ("proxy.result", {"alive": 0, "dead": 0, "total": 0}),
         ("head.progress_work", {"n": 0}),
         ("dlg.claim_via", {"account": "a"}),
+        ("log.gen_rare", {"n": 0, "length": 3, "mode": "Rarest"}),
+        ("toast.gen_rare", {"n": 0, "length": 3, "mode": "Rarest"}),
     ):
         for lang in i18n.LANGUAGES:
             i18n.t.set_lang(lang)
@@ -303,6 +309,42 @@ def main() -> int:
     if "save_current_config" not in defined:
         fail("config: utils.save_current_config() tidak ada")
     ok("config: UI menyimpan setting lewat save_current_config()")
+
+    # -- generator kelangkaan ------------------------------------------------ #
+    from generator import (BLOCKED_NAMES, LETTER_RARITY, generate_rare,
+                           rarity_score)
+
+    rare = generate_rare(300, 3, allow_vowels=True, seed=1234)
+    if len(rare) != len(set(rare)):
+        fail("generator: generate_rare menghasilkan nama duplikat")
+    if any(len(name) != 3 for name in rare):
+        fail("generator: generate_rare menghasilkan panjang salah")
+    if rare != sorted(rare, key=lambda s: (-rarity_score(s), s)):
+        fail("generator: hasil tidak urut dari yang paling langka")
+    if any(name in BLOCKED_NAMES for name in rare):
+        fail("generator: nama terblokir ikut terpilih")
+
+    consonants = generate_rare(200, 3, allow_vowels=False, seed=7)
+    if any(set(name) & set("aeiou") for name in consonants):
+        fail("generator: mode konsonan masih memuat vokal")
+
+    if generate_rare(50, 3, seed=99) != generate_rare(50, 3, seed=99):
+        fail("generator: seed sama tapi hasil tidak deterministik")
+
+    four = generate_rare(120, 4, allow_vowels=False, seed=5)
+    if len(set(four)) != 120 or any(len(name) != 4 for name in four):
+        fail(f"generator: sampling 4L tidak menghasilkan 120 nama unik ({len(set(four))})")
+
+    order = [rarity_score(n) for n in ("zbx", "nfj", "ldm", "hda")]
+    if order != sorted(order, reverse=True):
+        fail(f"generator: urutan contoh tidak menurun sesuai kelangkaan -> {order}")
+    if rarity_score("hda") <= rarity_score("the"):
+        fail("generator: 'hda' seharusnya lebih langka daripada 'the'")
+    if rarity_score("aaa") >= rarity_score("hda"):
+        fail("generator: 'aaa' seharusnya lebih umum daripada 'hda'")
+    if min(LETTER_RARITY.values()) <= 0:
+        fail("generator: bobot huruf harus positif")
+    ok(f"generator: {len(rare)} nama 3L terurut terlangka, {len(four)} nama 4L sampling")
 
     # -- matematika wallpaper + helper tema ---------------------------------- #
     from ui import theme as th
