@@ -21,6 +21,7 @@ notifikasi Discord, dan **riwayat pemindaian SQLite** yang tersimpan setelah apl
 | **Microsoft Login (OAuth)** | Login resmi lewat `login.microsoftonline.com` (OAuth2 authorization code flow + device code headless). Token & callback ditangani aman. Token yang valid tapi dianggap invalid (429/401) sekarang ditangani dengan benar |
 | **Smart 3-Letter Scanner** | Cegah pemindaian nama yang sama berulang kali. Simpan semua nama & status scan dalam **SQLite** (`scan_history.db`) agar riwayat tetap tersimpan setelah ditutup. Daftar history, filter status, dan opsi rescan manual. Scan mulai dari 3L rare |
 | **Generator** | **Rarest 3L** (skor kelangkaan: bobot huruf, struktur, bigram/trigram umum, pola berulang, urutan papan ketik) dengan mode *Rarest / Balanced / Legacy* + opsi *consonants only*, 3L/4L random, **3L FULL** (17.576 kombinasi terurut prioritas), pattern |
+| **Versi Web** | UI web (`run_web.py`) dengan engine yang sama: antrian, checker multi-source, generator kelangkaan, riwayat SQLite, statistik, EN/ID, live log via SSE |
 | **Auto Claim** | Claim otomatis saat AVAILABLE, round-robin multi-akun, skip akun cooldown/invalid, log ke `claimed.txt` |
 | **Proxy** | HTTP/SOCKS4/SOCKS5, scoring, test all, auto-clean proxy mati, rotasi |
 | **Notifikasi** | Toast in-app, modal claim, Discord webhook, sound opsional |
@@ -170,8 +171,11 @@ aplikasi ditutup dan dibuka kembali.
 | `scan_history.py` | Database SQLite riwayat pemindaian |
 | `proxy.py` | Proxy model + manager (scoring, test, auto-clean) |
 | `generator.py` | Generator 3L/4L, rarity scoring (`generate_rare`), priority scoring, pattern |
+| `blocklist.py` | Daftar blokir bersama: nama dari `3name.xyz/list` + filter inappropriate (desktop & web) |
 | `utils.py` | Config manager, stats, Discord webhook, logging |
 | `assets/` | Ikon aplikasi + ikon GUI hasil `tools/make_icons.py` |
+| `webapp/` | Server web stdlib (`server.py` + `static/`) untuk versi browser |
+| `run_web.py` | Entry point versi web (`python run_web.py`) |
 | `Varin-Sniper.spec` / `build.bat` | Konfigurasi PyInstaller |
 | `.github/workflows/build-exe.yml` | Build `.exe` otomatis di GitHub |
 
@@ -188,3 +192,34 @@ aplikasi ditutup dan dibuka kembali.
 - Auto claim hanya berhasil bila akun memenuhi syarat (cooldown ganti nama 30 hari,
   akun tidak dibatasi).
 - Gunakan dengan tanggung jawab sendiri; ini tool bantu, bukan jaminan dapat nama.
+
+---
+
+## 🌐 Versi Web
+
+UI browser dengan engine yang sama seperti aplikasi desktop. Tanpa dependensi
+baru — memakai `http.server` dari stdlib, jadi cukup Python yang sudah dipakai
+untuk menjalankan `varin_sniper.py`.
+
+```bash
+python run_web.py                  # http://localhost:3000
+python run_web.py --port 8080      # port lain
+python run_web.py --open           # buka browser otomatis
+```
+
+Yang tersedia di versi web:
+
+- **Checker** — cek satu nama, tempel banyak nama ke antrian, start/stop engine,
+  log langsung via SSE, daftar AVAILABLE, ekspor `.txt`.
+- **Generator** — mode *Rarest / Balanced / Legacy*, opsi *consonants only*,
+  panjang 3L/4L, serta generator pola. Hasil langsung masuk antrian.
+- **History** — tabel riwayat SQLite dengan pencarian, filter status, hapus
+  entri, rescan nama error, dan hapus semua.
+- **Stats** — penghitung mesin dan rincian status sepanjang waktu.
+- **Settings** — threads, timeout, watch mode, stealth, bahasa (EN/ID), dan
+  tautan ekspor. Semua tersimpan di `config.json` yang sama dengan desktop.
+
+Batasan yang disengaja: login Microsoft/OAuth, refresh token, dan auto claim
+masih hanya di aplikasi desktop. Versi web fokus ke pengecekan nama, antrian,
+riwayat, dan generator. Jangan buka port-nya ke internet tanpa auth — ini alat
+lokal, bukan layanan multi-user.

@@ -372,6 +372,13 @@ def main() -> int:
     )
     logger = logging.getLogger("VarinSniper")
 
+    # Segarkan daftar 3name.xyz/list di background (non-blocking, opsional).
+    try:
+        from blocklist import start_refresh as _start_blocklist_refresh
+        _start_blocklist_refresh()
+    except Exception:  # noqa: BLE001
+        logger.debug("blocklist refresh tidak tersedia", exc_info=True)
+
     try:
         from ui import theme
         theme.apply_appearance()

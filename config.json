@@ -11,10 +11,12 @@
     "auto_claim": false,
     "watch_mode": true,
     "stealth_mode": true,
+    "adaptive_rate": true,
     "language": "en",
     "wallpaper_3d": true,
     "effects_3d": true,
-    "adaptive_rate": true,
+    "gen_mode": "random",
+    "gen_consonants_only": false,
     "max_retries": 3,
     "claim_max_accounts": 0,
     "discord_webhook_url": "",
@@ -25,5 +27,9 @@
     "max_delay": 30.0,
     "jitter_factor": 0.3,
     "connection_pool_size": 10,
-    "user_agent_rotation": true
+    "user_agent_rotation": true,
+    "dg_token": "",
+    "dg_api_url": "",
+    "dg_api_key": "",
+    "dg_pace": 0.3
 }

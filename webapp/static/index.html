@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Varin Sniper — Web</title>
+  <link rel="icon" href="/assets/icon.png">
+  <link rel="stylesheet" href="/static/app.css?v=4.5">
+  <style>
+    .build-banner { position: fixed; top: 12px; left: 50%; transform: translateX(-50%); z-index: 60;
+      display: flex; align-items: center; gap: 12px; padding: 9px 14px; border-radius: 12px;
+      background: rgba(28, 14, 48, 0.96); border: 1px solid rgba(179, 102, 255, 0.7);
+      color: #f2ecff; font: 600 12px/1.3 system-ui, sans-serif;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45); }
+    .build-banner[hidden] { display: none; }
+  </style>
+</head>
+<body>
+  <div class="build-banner" id="buildBanner" hidden>
+    <span data-i18n="build.new">A new version of the web UI is ready.</span>
+    <button class="btn btn-tiny btn-primary" id="buildReload" type="button" data-i18n="build.reload">Reload</button>
+  </div>
+
+  <div class="backdrop" aria-hidden="true">
+    <span class="orb orb-a"></span>
+    <span class="orb orb-b"></span>
+    <span class="orb orb-c"></span>
+    <span class="grid"></span>
+  </div>
+
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img class="brand-logo" src="/assets/logo_small.png" alt="" width="52" height="52">
+        <div class="brand-text">
+          <strong>VARIN</strong>
+          <span>SNIPER <em>WEB</em></span>
+        </div>
+      </div>
+
+      <nav class="nav" id="nav">
+        <button class="nav-item is-active" data-page="checker" type="button" onclick="if(window.setPage){window.setPage('checker');}else{var e=document.querySelector('.page.is-active');e&&e.classList.remove('is-active');document.getElementById('page-checker')&&document.getElementById('page-checker').classList.add('is-active');var n=document.querySelectorAll('.nav-item');n.forEach(function(x){x.classList.toggle('is-active',x.dataset.page==='checker');});}">
+          <img src="/assets/icons/nav_checker_hi.png" alt="" width="22" height="22">
+          <span data-i18n="nav.checker">Checker</span>
+        </button>
+        <button class="nav-item" data-page="discord" type="button" onclick="if(window.setPage){window.setPage('discord');}else{var e=document.querySelector('.page.is-active');e&&e.classList.remove('is-active');document.getElementById('page-discord')&&document.getElementById('page-discord').classList.add('is-active');var n=document.querySelectorAll('.nav-item');n.forEach(function(x){x.classList.toggle('is-active',x.dataset.page==='discord');});}">
+          <img src="/assets/icons/act_sparkle_hi.png" alt="" width="22" height="22">
+          <span data-i18n="nav.discord">Discord</span>
+        </button>
+        <button class="nav-item" data-page="minecraft" type="button" onclick="if(window.setPage){window.setPage('minecraft');}else{var e=document.querySelector('.page.is-active');e&&e.classList.remove('is-active');document.getElementById('page-minecraft')&&document.getElementById('page-minecraft').classList.add('is-active');var n=document.querySelectorAll('.nav-item');n.forEach(function(x){x.classList.toggle('is-active',x.dataset.page==='minecraft');});}">
+          <img src="/assets/icons/act_nether_hi.png" alt="" width="22" height="22">
+          <span data-i18n="nav.minecraft">Minecraft</span>
+        </button>
+        <button class="nav-item" data-page="history" type="button" onclick="if(window.setPage){window.setPage('history');}else{var e=document.querySelector('.page.is-active');e&&e.classList.remove('is-active');document.getElementById('page-history')&&document.getElementById('page-history').classList.add('is-active');var n=document.querySelectorAll('.nav-item');n.forEach(function(x){x.classList.toggle('is-active',x.dataset.page==='history');});}">
+          <img src="/assets/icons/nav_history_hi.png" alt="" width="22" height="22">
+          <span data-i18n="nav.history">History</span>
+        </button>
+        <button class="nav-item" data-page="stats" type="button" onclick="if(window.setPage){window.setPage('stats');}else{var e=document.querySelector('.page.is-active');e&&e.classList.remove('is-active');document.getElementById('page-stats')&&document.getElementById('page-stats').classList.add('is-active');var n=document.querySelectorAll('.nav-item');n.forEach(function(x){x.classList.toggle('is-active',x.dataset.page==='stats');});}">
+          <img src="/assets/icons/nav_stats_hi.png" alt="" width="22" height="22">
+          <span data-i18n="nav.stats">Stats</span>
+        </button>
+        <button class="nav-item" data-page="settings" type="button" onclick="if(window.setPage){window.setPage('settings');}else{var e=document.querySelector('.page.is-active');e&&e.classList.remove('is-active');document.getElementById('page-settings')&&document.getElementById('page-settings').classList.add('is-active');var n=document.querySelectorAll('.nav-item');n.forEach(function(x){x.classList.toggle('is-active',x.dataset.page==='settings');});}">
+          <img src="/assets/icons/nav_settings_hi.png" alt="" width="22" height="22">
+          <span data-i18n="nav.settings">Settings</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" class="lang-btn is-active" data-lang="en">EN</button>
+          <button type="button" class="lang-btn" data-lang="id">ID</button>
+        </div>
+        <p class="version">v4.5 · web</p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1 id="pageTitle" data-i18n="page.checker.title">Checker</h1>
+          <p id="pageSubtitle" data-i18n="page.checker.sub">Queue names, generate rare 3L targets, watch results live.</p>
+        </div>
+        <div class="topbar-right">
+          <span class="status-pill" id="statusPill" data-state="stopped">
+            <i class="dot"></i><span id="statusText" data-i18n="status.stopped">Idle</span>
+          </span>
+          <span class="pill pill-ghost" id="queuePill">0 <span data-i18n="label.inQueue">in queue</span></span>
+        </div>
+      </header>
+
+      <!-- ---------------------------------------------------------- CHECKER -->
+      <section class="page is-active" id="page-checker">
+        <div class="cards">
+          <article class="card card-wide">
+            <header class="card-head">
+              <span class="card-glyph"><img src="/assets/icons/act_search_hi.png" alt="" width="18" height="18"></span>
+              <div>
+                <h2 data-i18n="checker.target">Target queue</h2>
+                <p data-i18n="checker.targetSub">Single check, or paste many names to fill the queue.</p>
+              </div>
+            </header>
+            <div class="card-body">
+              <div class="row">
+                <input id="nameInput" class="input" type="text" autocomplete="off" spellcheck="false"
+                       placeholder="username (3–16 chars, a-z 0-9 _)" data-i18n-placeholder="checker.placeholder">
+                <button class="btn btn-soft" id="checkBtn" type="button" data-i18n="checker.check">Check</button>
+                <button class="btn btn-primary" id="addBtn" type="button" data-i18n="checker.add">Add</button>
+              </div>
+              <p class="hint" data-i18n="checker.hint">Tip: Enter checks one name, Shift+Enter adds the whole list.</p>
+              <div class="row row-wrap">
+                <button class="btn btn-ghost" id="startBtn" type="button" data-i18n="checker.start">Start engine</button>
+                <button class="btn btn-ghost" id="stopBtn" type="button" data-i18n="checker.stop">Stop</button>
+                <button class="btn btn-danger" id="clearBtn" type="button" data-i18n="checker.clear">Clear queue</button>
+                <span class="spacer"></span>
+                <span class="meta" id="threadsMeta">15 threads</span>
+              </div>
+            </div>
+          </article>
+
+          <div class="stat-grid">
+            <article class="stat" data-tone="accent"><span class="stat-label" data-i18n="stat.checked">Checked</span><strong id="statChecked">0</strong></article>
+            <article class="stat" data-tone="ok"><span class="stat-label" data-i18n="stat.available">Available</span><strong id="statAvailable">0</strong></article>
+            <article class="stat" data-tone="taken"><span class="stat-label" data-i18n="stat.taken">Taken</span><strong id="statTaken">0</strong></article>
+            <article class="stat" data-tone="bad"><span class="stat-label" data-i18n="stat.errors">Errors</span><strong id="statErrors">0</strong></article>
+            <article class="stat" data-tone="info"><span class="stat-label" data-i18n="stat.speed">Checks / s</span><strong id="statSpeed">0</strong></article>
+            <article class="stat" data-tone="ghost"><span class="stat-label" data-i18n="stat.uptime">Uptime</span><strong id="statUptime">00:00:00</strong></article>
+          </div>
+
+          <article class="card">
+            <header class="card-head">
+              <span class="card-glyph"><img src="/assets/icons/act_sparkle_hi.png" alt="" width="18" height="18"></span>
+              <div>
+                <h2 data-i18n="gen.title">Generators</h2>
+                <p data-i18n="gen.sub">Rarest first, then more common — same rarity model as the desktop app.</p>
+              </div>
+            </header>
+            <div class="card-body">
+              <div class="row row-wrap">
+                <span class="label" data-i18n="gen.rarity">Rarity</span>
+                <div class="chips" id="modeChips">
+                  <button class="chip" type="button" data-mode="rarest" data-i18n="gen.rarest">Rarest</button>
+                  <button class="chip" type="button" data-mode="balanced" data-i18n="gen.balanced">Balanced</button>
+                  <button class="chip" type="button" data-mode="random" data-i18n="gen.random">Random</button>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="consOnly">
+                  <span class="switch-track"><span class="switch-knob"></span></span>
+                  <span data-i18n="gen.consonants">Consonants only</span>
+                </label>
+              </div>
+              <div class="row row-wrap">
+                <span class="label" data-i18n="gen.length">Length</span>
+                <div class="chips" id="lengthChips">
+                  <button class="chip is-active" type="button" data-length="3">3L</button>
+                  <button class="chip" type="button" data-length="4">4L</button>
+                </div>
+                <span class="label" data-i18n="gen.count">Count</span>
+                <select id="genCount" class="input input-sm">
+                  <option value="100">100</option>
+                  <option value="500" selected>500</option>
+                  <option value="1000">1000</option>
+                  <option value="2500">2500</option>
+                </select>
+                <button class="btn btn-primary" id="genBtn" type="button" data-i18n="gen.generate">Generate &amp; queue</button>
+              </div>
+              <div class="row row-wrap">
+                <span class="label" data-i18n="gen.pattern">Pattern</span>
+                <input id="patternInput" class="input input-sm" type="text" spellcheck="false"
+                       placeholder="x_x · aaa · _dd" data-i18n-placeholder="gen.patternPlaceholder">
+                <button class="btn btn-soft" id="patternBtn" type="button" data-i18n="gen.patternRun">Generate pattern</button>
+              </div>
+              <p class="hint" id="genHint" data-i18n="gen.hint">Rarest 3L starts at consonant clusters like zbx / qkg and moves down to rarer-sounding names.</p>
+            </div>
+          </article>
+
+          <div class="split">
+            <article class="card card-terminal">
+              <header class="card-head">
+                <span class="card-glyph"><img src="/assets/icons/act_clock_hi.png" alt="" width="18" height="18"></span>
+                <div><h2 data-i18n="log.title">Live log</h2><p data-i18n="log.sub">Streaming from the engine.</p></div>
+                <button class="btn btn-tiny btn-ghost" id="logClear" type="button" data-i18n="log.clear">Clear</button>
+              </header>
+              <div class="card-body">
+                <div class="log" id="log" aria-live="polite"></div>
+              </div>
+            </article>
+
+            <article class="card">
+              <header class="card-head">
+                <span class="card-glyph"><img src="/assets/icons/act_export_hi.png" alt="" width="18" height="18"></span>
+                <div><h2 data-i18n="avail.title">Available</h2><p data-i18n="avail.sub">Fresh hits, newest first.</p></div>
+                <a class="btn btn-tiny btn-ghost" href="/api/export?file=available.txt" data-i18n="avail.export">Export</a>
+              </header>
+              <div class="card-body">
+                <ul class="list" id="available"></ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------------------------------------------------------- DISCORD -->
+      <section class="page" id="page-discord">
+        <div class="cards">
+          <article class="card card-wide">
+            <header class="card-head">
+              <span class="card-glyph"><img src="/assets/icons/act_search_hi.png" alt="" width="18" height="18"></span>
+              <div>
+                <h2 data-i18n="dg.target">Discord target queue</h2>
+                <p data-i18n="dg.targetSub">3L/4L usernames. One name per request, so pacing matters.</p>
+              </div>
+            </header>
+            <div class="card-body">
+              <div class="row">
+                <input id="dgNameInput" class="input" type="text" autocomplete="off" spellcheck="false"
+                       placeholder="username (2–32 chars, a-z 0-9 . _)" data-i18n-placeholder="dg.placeholder">
+                <button class="btn btn-soft" id="dgCheckBtn" type="button" data-i18n="dg.check">Check</button>
+                <button class="btn btn-primary" id="dgAddBtn" type="button" data-i18n="dg.add">Add</button>
+              </div>
+              <p class="hint" data-i18n="dg.hint">Enter checks one name · Shift+Enter adds the list. Results are cached in SQLite, so Discord is never asked twice.</p>
+              <div class="row row-wrap">
+                <button class="btn btn-ghost" id="dgStartBtn" type="button" data-i18n="dg.start">Start checker</button>
+                <button class="btn btn-ghost" id="dgStopBtn" type="button" data-i18n="dg.stop">Stop</button>
+                <button class="btn btn-danger" id="dgClearBtn" type="button" data-i18n="dg.clear">Clear queue</button>
+                <span class="spacer"></span>
+                <span class="meta" id="dgWorkersMeta">3 workers · 0 in queue</span>
+              </div>
+            </div>
+          </article>
+
+          <div class="stat-grid">
+            <article class="stat" data-tone="accent"><span class="stat-label" data-i18n="stat.checked">Checked</span><strong id="dgStatChecked">0</strong></article>
+            <article class="stat" data-tone="ok"><span class="stat-label" data-i18n="stat.available">Available</span><strong id="dgStatAvailable">0</strong></article>
+            <article class="stat" data-tone="taken"><span class="stat-label" data-i18n="stat.taken">Taken</span><strong id="dgStatTaken">0</strong></article>
+            <article class="stat" data-tone="bad"><span class="stat-label" data-i18n="dg.statInvalid">Invalid</span><strong id="dgStatInvalid">0</strong></article>
+            <article class="stat" data-tone="info"><span class="stat-label" data-i18n="dg.statLimited">Rate limited</span><strong id="dgStatLimited">0</strong></article>
+            <article class="stat" data-tone="ghost"><span class="stat-label" data-i18n="stat.speed">Checks / s</span><strong id="dgStatSpeed">0</strong></article>
+          </div>
+
+          <div class="split">
+            <article class="card">
+              <header class="card-head">
+                <span class="card-glyph"><img src="/assets/icons/act_sparkle_hi.png" alt="" width="18" height="18"></span>
+                <div>
+                  <h2 data-i18n="dg.genTitle">Rare generator</h2>
+                  <p data-i18n="dg.genSub">Rarest first — rare mode only, 3L and 4L.</p>
+                </div>
+              </header>
+              <div class="card-body">
+                <div class="row row-wrap">
+                  <span class="label" data-i18n="gen.length">Length</span>
+                  <div class="chips" id="dgLengthChips">
+                    <button class="chip is-active" type="button" data-length="3">3L</button>
+                    <button class="chip" type="button" data-length="4">4L</button>
+                  </div>
+                  <div class="chips" id="mcLengthChips" style="margin-left: 12px;">
+                    <button class="chip is-active" type="button" data-length="3">3L</button>
+                    <button class="chip" type="button" data-length="4">4L</button>
+                  </div>
+                  <span class="label" data-i18n="gen.count">Count</span>
+                  <select id="dgCount" class="input input-sm">
+                    <option value="50">50</option>
+                    <option value="100" selected>100</option>
+                    <option value="500">500</option>
+                    <option value="1000">1000</option>
+                  </select>
+                  <button class="btn btn-primary" id="dgGenBtn" type="button" data-i18n="dg.genBtn">Generate rare &amp; queue</button>
+                </div>
+                <p class="hint" data-i18n="dg.genHint">Discord allows a–z, 0–9, dot and underscore. Leading, trailing and double dots plus reserved words are filtered before queueing.</p>
+              </div>
+            </article>
+
+            <article class="card">
+              <header class="card-head">
+                <span class="card-glyph"><img src="/assets/icons/act_clock_hi.png" alt="" width="18" height="18"></span>
+                <div><h2 data-i18n="dg.logTitle">Discord log</h2><p data-i18n="dg.logSub">Live output from the Discord checker.</p></div>
+                <button class="btn btn-tiny btn-ghost" id="dgLogClear" type="button" data-i18n="log.clear">Clear</button>
+              </header>
+              <div class="card-body">
+                <div class="log" id="dgLog" aria-live="polite"></div>
+              </div>
+            </article>
+          </div>
+
+          <article class="card card-wide" style="display:none;">
+            <header class="card-head">
+              <span class="card-glyph"><img src="/assets/icons/act_stats_hi.png" alt="" width="18" height="18"></span>
+              <div>
+                <h2 data-i18n="dg.sourcesTitle">Checker sources</h2>
+                <p data-i18n="dg.sourcesSub">Auto-configured</p>
+              </div>
+            </header>
+            <div class="card-body">
+              <ul class="list" id="dgSources"></ul>
+              <span class="meta" id="dgSourceMeta"></span>
+            </div>
+          </article>
+
+          <article class="card">
+            <header class="card-head">
+              <span class="card-glyph"><img src="/assets/icons/act_export_hi.png" alt="" width="18" height="18"></span>
+              <div><h2 data-i18n="dg.availTitle">Free usernames</h2><p data-i18n="dg.availSub">Available right now, newest first.</p></div>
+              <a class="btn btn-tiny btn-ghost" href="/api/export?file=discord_available.txt" data-i18n="avail.export">Export</a>
+            </header>
+            <div class="card-body">
+              <ul class="list" id="dgAvailable"></ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ---------------------------------------------------------- MINECRAFT -->
+      <section class="page" id="page-minecraft">
+        <div class="cards">
+          <article class="card card-wide">
+            <header class="card-head">
+              <span class="card-glyph"><img src="/assets/icons/act_search_hi.png" alt="" width="18" height="18"></span>
+              <div>
+                <h2 data-i18n="checker.target">Minecraft name check</h2>
+                <p data-i18n="checker.targetSub">Check if a Minecraft username is taken or available.</p>
+              </div>
+            </header>
+            <div class="card-body">
+              <div class="row">
+                <input id="mcNameInput" class="input" type="text" autocomplete="off" spellcheck="false"
+                       placeholder="username (3–16 chars, a-z 0-9 _)" data-i18n-placeholder="checker.placeholder">
+                <button class="btn btn-soft" id="mcCheckBtn" type="button" data-i18n="checker.check">Check</button>
+                <button class="btn btn-primary" id="mcAddBtn" type="button" data-i18n="checker.add">Add</button>
+              </div>
+              <p class="hint" data-i18n="checker.hint">Enter checks one name, Shift+Enter adds the whole list.</p>
+              <div class="row row-wrap">
+                <button class="btn btn-ghost" id="mcStartBtn" type="button" data-i18n="checker.start">Start engine</button>
+                <button class="btn btn-ghost" id="mcStopBtn" type="button" data-i18n="checker.stop">Stop</button>
+                <button class="btn btn-danger" id="mcClearBtn" type="button" data-i18n="checker.clear">Clear queue</button>
+                <span class="spacer"></span>
+                <span class="meta" id="mcWorkersMeta">3 threads</span>
+              </div>
+            </div>
+          </article>
+
+          <div class="stat-grid">
+            <article class="stat" data-tone="accent"><span class="stat-label" data-i18n="stat.checked">Checked</span><strong id="mcStatChecked">0</strong></article>
+            <article class="stat" data-tone="ok"><span class="stat-label" data-i18n="stat.available">Available</span><strong id="mcStatAvailable">0</strong></article>
+            <article class="stat" data-tone="taken"><span class="stat-label" data-i18n="stat.taken">Taken</span><strong id="mcStatTaken">0</strong></article>
+            <article class="stat" data-tone="bad"><span class="stat-label" data-i18n="stat.errors">Errors</span><strong id="mcStatErrors">0</strong></article>
+            <article class="stat" data-tone="info"><span class="stat-label" data-i18n="stat.speed">Checks / s</span><strong id="mcStatSpeed">0</strong></article>
+          </div>
+
+          <div class="split">
+            <article class="card">
+              <header class="card-head">
+                <span class="card-glyph"><img src="/assets/icons/act_clock_hi.png" alt="" width="18" height="18"></span>
+                <div><h2 data-i18n="log.title">Live log</h2><p data-i18n="log.sub">Streaming from the engine.</p></div>
+                <button class="btn btn-tiny btn-ghost" id="mcLogClear" type="button" data-i18n="log.clear">Clear</button>
+              </header>
+              <div class="card-body">
+                <div class="log" id="mcLog" aria-live="polite"></div>
+              </div>
+            </article>
+
+            <article class="card">
+              <header class="card-head">
+                <span class="card-glyph"><img src="/assets/icons/act_export_hi.png" alt="" width="18" height="18"></span>
+                <div><h2 data-i18n="avail.title">Available</h2><p data-i18n="avail.sub">Fresh hits, newest first.</p></div>
+                <a class="btn btn-tiny btn-ghost" href="/api/export?file=available.txt" data-i18n="avail.export">Export</a>
+              </header>
+              <div class="card-body">
+                <ul class="list" id="mcAvailable"></ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------------------------------------------------------- HISTORY -->
+      <section class="page" id="page-history">
+        <article class="card">
+          <header class="card-head">
+            <span class="card-glyph"><img src="/assets/icons/act_history_hi.png" alt="" width="18" height="18"></span>
+            <div><h2 data-i18n="history.title">Scan history</h2><p data-i18n="history.sub">Every result is stored in SQLite.</p></div>
+            <div class="card-actions">
+              <button class="btn btn-tiny btn-soft" id="rescanBtn" type="button" data-i18n="history.rescan">Rescan errors</button>
+              <button class="btn btn-tiny btn-danger" id="historyClear" type="button" data-i18n="history.clear">Clear all</button>
+            </div>
+          </header>
+          <div class="card-body">
+            <div class="row row-wrap">
+              <input id="historySearch" class="input input-sm" type="search" placeholder="Search name" data-i18n-placeholder="history.search">
+              <select id="historyStatus" class="input input-sm">
+                <option value="" data-i18n="history.all">All statuses</option>
+                <option value="available">AVAILABLE</option>
+                <option value="taken">TAKEN</option>
+                <option value="error">ERROR</option>
+                <option value="unknown">UNKNOWN</option>
+                <option value="rate_limited">RATE_LIMITED</option>
+                <option value="claimed">CLAIMED</option>
+              </select>
+              <span class="spacer"></span>
+              <span class="meta" id="historyMeta">0 rows</span>
+            </div>
+            <div class="table-wrap">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th data-i18n="history.name">Name</th>
+                    <th data-i18n="history.status">Status</th>
+                    <th data-i18n="history.source">Source</th>
+                    <th data-i18n="history.time">Scanned</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="historyBody"></tbody>
+              </table>
+              <p class="empty" id="historyEmpty" data-i18n="history.empty">No scans yet — start the engine or check a name.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- ------------------------------------------------------------ STATS -->
+      <section class="page" id="page-stats">
+        <div class="stat-grid stat-grid-lg">
+          <article class="stat" data-tone="accent"><span class="stat-label" data-i18n="stat.totalScans">Total scans</span><strong id="bigTotal">0</strong></article>
+          <article class="stat" data-tone="ok"><span class="stat-label" data-i18n="stat.availableTotal">Available found</span><strong id="bigAvailable">0</strong></article>
+          <article class="stat" data-tone="taken"><span class="stat-label" data-i18n="stat.takenTotal">Taken</span><strong id="bigTaken">0</strong></article>
+          <article class="stat" data-tone="bad"><span class="stat-label" data-i18n="stat.errorTotal">Errors</span><strong id="bigErrors">0</strong></article>
+        </div>
+        <article class="card">
+          <header class="card-head">
+            <span class="card-glyph"><img src="/assets/icons/act_stats_hi.png" alt="" width="18" height="18"></span>
+            <div><h2 data-i18n="stats.breakdown">History breakdown</h2><p data-i18n="stats.breakdownSub">By status, all time.</p></div>
+          </header>
+          <div class="card-body">
+            <ul class="bars" id="statusBars"></ul>
+          </div>
+        </article>
+      </section>
+
+      <!-- --------------------------------------------------------- SETTINGS -->
+      <section class="page" id="page-settings">
+        <div class="split">
+          <article class="card">
+            <header class="card-head">
+              <span class="card-glyph"><img src="/assets/icons/act_settings_hi.png" alt="" width="18" height="18"></span>
+              <div><h2 data-i18n="settings.engine">Engine</h2><p data-i18n="settings.engineSub">Applied the next time the engine starts.</p></div>
+            </header>
+            <div class="card-body">
+              <label class="field">
+                <span data-i18n="settings.threads">Threads</span>
+                <input id="setThreads" class="input" type="number" min="1" max="100" step="1">
+              </label>
+              <label class="field">
+                <span data-i18n="settings.timeout">Request timeout (s)</span>
+                <input id="setTimeout" class="input" type="number" min="1" max="60" step="1">
+              </label>
+              <label class="switch">
+                <input type="checkbox" id="setWatch">
+                <span class="switch-track"><span class="switch-knob"></span></span>
+                <span data-i18n="settings.watch">Watch mode (recheck taken names)</span>
+              </label>
+              <label class="switch">
+                <input type="checkbox" id="setStealth">
+                <span class="switch-track"><span class="switch-knob"></span></span>
+                <span data-i18n="settings.stealth">Stealth pacing</span>
+              </label>
+              <label class="switch">
+                <input type="checkbox" id="setAutoClaim">
+                <span class="switch-track"><span class="switch-knob"></span></span>
+                <span data-i18n="settings.autoClaim">Auto claim (needs accounts, desktop only)</span>
+              </label>
+              <label class="field">
+                <span data-i18n="settings.language">Language</span>
+                <select id="setLanguage" class="input">
+                  <option value="en">English</option>
+                  <option value="id">Bahasa Indonesia</option>
+                </select>
+              </label>
+              <div class="row">
+                <button class="btn btn-primary" id="saveSettings" type="button" data-i18n="settings.save">Save settings</button>
+                <span class="meta" id="settingsNote"></span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <header class="card-head">
+              <span class="card-glyph"><img src="/assets/icons/act_folder_hi.png" alt="" width="18" height="18"></span>
+              <div><h2 data-i18n="settings.data">Data &amp; exports</h2><p data-i18n="settings.dataSub">Files live next to the app.</p></div>
+            </header>
+            <div class="card-body">
+              <ul class="facts">
+                <li><span data-i18n="settings.accounts">Accounts loaded</span><strong id="factAccounts">0</strong></li>
+                <li><span data-i18n="settings.proxies">Proxies in proxies.txt</span><strong id="factProxies">0</strong></li>
+                <li><span data-i18n="settings.historyRows">History rows</span><strong id="factHistory">0</strong></li>
+                <li><span data-i18n="settings.scanned">Names scanned</span><strong id="factScanned">0</strong></li>
+              </ul>
+              <div class="row row-wrap">
+                <a class="btn btn-ghost" href="/api/export?file=available.txt" data-i18n="settings.availableTxt">available.txt</a>
+                <a class="btn btn-ghost" href="/api/export?file=claimed.txt" data-i18n="settings.claimedTxt">claimed.txt</a>
+                <a class="btn btn-ghost" href="/api/export?file=failed.txt" data-i18n="settings.failedTxt">failed.txt</a>
+              </div>
+              <p class="hint" data-i18n="settings.desktopOnly">Microsoft login, token refresh and automatic claiming stay in the desktop app. This web build checks names, queues targets, stores history and generates names.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+  <script src="/static/app.js?v=4.5"></script>
+</body>
+</html>

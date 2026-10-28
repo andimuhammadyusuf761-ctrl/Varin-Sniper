@@ -4,6 +4,10 @@ import random
 import string
 from typing import Dict, List, Optional, Set, Tuple
 
+# Nama dari daftar 3name.xyz/list dan nama inappropriate tidak pernah
+# dihasilkan (lihat blocklist.py untuk aturan dan daftarnya).
+from blocklist import is_blocked
+
 ALLOWED = string.ascii_lowercase + string.digits + "_"
 LOWERCASE = string.ascii_lowercase
 DIGITS = string.digits
@@ -18,32 +22,31 @@ def _calculate_priority_score(name: str) -> int:
     """Calculate priority score - higher = more desirable"""
     score = 0
     length = len(name)
-    
+
     # All same char (aaa, bbb) - highest priority
     if len(set(name)) == 1:
         score += 1000
-    
+
     # Very few unique chars
     elif len(set(name)) == 2:
         score += 500
         # Check patterns
         if name[0] == name[1] or name[1] == name[2] or (length == 4 and (name[2] == name[3] or name[0] == name[2])):
             score += 100
-    
+
     # Has repeated chars
     for i in range(len(name) - 1):
         if name[i] == name[i + 1]:
             score += 50
-    
+
     # All letters (no numbers/underscore) slightly preferred
     if all(c.islower() for c in name):
         score += 30
-    
-    # Shorter in general same length but just in case
+
     # Palindromes
     if name == name[::-1]:
         score += 80
-    
+
     # Common patterns
     if length == 3:
         # x_x style less common but check
@@ -57,13 +60,15 @@ def _calculate_priority_score(name: str) -> int:
             score += 200
         elif name[0] == name[2] and name[1] == name[3]:  # abab
             score += 180
-    
+
     return score
 
 def enumerate_ordered(length: int, use_all_chars: bool = False) -> List[str]:
     """Full enumeration ordered by priority"""
     chars = LOWERCASE if not use_all_chars else ALLOWED
     names = enumerate_full(length, chars)
+    # daftar 3name.xyz/list & nama inappropriate tidak ikut dienumerasi penuh
+    names = [n for n in names if not is_blocked(n)]
     # Sort by priority score desc, then alphabetically
     names.sort(key=lambda s: (-_calculate_priority_score(s), s))
     return names
@@ -79,64 +84,116 @@ def generate_random(count: int, length: int, allowed_chars: str = None,
     attempts = 0
     while len(out) < count and attempts < max_attempts:
         name = "".join(random.choice(allowed_chars) for _ in range(length))
-        if name not in seen and name not in excluded and 3 <= len(name) <= 16:
+        if name not in seen and name not in excluded and 3 <= len(name) <= 16 and not is_blocked(name):
             seen.add(name)
             out.append(name)
         attempts += 1
     return out
 
+def _make_underscore3():
+    """Generate a random 3-char name with exactly one underscore."""
+    slot = random.randrange(3)
+    rest = "".join(random.choice(LOWERCASE) for _ in range(2))
+    return rest[:slot] + "_" + rest[slot:]
+
+def _make_underscore4():
+    """Generate a random 4-char name with exactly one underscore."""
+    slot = random.randrange(4)
+    rest = "".join(random.choice(LOWERCASE) for _ in range(3))
+    return rest[:slot] + "_" + rest[slot:]
+
 def generate_smart_random(count: int, length: int,
+                          allow_vowels: bool = True,
+                          underscore: bool = False,
                           exclude: Optional[Set[str]] = None) -> List[str]:
     """Generate with higher chance for good patterns"""
     excluded = exclude or frozenset()
     seen: Set[str] = set()
     out: List[str] = []
-    strategies = []
-    
-    # Weight strategies
+    strategies_used = False
+    letters = [c for c in (LOWERCASE if allow_vowels else LOWERCASE.replace("aeiou", "")) or LOWERCASE]
+    weights = [max(0.05, LETTER_RARITY.get(c, 6.0)) ** 2 for c in letters]
+
+    # Weight strategies based on length and underscore
     if length == 3:
-        strategies = [
-            (lambda: random.choice(LOWERCASE)*3, 0.15),  # aaa
-            (lambda: random.choice(LOWERCASE)*2 + random.choice(LOWERCASE), 0.10),  # aab
-            (lambda: random.choice(LOWERCASE) + random.choice(LOWERCASE)*2, 0.10),  # abb
-            (lambda: random.choice(LOWERCASE) + random.choice(LOWERCASE) + random.choice(LOWERCASE), 0.65),  # normal
-        ]
+        if underscore:
+            # Balanced 3L: names with exactly one underscore (h_d, z_x, q_b)
+            strategies = [
+                (_make_underscore3, 0.3),  # one underscore
+            ]
+            strategy_weight_total = 0.3
+        else:
+            strategies = None
+            strategy_weight_total = 0
     elif length == 4:
-        strategies = [
-            (lambda: random.choice(LOWERCASE)*2 + random.choice(LOWERCASE)*2, 0.15),  # aabb
-            (lambda: random.choice(LOWERCASE)*4, 0.10),  # aaaa
-            (lambda: random.choice(LOWERCASE)+random.choice(LOWERCASE)+random.choice(LOWERCASE)+random.choice(LOWERCASE), 0.75),
-        ]
-    
+        if underscore:
+            # 4L with one underscore: e.g., abc_d, x_y_z, etc.
+            strategies = [
+                (_make_underscore4, 0.3),  # one underscore
+            ]
+            strategy_weight_total = 0.3
+        else:
+            strategies = None
+            strategy_weight_total = 0
+
     attempts = 0
     while len(out) < count and attempts < count * 200 + len(excluded) * 4:
-        if strategies and random.random() < 0.4:
+        # Decide whether to use strategy or random combo
+        if strategies and random.random() * (strategy_weight_total + 1.0) < strategy_weight_total:
             # Pick strategy
-            r = random.random()
+            r = random.random() * strategy_weight_total
             cum = 0
             for func, prob in strategies:
                 cum += prob
                 if r <= cum:
                     name = func()
+                    strategies_used = True
                     break
             else:
                 name = random_combo(length)
+                strategies_used = False
         else:
             name = random_combo(length)
-        
-        if name not in seen and name not in excluded \
-                and all(c.isalnum() or c == '_' for c in name):
+            strategies_used = False
+
+        # When underscore mode is on, ensure exactly one underscore
+        if underscore:
+            if strategies_used:
+                # Strategy already produces name with one underscore, verify/fix
+                underscore_count = name.count('_')
+                if underscore_count == 0:
+                    # No underscore added by strategy - add one
+                    slot = random.randrange(length)
+                    name = name[:slot] + "_" + name[slot+1:]
+                elif underscore_count > 1:
+                    # Too many underscores - fix to exactly one
+                    # Keep the first underscore and remove others
+                    parts = name.split('_')
+                    name = parts[0] + "_" + "".join(parts[1:])
+            else:
+                # Non-strategy path: add exactly one underscore
+                slot = random.randrange(length)
+                name = name[:slot] + "_" + name[slot+1:]
+
+        if name not in seen and name not in excluded and all(c.isalnum() or c == '_' for c in name) and not is_blocked(name):
             seen.add(name)
             out.append((name, _calculate_priority_score(name)))
         attempts += 1
-    
+
     # Sort by priority
     out.sort(key=lambda x: -x[1])
     return [n[0] for n in out]
 
+def _underscore_combo(length: int, chars: str) -> str:
+    """Generate a random name with exactly one underscore."""
+    slot = random.randrange(length)
+    rest = "".join(random.choice(chars) for _ in range(length - 1))
+    return rest[:slot] + "_" + rest[slot:]
+
 # --------------------------------------------------------------------------- #
 # Kelangkaan (rarity) — dasar generate_rare()
 # --------------------------------------------------------------------------- #
+
 VOWELS = "aeiou"
 _VOWEL_SET = frozenset(VOWELS)
 
@@ -155,28 +212,29 @@ COMMON_BIGRAMS = frozenset("""
     se ha as ou io le ve co me de hi ri ro ic ne ea ra ce li ch ll be ma si
     om ur ca el ta la ns di fo ho pe ec pr no ct us ac ot il tr ly nc et ut
     ss so rs un lo wa ge ie wh ee wi em ad ol rt po we na ul ni ts mo ow pa
-    im mi ai sh ir su id os iv ia am fi ci vi pl ig tu ev ld ry
+    im mi ai sh ir su id osiv ia am fi ci vi pl ig tu ev ld ry
 """.split())
 
 COMMON_TRIGRAMS = frozenset("""
-    the and ing her hat his tha ere for ent ion ter was you ith ver all wit
+    the and ing his tha ere for ent ion ter was you ith ver all wit
     thi tio nde has men est ers eve sti rin not are but oul
-    sch chr str thr spr shr spl scr squ tch ght nth rth
+    sch chr str thr spr shr spl scr sq tch ght nth rth
 """.split())
 
 # Pola yang justru sering dipakai orang lain — bukan "langka".
-COMMON_SEQUENCES = frozenset({"abc", "xyz", "qwe", "asd", "zxc", "qaz", "wsx", "edc"})
+COMMON_SEQUENCES = frozenset({
+    "abc", "xyz", "qwe", "asd", "zxc", "qaz", "wsx", "edc"
+})
 
 # Nama nyata/sensitif: lebih baik dilewati (pasti ditolak Minecraft).
 BLOCKED_NAMES = frozenset({
     "ass", "cum", "gay", "sex", "fag", "nig", "dck", "fck", "sht", "wtf",
-    "tit", "kkk", "nzi", "dic", "pns", "vgn", "gyp", "the", "and", "you",
-    "for", "are", "but", "not", "all", "can", "had", "her", "was", "one",
-    "our", "out", "day", "get", "has", "him", "how", "man", "new", "now",
+    "tit", "kkk", "nzi", "dic", "pns", "vgn", "gyp", "the", "and",
+    "you", "for", "are", "but", "not", "all", "can", "had", "her", "was",
+    "one", "our", "out", "day", "get", "has", "him", "how", "man", "new", "now",
     "old", "see", "two", "way", "who", "boy", "did", "its", "let", "put",
     "say", "she", "too", "use", "yes", "yet", "own", "off", "end", "few",
 })
-
 
 def rarity_score(name: str) -> float:
     """Skor kelangkaan: makin tinggi = makin jarang dijumpai orang.
@@ -219,7 +277,6 @@ def rarity_score(name: str) -> float:
 _POOL_LIMIT = 60000
 _POOL_CACHE: Dict[Tuple[int, bool, str, bool], Tuple[str, ...]] = {}
 
-
 def _underscore_combos(length: int, chars: str) -> List[str]:
     """Semua kombinasi `length` karakter dengan tepat satu '_'."""
     out: List[str] = []
@@ -227,7 +284,6 @@ def _underscore_combos(length: int, chars: str) -> List[str]:
         for rest in itertools.product(chars, repeat=length - 1):
             out.append("".join(rest[:slot]) + "_" + "".join(rest[slot:]))
     return out
-
 
 def rare_pool(length: int = 3, allow_vowels: bool = True,
               chars: str = LOWERCASE,
@@ -256,13 +312,12 @@ def rare_pool(length: int = 3, allow_vowels: bool = True,
         combos = ["".join(t) for t in itertools.product(chars, repeat=size)]
     if not allow_vowels:
         combos = [c for c in combos if not (_VOWEL_SET & set(c))]
-    combos = [c for c in combos if c not in BLOCKED_NAMES]
+    combos = [c for c in combos if c not in BLOCKED_NAMES and not is_blocked(c)]
     combos.sort(key=lambda s: (-rarity_score(s), s))
 
     pool = tuple(combos)
     _POOL_CACHE[key] = pool
     return pool
-
 
 def _sample_rare(count: int, length: int, allow_vowels: bool, chars: str,
                  rng: random.Random, exclude: Optional[Set[str]] = None,
@@ -292,7 +347,7 @@ def _sample_rare(count: int, length: int, allow_vowels: bool, chars: str,
             name = body[:slot] + "_" + body[slot:]
         else:
             name = body
-        if name in seen or name in BLOCKED_NAMES or name in excluded:
+        if name in seen or name in BLOCKED_NAMES or name in excluded or is_blocked(name):
             continue
         seen.add(name)
         out.append(name)
@@ -305,7 +360,6 @@ def _sample_rare(count: int, length: int, allow_vowels: bool, chars: str,
     picked = rng.sample(out[:band_size], take)
     picked.sort(key=lambda s: (-rarity_score(s), s))
     return picked
-
 
 def generate_rare(count: int, length: int = 3, allow_vowels: bool = True,
                   chars: str = LOWERCASE, band: float = 0.45,
@@ -330,7 +384,7 @@ def generate_rare(count: int, length: int = 3, allow_vowels: bool = True,
     excluded = exclude or frozenset()
     pool = rare_pool(length, allow_vowels, chars, underscore)
     if pool:
-        candidates = [n for n in pool if n not in excluded]
+        candidates = [n for n in pool if n not in excluded and not is_blocked(n)]
         if not candidates:
             return []
         take = min(count, len(candidates))
@@ -342,7 +396,6 @@ def generate_rare(count: int, length: int = 3, allow_vowels: bool = True,
 
     return _sample_rare(count, int(length), allow_vowels, chars, rng,
                         excluded, underscore, band)
-
 
 def pattern_combo(pattern: str) -> str:
     """Generate from pattern: x=letter, d=digit, u/_=underscore, a=any"""
@@ -377,7 +430,8 @@ def generate_pattern(patterns: List[str], count: int,
         p = random.choice(valid_patterns)
         name = pattern_combo(p)
         if name and 3 <= len(name) <= 16 and name not in seen and name not in excluded \
-                and all(c.isalnum() or c == '_' for c in name):
+                and all(c.isalnum() or c == '_' for c in name) \
+                and not is_blocked(name):
             seen.add(name)
             out.append(name)
         attempts += 1
@@ -391,7 +445,7 @@ if __name__ == "__main__":
     print("Smart 4L:", generate_smart_random(10, 4))
     print("Pattern _dd:", generate_pattern(["_dd"], 5))
     print("Full 3L ordered first 5:", enumerate_ordered(3)[:5])
-    print("Rarest 3L (vokal boleh) :", generate_rare(10, 3, seed=1))
-    print("Rarest 3L (konsonan)    :", generate_rare(10, 3, allow_vowels=False, seed=1))
+    print("Rarest 3L (vokal boleh):", generate_rare(10, 3, seed=1))
+    print("Rarest 3L (konsonan):", generate_rare(10, 3, allow_vowels=False, seed=1))
     print("Balanced 3L (underscore):", generate_rare(10, 3, band=0.85, underscore=True, seed=1))
-    print("Rarest 4L               :", generate_rare(10, 4, allow_vowels=False, seed=1))
+    print("Rarest 4L:", generate_rare(10, 4, allow_vowels=False, seed=1))

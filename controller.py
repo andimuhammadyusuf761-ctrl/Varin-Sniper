@@ -24,6 +24,7 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from checker import BulkLookup, Checker, CheckResult, NameStatus
+from blocklist import blocked_reason, filter_names
 from proxy import Proxy, ProxyManager
 import claimer as clm
 from scan_history import (
@@ -130,6 +131,9 @@ class SniperController:
             return False
         if not all(ch.isalnum() or ch == "_" for ch in name):
             return False
+        # daftar 3name.xyz/list dan nama inappropriate tidak pernah dicek
+        if blocked_reason(name):
+            return False
         if not force:
             existing = self.scan_history.get_status(name)
             if existing and existing.get("status") in (STATUS_AVAILABLE, STATUS_TAKEN):
@@ -144,8 +148,11 @@ class SniperController:
         return True
 
     def enqueue_many(self, names: List[str], force: bool = False) -> int:
+        clean, blocked = filter_names(names)
+        if blocked:
+            self.emit("log", ("info", T("log.blocked_skipped", n=blocked)))
         added = 0
-        for name in names:
+        for name in clean:
             if self.enqueue(name, force=force):
                 added += 1
         return added

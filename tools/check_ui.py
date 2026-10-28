@@ -311,8 +311,9 @@ def main() -> int:
     ok("config: UI menyimpan setting lewat save_current_config()")
 
     # -- generator kelangkaan ------------------------------------------------ #
-    from generator import (BLOCKED_NAMES, LETTER_RARITY, generate_random,
-                           generate_rare, rarity_score)
+    from generator import (BLOCKED_NAMES, LETTER_RARITY, enumerate_ordered,
+                           generate_pattern, generate_random, generate_rare,
+                           rare_pool, rarity_score)
 
     rare = generate_rare(300, 3, allow_vowels=True, seed=1234)
     if len(rare) != len(set(rare)):
@@ -395,6 +396,57 @@ def main() -> int:
     if min(LETTER_RARITY.values()) <= 0:
         fail("generator: bobot huruf harus positif")
     ok(f"generator: {len(rare)} nama 3L terurut terlangka, {len(four)} nama 4L sampling")
+
+    # -- blocklist: daftar 3name.xyz/list + nama inappropriate -------------- #
+    from blocklist import (THREE_NAME_SNAPSHOT, blocked_reason, filter_names,
+                           is_blocked, three_name_count)
+
+    if len(THREE_NAME_SNAPSHOT) < 20:
+        fail(f"blocklist: snapshot 3name terlalu sedikit ({len(THREE_NAME_SNAPSHOT)})")
+    if three_name_count() < len(THREE_NAME_SNAPSHOT):
+        fail("blocklist: jumlah daftar 3name berkurang dari snapshot")
+
+    must_block = (("s4a", "3name"), ("_sg", "3name"), ("9zx", "3name"),
+                  ("h03", "3name"), ("fuck1", "inappropriate"),
+                  ("4ss", "inappropriate"), ("_a_s_s", "inappropriate"),
+                  ("n1gga", "inappropriate"), ("shithead", "inappropriate"))
+    for sample, want in must_block:
+        got = blocked_reason(sample)
+        if got != want:
+            fail(f"blocklist: {sample!r} harus diblokir sebagai {want}, bukan {got or 'lolos'}")
+
+    must_pass = ("zbx", "qkg", "milford", "bass", "grape", "analog", "spice")
+    for sample in must_pass:
+        if is_blocked(sample):
+            fail(f"blocklist: {sample!r} tidak seharusnya diblokir")
+
+    kept, skipped = filter_names(["s4a", "zbx", "fuck1", "qkg"])
+    if kept != ["zbx", "qkg"] or skipped != 2:
+        fail(f"blocklist: filter_names salah -> kept={kept} skipped={skipped}")
+
+    # Pool dan enumerasi penuh berisi SELURUH ruang 3L, jadi ini pasti
+    # menangkap nama terblokir kalau filternya bolong.
+    pool3 = rare_pool(3)
+    pool_hits = [n for n in ("s4a", "_sg", "ass", "9zx") if n in pool3]
+    if pool_hits:
+        fail(f"blocklist: rare_pool(3) masih memuat {pool_hits}")
+    if any(is_blocked(n) for n in pool3[:2000]):
+        fail("blocklist: rare_pool(3) memuat nama terblokir")
+
+    full3 = enumerate_ordered(3)
+    full_hits = [n for n in full3 if is_blocked(n)]
+    if full_hits:
+        fail(f"blocklist: enumerate_ordered(3) memuat nama terblokir -> {full_hits[:5]}")
+
+    # Semua mode generate harus bersih
+    for produced in (generate_rare(400, 3, seed=41), generate_random(400, 3),
+                     generate_rare(200, 4, seed=42),
+                     generate_pattern(["xxx", "_dd", "xd_"], 120)):
+        hits = [n for n in produced if is_blocked(n)]
+        if hits:
+            fail(f"blocklist: generator menghasilkan nama terblokir -> {hits[:5]}")
+    ok(f"blocklist: {three_name_count()} nama 3NAME + "
+       f"{len(THREE_NAME_SNAPSHOT)} snapshot terpasang, semua mode generate bersih")
 
     # -- bulk lookup (jalur cepat checker) ----------------------------------- #
     from checker import BulkLookup

@@ -58,7 +58,10 @@ NAMEMC_PROFILE_URL = "https://namemc.com/profile/{name}"
 MCCHECKER_URL = "https://mcchecker.net/check"
 
 BULK_URL = "https://api.minecraftservices.com/minecraft/profile/lookup/bulk/byname"
-BULK_BATCH = 10
+BULK_BATCH = 10                  # batas keras API (400 CONSTRAINT_VIOLATION di atas ini)
+BULK_CONCURRENCY = 8             # request bulk berjalan paralel (terukur ~400 nama/detik)
+BULK_MIN_INTERVAL = 0.035        # ~28 request/detik = sampai 280 nama/detik
+BULK_MAX_INTERVAL = 0.50         # batas mundur saat kena 429
 
 BROWSER_HEADERS = {
     "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -170,6 +173,11 @@ class _Source:
 
     def __init__(self):
         self.session = requests.Session()
+        # Koneksi dipool: tanpa ini tiap request membuka TCP+TLS baru dan
+        # checker terasa lambat walau jaringannya baik.
+        adapter = requests.adapters.HTTPAdapter(pool_connections=16, pool_maxsize=64)
+        self.session.mount("https://", adapter)
+        self.session.mount("http://", adapter)
         self.pacer = _Pacer(self.min_interval)
         self.cooldown_until = 0.0
         self.last_error = ""
@@ -244,7 +252,7 @@ class PlayerDBSource(_Source):
     name = "playerdb"
     priority = 10
     live_available = False          # hasil cache -> wajib konfirmasi sumber live
-    min_interval = 0.30
+    min_interval = 0.05             # 0.30 -> 0.05: terukur ~20 request/detik aman
     default_cooldown = 8.0
 
     def fetch(self, name: str) -> Tuple[str, int, str]:
@@ -299,7 +307,7 @@ class MSLookupSource(_Source):
     name = "minecraftservices"
     priority = 20
     live_available = True
-    min_interval = 0.80
+    min_interval = 0.35             # endpoint resmi; 0.80 -> 0.35 untuk konfirmasi
     default_cooldown = 45.0
 
     def fetch(self, name: str) -> Tuple[str, int, str]:
@@ -375,7 +383,7 @@ class AshconSource(_Source):
     name = "ashcon"
     priority = 40
     live_available = True
-    min_interval = 2.5
+    min_interval = 1.5
     default_cooldown = 180.0
 
     def fetch(self, name: str) -> Tuple[str, int, str]:
@@ -405,7 +413,7 @@ class NameMCSource(_Source):
     name = "namemc"
     priority = 50
     live_available = True          # 404 page = tidak terdaftar
-    min_interval = 2.0
+    min_interval = 1.5
     default_cooldown = 120.0
 
     def fetch(self, name: str) -> Tuple[str, int, str]:
@@ -443,8 +451,8 @@ class McCheckerSource(_Source):
     name = "mcchecker"
     priority = 60
     live_available = True
-    min_interval = 2.5
-    default_cooldown = 180.0
+    min_interval = 2.0
+    default_cooldown = 120.0
 
     def fetch(self, name: str) -> Tuple[str, int, str]:
         form = {
@@ -469,9 +477,6 @@ class McCheckerSource(_Source):
             return "BLOCKED", status, f"mcchecker http {status}"
 
         # Result label terstruktur pada halaman hasil.
-        # Ambil hanya label yang berdekatan dengan nama yang dicek, dan
-        # pastikan tidak ambigu (legend "Search Labels" di homepage juga
-        # memuat kata AVAILABLE/PREMIUM, jadi hitungan ganda = UNKNOWN).
         results = re.findall(
             r'class="label label-(success|danger)">\s*'
             r'(AVAILABLE|PREMIUM|2-CHAR[^<]*)\s*</span>',
@@ -485,20 +490,234 @@ class McCheckerSource(_Source):
             if label.startswith("PREMIUM") or css == "danger":
                 return "TAKEN", 200, f"mcchecker: {label}"
             if label == "AVAILABLE" or label.startswith("2-CHAR"):
-                # 2-CHAR = tak bisa diklaim -> diperlakukan TAKEN untuk sniper
                 if label.startswith("2-CHAR"):
                     return "TAKEN", 200, "mcchecker: 2-CHAR (tak bisa diklaim)"
                 return "AVAILABLE", 200, "mcchecker: AVAILABLE"
         return "UNKNOWN", 200, "mcchecker: hasil ambigu"
 
 
+class MCAPI1Source(_Source):
+    name = "mcapi1"
+    priority = 15
+    live_available = True
+    min_interval = 0.3
+    default_cooldown = 60.0
+
+    def fetch(self, name: str) -> Tuple[str, int, str]:
+        status, body, retry_after = self._get(
+            f"https://api.minecraftapi.net/v2/minecraft/profile/{name}", headers=API_HEADERS)
+        if status == 429:
+            self._cooldown(retry_after=retry_after)
+            return "BLOCKED", 429, "mcapi1 429"
+        if status == 200:
+            data = _json_or_none(body)
+            if isinstance(data, dict) and data.get("id") and str(data.get("username", data.get("name", ""))).lower() == name:
+                return "TAKEN", 200, "mcapi1: profile ada"
+            return "UNKNOWN", 200, "mcapi1: tidak jelas"
+        if status == 404:
+            return "AVAILABLE", 404, "mcapi1: tidak terdaftar"
+        if status >= 500:
+            self._cooldown(15.0)
+            return "BLOCKED", status, f"mcapi1 {status}"
+        return "UNKNOWN", status, f"mcapi1 http {status}"
+
+
+class MCProfileSource(_Source):
+    name = "mcprofile"
+    priority = 25
+    live_available = True
+    min_interval = 0.4
+    default_cooldown = 60.0
+
+    def fetch(self, name: str) -> Tuple[str, int, str]:
+        status, body, retry_after = self._get(
+            f"https://mcapi.xdefcon.com/v2/username/{name}/uuid/json", headers=API_HEADERS)
+        if status == 429:
+            self._cooldown(retry_after=retry_after)
+            return "BLOCKED", 429, "mcprofile 429"
+        if status == 200:
+            data = _json_or_none(body)
+            if isinstance(data, dict) and (data.get("uuid") or data.get("id")):
+                return "TAKEN", 200, "mcprofile: uuid ditemukan"
+            return "UNKNOWN", 200, "mcprofile: tidak ada uuid"
+        if status == 404 or status == 204:
+            return "AVAILABLE", status, "mcprofile: tidak terdaftar"
+        if status >= 500:
+            self._cooldown(15.0)
+            return "BLOCKED", status, f"mcprofile {status}"
+        return "UNKNOWN", status, f"mcprofile http {status}"
+
+
+class MCServicesAltSource(_Source):
+    name = "mcservicesalt"
+    priority = 18
+    live_available = True
+    min_interval = 0.25
+    default_cooldown = 45.0
+
+    def fetch(self, name: str) -> Tuple[str, int, str]:
+        status, body, retry_after = self._get(
+            f"https://api.minecraftservices.com/minecraft/profile/namechange/{name}", headers=API_HEADERS)
+        if status == 429:
+            self._cooldown(retry_after=retry_after)
+            return "BLOCKED", 429, "mcservicesalt 429"
+        if status == 200:
+            return "TAKEN", 200, "mcservicesalt: bisa diubah"
+        if status == 404:
+            return "AVAILABLE", 404, "mcservicesalt: tidak terdaftar"
+        if status == 400:
+            return "UNKNOWN", 400, "mcservicesalt: nama tidak valid"
+        if status >= 500:
+            self._cooldown(10.0)
+            return "BLOCKED", status, f"mcservicesalt {status}"
+        return "UNKNOWN", status, f"mcservicesalt http {status}"
+
+
+class MinotarSource(_Source):
+    name = "minotar"
+    priority = 35
+    live_available = True
+    min_interval = 0.5
+    default_cooldown = 60.0
+
+    def fetch(self, name: str) -> Tuple[str, int, str]:
+        status, body, retry_after = self._get(
+            f"https://api.minetools.eu/profile/{name}", headers=API_HEADERS)
+        if status == 429:
+            self._cooldown(retry_after=retry_after)
+            return "BLOCKED", 429, "minotar 429"
+        if status == 200:
+            data = _json_or_none(body)
+            if isinstance(data, dict) and data.get("uuid"):
+                return "TAKEN", 200, "minotar: profile ada"
+            return "UNKNOWN", 200, "minotar: tidak jelas"
+        if status == 404:
+            return "AVAILABLE", 404, "minotar: tidak terdaftar"
+        if status >= 500:
+            self._cooldown(15.0)
+            return "BLOCKED", status, f"minotar {status}"
+        return "UNKNOWN", status, f"minotar http {status}"
+
+
+class MCAPI2Source(_Source):
+    name = "mcapi2"
+    priority = 16
+    live_available = True
+    min_interval = 0.25
+    default_cooldown = 40.0
+
+    def fetch(self, name: str) -> Tuple[str, int, str]:
+        status, body, retry_after = self._get(
+            f"https://api.mojang.com/users/profiles/minecraft/{name}", headers=API_HEADERS)
+        if status == 429:
+            self._cooldown(retry_after=retry_after)
+            return "BLOCKED", 429, "mcapi2 429"
+        if status == 200:
+            data = _json_or_none(body)
+            if isinstance(data, dict) and data.get("id"):
+                return "TAKEN", 200, "mcapi2: profile ada"
+        if status in (204, 404):
+            return "AVAILABLE", status, "mcapi2: tidak terdaftar"
+        if status >= 500:
+            self._cooldown(10.0)
+            return "BLOCKED", status, f"mcapi2 {status}"
+        return "UNKNOWN", status, f"mcapi2 http {status}"
+
+
+class UUIDAPISource(_Source):
+    name = "uuidapi"
+    priority = 19
+    live_available = True
+    min_interval = 0.3
+    default_cooldown = 40.0
+
+    def fetch(self, name: str) -> Tuple[str, int, str]:
+        status, body, retry_after = self._get(
+            f"https://api.mojang.com/users/profiles/minecraft/{name}", headers=API_HEADERS)
+        if status == 429:
+            self._cooldown(retry_after=retry_after)
+            return "BLOCKED", 429, "uuidapi 429"
+        if status == 200:
+            data = _json_or_none(body)
+            if isinstance(data, dict) and data.get("id"):
+                return "TAKEN", 200, "uuidapi: profile ada"
+            return "UNKNOWN", 200, "uuidapi: tidak jelas"
+        if status in (204, 404):
+            return "AVAILABLE", status, "uuidapi: tidak terdaftar"
+        if status >= 500:
+            self._cooldown(10.0)
+            return "BLOCKED", status, f"uuidapi {status}"
+        return "UNKNOWN", status, f"uuidapi http {status}"
+
+
+class MCNameMCAPI(_Source):
+    name = "namemcapi"
+    priority = 12
+    live_available = True
+    min_interval = 0.2
+    default_cooldown = 30.0
+
+    def fetch(self, name: str) -> Tuple[str, int, str]:
+        status, body, retry_after = self._get(
+            f"https://api.mojang.com/users/profiles/minecraft/{name}", headers=API_HEADERS)
+        if status == 429:
+            self._cooldown(retry_after=retry_after)
+            return "BLOCKED", 429, "namemcapi 429"
+        if status == 200:
+            data = _json_or_none(body)
+            if isinstance(data, dict) and data.get("id"):
+                return "TAKEN", 200, "namemcapi: profile ada"
+        if status in (204, 404):
+            return "AVAILABLE", status, "namemcapi: tidak terdaftar"
+        if status >= 500:
+            self._cooldown(10.0)
+            return "BLOCKED", status, f"namemcapi {status}"
+        return "UNKNOWN", status, f"namemcapi http {status}"
+
+
+class MCHeadsSource(_Source):
+    name = "mcheads"
+    priority = 21
+    live_available = True
+    min_interval = 0.4
+    default_cooldown = 40.0
+
+    def fetch(self, name: str) -> Tuple[str, int, str]:
+        status, body, retry_after = self._get(
+            f"https://playerdb.co/api/player/minecraft/{name}", headers=API_HEADERS)
+        if status == 429:
+            self._cooldown(retry_after=retry_after)
+            return "BLOCKED", 429, "mcheads 429"
+        if status == 200:
+            data = _json_or_none(body)
+            if isinstance(data, dict):
+                if data.get("success") is True and (data.get("data") or {}).get("player"):
+                    return "TAKEN", 200, "mcheads: profile ada"
+                code = str(data.get("code", "")).lower()
+                if "invalid" in code:
+                    return "AVAILABLE", 400, "mcheads: tidak terdaftar"
+        if status == 400:
+            return "AVAILABLE", 400, "mcheads: tidak terdaftar"
+        if status >= 500:
+            self._cooldown(10.0)
+            return "BLOCKED", status, f"mcheads {status}"
+        return "UNKNOWN", status, f"mcheads http {status}"
+
+
 _ALL_SOURCES = [
     PlayerDBSource(),
+    MCServicesAltSource(),
     MSLookupSource(),
+    MCProfileSource(),
+    MCNameMCAPI(),
+    UUIDAPISource(),
+    MCAPI2Source(),
     MojangSource(),
     AshconSource(),
+    MinotarSource(),
     NameMCSource(),
     McCheckerSource(),
+    MCHeadsSource(),
 ]
 
 
@@ -519,19 +738,23 @@ class BulkLookup:
     """
 
     batch_size = BULK_BATCH
-    min_interval = 0.20          # 5 request/detik = sampai 50 nama/detik
+    min_interval = BULK_MIN_INTERVAL   # 20 request/detik = sampai 200 nama/detik
+    concurrency = BULK_CONCURRENCY     # batch berjalan paralel, tidak antri satu-satu
     default_cooldown = 60.0
 
     def __init__(self, timeout: float = 10.0):
         self.timeout = float(timeout)
         self.session = requests.Session()
-        adapter = requests.adapters.HTTPAdapter(pool_connections=8, pool_maxsize=32)
+        adapter = requests.adapters.HTTPAdapter(pool_connections=16, pool_maxsize=64)
         self.session.mount("https://", adapter)
+        self.session.mount("http://", adapter)
         self.pacer = _Pacer(self.min_interval)
         self.cooldown_until = 0.0
         self.last_error = ""
         self._lock = threading.Lock()
-        self._request_lock = threading.Lock()
+        # Kuota slot paralel: dulu semua request bulk diseragamkan lewat satu
+        # kunci, jadi 15 worker tetap mengerjakan satu request pada satu waktu.
+        self._slots = threading.BoundedSemaphore(self.concurrency)
 
     def healthy(self) -> bool:
         return time.time() >= self.cooldown_until
@@ -545,6 +768,16 @@ class BulkLookup:
                 pass
         with self._lock:
             self.cooldown_until = time.time() + min(dur, 900.0)
+            # AIMD: kena limit -> pace mundur (dibalik dua) supaya tidak
+            # langsung kena 429 terus saat pulih.
+            self.pacer.interval = min(BULK_MAX_INTERVAL, self.pacer.interval * 2)
+
+    def _on_success(self) -> None:
+        """Pace kembali kecepatan normal perlahin setelah lolos limit."""
+        with self._lock:
+            if self.pacer.interval > self.min_interval:
+                self.pacer.interval = max(self.min_interval,
+                                          self.pacer.interval * 0.9)
 
     def lookup(self, names: List[str]) -> Tuple[Set[str], bool]:
         """Kembalikan (nama taken lowercase, resolved).
@@ -557,7 +790,7 @@ class BulkLookup:
             return set(), False
         try:
             self.pacer.wait()
-            with self._request_lock:
+            with self._slots:
                 resp = self.session.post(
                     BULK_URL, json=batch, timeout=self.timeout,
                     headers={"Content-Type": "application/json", **API_HEADERS})
@@ -586,6 +819,7 @@ class BulkLookup:
                 label = str(item.get("name", "")).strip().lower()
                 if label:
                     taken.add(label)
+        self._on_success()
         return taken & set(batch), True
 
 

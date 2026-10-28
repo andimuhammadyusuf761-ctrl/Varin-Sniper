@@ -1,0 +1,1917 @@
+[web] 127.0.0.1 - "GET / HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /static/app.css HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /static/app.js HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /assets/icon.png HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/queue/add HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/history?limit=3 HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/events HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET / HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/scan/start HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/scan/stop HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/settings HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/settings HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/export?file=../config.json HTTP/1.1" 400 -
+[web] 127.0.0.1 - "GET /server.py HTTP/1.1" 404 -
+[web] 127.0.0.1 - "GET /api/nope HTTP/1.1" 404 -
+[web] 127.0.0.1 - "GET / HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /assets/icon.png HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /static/app.css HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /static/app.js HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/check HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/history?limit=5 HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/queue/clear HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/history/clear HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET / HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET / HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /static/app.css HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /static/app.js HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET / HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icon.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/scan/start HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET / HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /static/app.css HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /static/app.js HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icon.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET / HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /static/app.css HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /static/app.js HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icon.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET / HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /static/app.css HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /static/app.js HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icon.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate/pattern HTTP/1.1" 400 -
+[web] 10.31.252.165 - "POST /api/generate/pattern HTTP/1.1" 400 -
+[web] 10.31.252.165 - "POST /api/generate/pattern HTTP/1.1" 400 -
+[web] 10.31.252.165 - "POST /api/queue/clear HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/scan/stop HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/check HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/queue/add HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/scan/start HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/scan/stop HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/scan/start HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/queue/clear HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/settings HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/scan/start HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/scan/stop HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/history?limit=100 HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/queue/clear HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/scan/start HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/scan/stop HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET / HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /static/app.css HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /static/app.js HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET / HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/queue/clear HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/queue/add HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/queue/clear HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/state HTTP/1.1" 404 -
+[web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/queue/clear HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET / HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /static/app.js HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /static/app.css HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/settings HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET / HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET / HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /static/app.css HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /static/app.js HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET / HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /static/app.css HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /static/app.js HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/queue/clear HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET / HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /static/app.css HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /static/app.js HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /static/app.js HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET / HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /static/app.css?v=4.2 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /static/app.js?v=4.2 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET / HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET / HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /static/app.js HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] 127.0.0.1 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET / HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /static/app.js?v=4.2 HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /static/app.css?v=4.2 HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET / HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET / HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /static/app.css?v=4.2 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /static/app.js?v=4.2 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET / HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /static/app.css?v=4.2 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /static/app.js?v=4.2 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/scan/start HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/scan/start HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/scan/stop HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&q=qfd HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&q=qfd HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300&q=syi HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300&q=syi HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/history?limit=300&q=syi HTTP/1.1" 200 -
+[web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET / HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /static/app.js?v=4.2 HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/queue HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&q=syi HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&q=syi HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&q=syi HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&q=syi&status=taken HTTP/1.1" 200 -
+[web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&q=syi&status=taken HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=taken HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=taken HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET / HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /static/app.css?v=4.2 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /static/app.js?v=4.2 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET / HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /static/app.css?v=4.2 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /static/app.js?v=4.2 HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[01:53:15] [web] 127.0.0.1 - "GET / HTTP/1.1" 200 -
+[01:53:15] [web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[01:53:15] [web] 127.0.0.1 - "GET / HTTP/1.1" 200 -
+[01:53:16] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[01:53:17] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[01:53:24] [web] 127.0.0.1 - "GET / HTTP/1.1" 200 -
+[01:53:25] [web] 10.31.252.152 - "GET / HTTP/1.1" 200 -
+[01:53:26] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[01:53:26] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[01:53:26] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[01:53:26] [web] 10.31.252.152 - "GET /static/app.css?v=4.3 HTTP/1.1" 200 -
+[01:53:26] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[01:53:26] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[01:53:26] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[01:53:26] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[01:53:26] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[01:53:26] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[01:53:26] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[01:53:26] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[01:53:26] [web] 10.31.252.152 - "GET /static/app.js?v=4.3 HTTP/1.1" 200 -
+[01:53:26] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[01:53:27] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[01:53:27] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[01:53:27] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[01:53:43] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[01:53:57] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] generate received_length=None received_mode=None -> length=3 mode=rarest underscore=False names=500 added=500 queue=500
+[01:54:10] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[01:54:11] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[01:54:13] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[01:54:28] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[01:54:42] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[01:54:58] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[01:55:12] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] generate received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=30 added=0 queue=0
+[01:55:42] [web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] generate received_length=4 received_mode='random' -> length=4 mode=random underscore=False names=8 added=0 queue=0
+[01:55:42] [web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] generate received_length=3 received_mode='legacy' -> length=3 mode=random underscore=False names=5 added=0 queue=0
+[01:55:42] [web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] generate received_length=3 received_mode='balanced' -> length=3 mode=balanced underscore=True names=6 added=0 queue=0
+[01:55:42] [web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[01:55:42] [web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[01:55:42] [web] 127.0.0.1 - "POST /api/settings HTTP/1.1" 200 -
+[01:56:27] [web] 10.31.252.165 - "GET / HTTP/1.1" 200 -
+[01:56:27] [web] 10.31.252.165 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[01:56:27] [web] 10.31.252.165 - "GET /static/app.css?v=4.3 HTTP/1.1" 200 -
+[01:56:27] [web] 10.31.252.165 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[01:56:27] [web] 10.31.252.165 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[01:56:27] [web] 10.31.252.165 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[01:56:27] [web] 10.31.252.165 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[01:56:27] [web] 10.31.252.165 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[01:56:27] [web] 10.31.252.165 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[01:56:28] [web] 10.31.252.165 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[01:56:28] [web] 10.31.252.165 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[01:56:28] [web] 10.31.252.165 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[01:56:28] [web] 10.31.252.165 - "GET /static/app.js?v=4.3 HTTP/1.1" 200 -
+[01:56:28] [web] 10.31.252.165 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[01:56:28] [web] 10.31.252.165 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[01:56:28] [web] 10.31.252.165 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[01:56:28] [web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[01:56:28] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[01:56:30] [web] 10.31.252.165 - "GET / HTTP/1.1" 200 -
+[01:56:31] [web] 10.31.252.165 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[01:56:31] [web] 10.31.252.165 - "GET /static/app.css?v=4.3 HTTP/1.1" 200 -
+[01:56:31] [web] 10.31.252.165 - "GET /static/app.js?v=4.3 HTTP/1.1" 200 -
+[01:56:31] [web] 10.31.252.165 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[01:56:31] [web] 10.31.252.165 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[01:56:31] [web] 10.31.252.165 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[01:56:31] [web] 10.31.252.165 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[01:56:31] [web] 10.31.252.165 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[01:56:31] [web] 10.31.252.165 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[01:56:31] [web] 10.31.252.165 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[01:56:31] [web] 10.31.252.165 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[01:56:31] [web] 10.31.252.165 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[01:56:31] [web] 10.31.252.165 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[01:56:32] [web] 10.31.252.165 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[01:56:32] [web] 10.31.252.165 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[01:56:32] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[01:56:32] [web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[01:56:34] [web] 10.31.252.165 - "GET / HTTP/1.1" 200 -
+[01:56:35] [web] 10.31.252.165 - "GET /static/app.css?v=4.3 HTTP/1.1" 200 -
+[01:56:35] [web] 10.31.252.165 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[01:56:35] [web] 10.31.252.165 - "GET /static/app.js?v=4.3 HTTP/1.1" 200 -
+[01:56:35] [web] 10.31.252.165 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[01:56:35] [web] 10.31.252.165 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[01:56:35] [web] 10.31.252.165 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[01:56:35] [web] 10.31.252.165 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[01:56:35] [web] 10.31.252.165 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[01:56:35] [web] 10.31.252.165 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[01:56:35] [web] 10.31.252.165 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[01:56:35] [web] 10.31.252.165 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[01:56:35] [web] 10.31.252.165 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[01:56:35] [web] 10.31.252.165 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[01:56:35] [web] 10.31.252.165 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[01:56:35] [web] 10.31.252.165 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[01:56:36] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[01:56:36] [web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[01:56:51] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[01:57:06] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[01:57:11] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[01:57:11] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[01:57:11] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[01:57:11] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[01:57:11] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[01:57:11] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[01:57:11] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[01:57:11] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[01:57:11] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[01:57:11] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[01:57:11] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[01:57:11] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[01:57:11] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[01:57:12] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[01:57:12] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[01:57:13] [web] 10.31.252.152 - "GET / HTTP/1.1" 200 -
+[01:57:14] [web] 10.31.252.152 - "GET /static/app.css?v=4.3 HTTP/1.1" 200 -
+[01:57:14] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[01:57:14] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[01:57:14] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[01:57:14] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[01:57:14] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[01:57:14] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[01:57:14] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[01:57:14] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[01:57:14] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[01:57:14] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[01:57:14] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[01:57:14] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[01:57:14] [web] 10.31.252.152 - "GET /static/app.js?v=4.3 HTTP/1.1" 200 -
+[01:57:14] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[01:57:15] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[01:57:15] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[01:57:18] [web] 10.31.252.152 - "POST /api/settings HTTP/1.1" 200 -
+[web] generate received_length=None received_mode=None -> length=3 mode=rarest underscore=False names=500 added=500 queue=500
+[01:57:20] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[01:57:20] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[01:57:22] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[01:57:27] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[01:57:28] [web] 10.31.252.152 - "POST /api/scan/start HTTP/1.1" 200 -
+[01:57:28] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[01:57:30] [web] 127.0.0.1 - "GET /api/queue HTTP/1.1" 200 -
+[01:57:55] [web] 10.31.252.152 - "POST /api/settings HTTP/1.1" 200 -
+[01:58:07] [web] 10.31.252.152 - "POST /api/settings HTTP/1.1" 200 -
+[web] generate received_length=None received_mode=None -> length=3 mode=rarest underscore=False names=500 added=500 queue=500
+[01:58:13] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[01:58:13] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[01:58:52] [web] 127.0.0.1 - "GET / HTTP/1.1" 302 -
+[01:58:52] [web] 127.0.0.1 - "GET /app-v44/ HTTP/1.1" 200 -
+[01:58:52] [web] 127.0.0.1 - "GET /app-v44/ HTTP/1.1" 200 -
+[01:58:52] [web] 127.0.0.1 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[01:58:52] [web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 400 -
+[web] generate keys=['count', 'enqueue', 'length', 'mode'] received_length=4 received_mode='random' -> length=4 mode=random underscore=False names=10 added=0 queue=0
+[01:58:52] [web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] generate keys=['count', 'enqueue', 'length', 'mode'] received_length=3 received_mode='balanced' -> length=3 mode=balanced underscore=True names=6 added=0 queue=0
+[01:58:52] [web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[01:58:52] [web] 127.0.0.1 - "POST /api/settings HTTP/1.1" 200 -
+[01:58:52] [web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[01:59:02] [web] 127.0.0.1 - "GET / HTTP/1.1" 302 -
+[01:59:02] [web] 127.0.0.1 - "GET /app-v44/ HTTP/1.1" 200 -
+[01:59:03] [web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[01:59:07] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[01:59:09] [web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[01:59:09] [web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[01:59:12] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[01:59:15] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[01:59:21] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[01:59:38] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[01:59:50] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 400 -
+[01:59:51] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[01:59:58] [web] 10.31.252.165 - "GET / HTTP/1.1" 302 -
+[01:59:58] [web] 10.31.252.165 - "GET /app-v44/ HTTP/1.1" 200 -
+[01:59:59] [web] 10.31.252.165 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[01:59:59] [web] 10.31.252.165 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[01:59:59] [web] 10.31.252.165 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:00:00] [web] 10.31.252.165 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:00:00] [web] 10.31.252.165 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:00:00] [web] 10.31.252.165 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:00:00] [web] 10.31.252.165 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:00:00] [web] 10.31.252.165 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:00:00] [web] 10.31.252.165 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:00:00] [web] 10.31.252.165 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:00:01] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:00:01] [web] 10.31.252.165 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:00:01] [web] 10.31.252.165 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:00:01] [web] 10.31.252.165 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:00:01] [web] 10.31.252.165 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:00:01] [web] 10.31.252.165 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:00:02] [web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[02:00:16] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 400 -
+[02:00:16] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:00:31] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:00:49] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:00:49] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:01:01] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:01:19] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[02:01:19] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:01:20] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:01:20] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:01:20] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:01:20] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:01:20] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:01:20] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:01:20] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:01:20] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:01:20] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:01:20] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:01:20] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:01:20] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:01:20] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:01:20] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:01:20] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:01:21] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:01:21] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:01:25] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:01:28] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[02:01:29] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:01:29] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:01:29] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:01:29] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:01:29] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:01:29] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:01:29] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:01:29] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:01:29] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:01:29] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:01:29] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:01:29] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:01:29] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:01:29] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:01:29] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:01:29] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:01:30] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:01:30] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:01:32] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:01:36] [web] 10.31.252.152 - "POST /api/settings HTTP/1.1" 200 -
+[02:01:37] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:01:40] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:01:46] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:01:46] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:01:48] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:01:49] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:01:49] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:01:49] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:01:49] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:01:49] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:01:49] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:01:49] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:01:49] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:01:49] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:01:49] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:01:49] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:01:49] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:01:49] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:01:49] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:01:49] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:01:50] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:01:50] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:01:53] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:01:57] [web] 10.31.252.152 - "POST /api/settings HTTP/1.1" 200 -
+[02:01:58] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:02:05] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:02:05] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:02:10] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:02:10] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:02:11] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:02:11] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:02:12] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:02:12] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:02:13] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:02:13] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:02:14] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:02:14] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:02:15] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:02:15] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:02:16] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:02:16] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:02:17] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 400 -
+[02:02:20] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:02:26] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:02:31] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:02:36] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:02:46] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:02:50] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:03:00] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:03:05] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:03:16] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:03:20] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:03:31] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:03:57] [web] 127.0.0.1 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:03:57] [web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['count', 'enqueue', 'length', 'mode'] received_length=4 received_mode='random' -> length=4 mode=random underscore=False names=6 added=0 queue=0
+[02:04:49] [web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] generate keys=['count', 'enqueue', 'length', 'mode'] received_length=4 received_mode='random' -> length=4 mode=random underscore=False names=6 added=0 queue=0
+[02:04:49] [web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] generate keys=['count', 'enqueue', 'length', 'mode'] received_length=3 received_mode='balanced' -> length=3 mode=balanced underscore=True names=6 added=0 queue=0
+[02:04:49] [web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[02:04:49] [web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 400 -
+[web] queue/add requested=3 added=3 known=0 queue=3
+[02:04:49] [web] 127.0.0.1 - "POST /api/queue/add HTTP/1.1" 200 -
+[02:04:49] [web] 127.0.0.1 - "POST /api/queue/clear HTTP/1.1" 200 -
+[02:04:49] [web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[02:04:55] [web] 127.0.0.1 - "GET / HTTP/1.1" 302 -
+[02:04:55] [web] 127.0.0.1 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:05:03] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[02:05:04] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:05:04] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:05:04] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:05:04] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:05:04] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:05:04] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:05:04] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:05:04] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:05:04] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:05:05] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:05:05] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:05:05] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:05:05] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:05:05] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:05:05] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:05:05] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:05:05] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:05:05] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:05:08] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[02:05:09] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[02:05:10] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:05:11] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:05:11] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:05:11] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:05:11] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:05:11] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:05:11] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:05:11] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:05:11] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:05:11] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:05:11] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:05:11] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:05:11] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:05:11] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:05:11] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:05:11] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:05:12] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:05:12] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='balanced' -> length=3 mode=balanced underscore=True names=500 added=500 queue=500
+[02:05:14] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[02:05:15] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:05:23] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:05:24] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:05:24] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:05:24] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:05:24] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:05:24] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:05:24] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:05:24] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:05:24] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:05:24] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:05:24] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:05:24] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:05:24] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:05:24] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:05:24] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:05:24] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:05:25] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:05:25] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:05:26] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[02:05:26] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:05:27] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:05:27] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:05:27] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:05:27] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:05:27] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:05:27] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:05:27] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:05:27] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:05:27] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:05:27] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:05:27] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:05:27] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:05:27] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:05:27] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:05:27] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:05:27] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:05:28] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:05:28] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:05:32] [web] 10.31.252.152 - "POST /api/settings HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=500 added=489 queue=989
+[02:05:33] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[02:05:34] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:05:39] [web] 10.31.252.152 - "POST /api/scan/start HTTP/1.1" 200 -
+[02:05:39] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:06:39] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:06:39] [web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[02:06:41] [web] 10.31.252.152 - "POST /api/settings HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=4 received_mode='rarest' -> length=4 mode=rarest underscore=False names=2500 added=2500 queue=2500
+[02:06:44] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[02:06:44] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:07:13] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:07:14] [web] 10.31.252.152 - "POST /api/queue/clear HTTP/1.1" 200 -
+[02:07:14] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:07:21] [web] 10.31.252.152 - "POST /api/scan/stop HTTP/1.1" 200 -
+[02:07:21] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:07:28] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:07:42] [WARNING] [urllib3.connectionpool] Connection pool is full, discarding connection: playerdb.co. Connection pool size: 10
+[02:07:43] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:07:58] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:08:13] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:10:18] [web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[02:10:18] [web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[02:10:18] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:10:18] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=2500 added=2500 queue=2500
+[02:10:19] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[02:10:19] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:10:22] [web] 10.31.252.165 - "POST /api/queue/clear HTTP/1.1" 200 -
+[02:10:23] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=2500 added=2500 queue=2500
+[02:10:26] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[02:10:26] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:10:27] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:10:28] [web] 10.31.252.165 - "GET /api/export?file=available.txt HTTP/1.1" 200 -
+[02:10:36] [web] 10.31.252.165 - "POST /api/scan/start HTTP/1.1" 200 -
+[02:10:36] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:12:01] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[02:12:01] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:12:03] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[02:12:03] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:12:07] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[02:12:07] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:12:08] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:12:08] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:12:08] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:12:08] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:12:08] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:12:08] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:12:08] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:12:08] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:12:08] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:12:08] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:12:08] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:12:08] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:12:08] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:12:08] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:12:08] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:12:09] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:12:10] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=2500 added=2500 queue=2500
+[02:13:43] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[02:13:44] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=2500 added=2321 queue=4819
+[02:13:44] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[02:13:44] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=2500 added=2104 queue=6727
+[02:14:07] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[02:14:07] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[02:14:27] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:15:19] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:19:08] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:19:08] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:19:08] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:19:08] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:19:09] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:19:09] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:19:09] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:19:09] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:19:09] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:19:09] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:19:09] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:19:09] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:19:09] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:19:09] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:19:09] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:19:09] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:19:09] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:19:09] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:19:09] [web] 10.31.252.152 - "GET /assets/icon.png HTTP/1.1" 200 -
+[02:19:54] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:20:01] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:20:01] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:20:01] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:20:01] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:20:01] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:20:01] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:20:01] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:20:01] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:20:01] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:20:01] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:20:01] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:20:01] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:20:01] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:20:01] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:20:01] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:20:03] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:20:03] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:20:03] [web] 10.31.252.152 - "GET /assets/icon.png HTTP/1.1" 200 -
+[02:20:14] [web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[02:20:15] [web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[02:20:16] [web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[02:20:17] [web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[02:20:19] [web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[02:20:20] [web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[02:20:21] [web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[02:20:22] [web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[02:20:22] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:20:24] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:20:24] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:20:26] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:20:28] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:20:29] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:20:30] [web] 10.31.252.152 - "GET /api/history?limit=300&status=rate_limited HTTP/1.1" 200 -
+[02:20:30] [web] 10.31.252.152 - "GET /api/history?limit=300&status=rate_limited HTTP/1.1" 200 -
+[02:20:31] [web] 10.31.252.152 - "GET /api/history?limit=300&status=rate_limited HTTP/1.1" 200 -
+[02:20:33] [web] 10.31.252.152 - "GET /api/history?limit=300&status=rate_limited HTTP/1.1" 200 -
+[02:21:55] [web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[02:22:15] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:22:17] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=2500 added=2468 queue=2838
+[02:22:52] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[02:22:52] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=2500 added=2236 queue=5062
+[02:22:55] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[02:22:56] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=2500 added=2007 queue=7067
+[02:22:56] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[02:22:56] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=2500 added=1794 queue=8858
+[02:22:56] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[02:22:57] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=2500 added=1625 queue=10480
+[02:22:57] [web] 10.31.252.152 - "POST /api/generate HTTP/1.1" 200 -
+[02:22:57] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:23:51] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:23:52] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:23:52] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:23:52] [web] 10.31.252.152 - "GET /assets/icon.png HTTP/1.1" 200 -
+[02:24:01] [web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[02:24:03] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:24:03] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:24:06] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:24:07] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:24:08] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:24:09] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:24:25] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:25:43] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:25:45] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:25:47] [web] 10.31.252.152 - "POST /api/history/rescan HTTP/1.1" 200 -
+[02:25:47] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:25:48] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:25:52] [web] 10.31.252.152 - "POST /api/history/rescan HTTP/1.1" 200 -
+[02:25:52] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:25:55] [web] 10.31.252.152 - "POST /api/history/rescan HTTP/1.1" 200 -
+[02:25:55] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:25:55] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:26:02] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:28:28] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:29:06] [web] 10.31.252.152 - "POST /api/settings HTTP/1.1" 200 -
+[02:29:16] [web] 10.31.252.152 - "POST /api/settings HTTP/1.1" 200 -
+[02:29:18] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:29:20] [web] 10.31.252.152 - "POST /api/settings HTTP/1.1" 200 -
+[02:29:29] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:29:30] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:29:30] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:29:32] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:29:34] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:29:36] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:31:03] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:31:03] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:31:03] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:31:04] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:31:04] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:31:04] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:31:04] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:31:04] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:31:04] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:31:04] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:31:04] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:31:04] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:31:04] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:31:04] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:31:04] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:31:04] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:31:04] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:31:04] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:31:05] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:31:05] [web] 10.31.252.152 - "GET /assets/icon.png HTTP/1.1" 200 -
+[02:31:05] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:31:10] [web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[02:31:11] [web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[02:31:13] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:31:14] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:31:14] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:31:14] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:31:15] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:31:15] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:31:16] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:31:27] [web] 10.31.252.152 - "POST /api/settings HTTP/1.1" 200 -
+[02:32:52] [web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[02:32:52] [web] 10.31.252.165 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:32:53] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:32:53] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:32:53] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:32:53] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:32:53] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:32:53] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:32:53] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:32:53] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:32:53] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:32:53] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:32:53] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:32:53] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:32:53] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:32:53] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:32:53] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:32:54] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:32:54] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:32:54] [web] 10.31.252.152 - "GET /assets/icon.png HTTP/1.1" 200 -
+[02:35:28] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:35:29] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:35:29] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:35:29] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:35:29] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:35:29] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:35:29] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:35:29] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:35:29] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:35:29] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:35:29] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:35:29] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:35:29] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:35:29] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:35:29] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:35:29] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:35:29] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:35:29] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:35:35] [web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[02:35:36] [web] 10.31.252.152 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[02:35:38] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:35:40] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:35:40] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:35:41] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:36:05] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:36:05] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:36:05] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:36:06] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:36:06] [web] 10.31.252.152 - "POST /api/history/rescan HTTP/1.1" 200 -
+[02:36:07] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:36:07] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:36:08] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:36:09] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:36:10] [web] 10.31.252.152 - "GET /api/history?limit=300&status=available HTTP/1.1" 200 -
+[02:36:49] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[02:36:49] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:36:50] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:36:50] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:36:50] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:36:50] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:36:50] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:36:50] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:36:50] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:36:50] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:36:50] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:36:50] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:36:50] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:36:50] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:36:50] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:36:50] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:36:50] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:36:53] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[02:36:53] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:36:54] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:36:54] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:36:54] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:36:54] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:36:54] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:36:54] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:36:54] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:36:54] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:36:54] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:36:54] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:36:54] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:36:54] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:36:54] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:36:54] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:36:54] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:36:55] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:36:55] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:38:06] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:40:49] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[02:47:35] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[02:47:35] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:47:36] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:47:36] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:47:36] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:47:36] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:47:36] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:47:36] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:47:36] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:47:36] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:47:37] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[02:47:37] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[02:47:38] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[02:47:38] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[02:47:38] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[02:47:38] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[02:47:38] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[02:47:38] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[02:47:38] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[02:47:38] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[02:47:38] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[02:47:38] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[02:47:38] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[02:47:38] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[02:47:38] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[02:47:38] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[02:47:38] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[02:47:39] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[02:47:39] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[03:00:32] [web] 127.0.0.1 - "GET / HTTP/1.1" 302 -
+[03:00:32] [web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['count', 'enqueue', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=1500 added=0 queue=0
+[03:01:00] [web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] generate keys=['count', 'enqueue', 'length', 'mode'] received_length=4 received_mode='random' -> length=4 mode=random underscore=False names=1500 added=0 queue=0
+[03:01:00] [web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] generate keys=['count', 'enqueue', 'length', 'mode'] received_length=3 received_mode='balanced' -> length=3 mode=balanced underscore=True names=300 added=0 queue=0
+[03:01:00] [web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[web] queue/add requested=5 added=1 known=4 queue=1
+[03:01:00] [web] 127.0.0.1 - "POST /api/queue/add HTTP/1.1" 200 -
+[03:01:00] [web] 127.0.0.1 - "POST /api/queue/clear HTTP/1.1" 200 -
+[web] queue/add requested=3 added=0 known=0 queue=0
+[03:01:39] [web] 127.0.0.1 - "POST /api/queue/add HTTP/1.1" 200 -
+[web] queue/add requested=2 added=2 known=1 queue=2
+[03:01:39] [web] 127.0.0.1 - "POST /api/queue/add HTTP/1.1" 200 -
+[03:01:39] [web] 127.0.0.1 - "POST /api/queue/clear HTTP/1.1" 200 -
+[03:02:32] [web] 127.0.0.1 - "GET / HTTP/1.1" 302 -
+[03:02:32] [web] 127.0.0.1 - "GET /app-v44/ HTTP/1.1" 200 -
+[03:02:37] [web] 127.0.0.1 - "GET / HTTP/1.1" 302 -
+[03:02:37] [web] 127.0.0.1 - "GET /app-v44/ HTTP/1.1" 200 -
+[03:03:22] [web] 10.31.252.165 - "GET / HTTP/1.1" 302 -
+[03:03:23] [web] 10.31.252.165 - "GET /app-v44/ HTTP/1.1" 200 -
+[03:03:24] [web] 10.31.252.165 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[03:03:24] [web] 10.31.252.165 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[03:03:24] [web] 10.31.252.165 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[03:03:24] [web] 10.31.252.165 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[03:03:24] [web] 10.31.252.165 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[03:03:24] [web] 10.31.252.165 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[03:03:24] [web] 10.31.252.165 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[03:03:24] [web] 10.31.252.165 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[03:03:24] [web] 10.31.252.165 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[03:03:24] [web] 10.31.252.165 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[03:03:24] [web] 10.31.252.165 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[03:03:24] [web] 10.31.252.165 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[03:03:24] [web] 10.31.252.165 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[03:03:24] [web] 10.31.252.165 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[03:03:24] [web] 10.31.252.165 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[03:03:25] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:03:25] [web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[03:08:37] [web] 127.0.0.1 - "GET / HTTP/1.1" 302 -
+[03:08:37] [web] 127.0.0.1 - "GET /app-v44/ HTTP/1.1" 200 -
+[03:08:37] [web] 127.0.0.1 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[03:08:37] [web] 127.0.0.1 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['count', 'enqueue', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=50 added=0 queue=0
+[03:08:37] [web] 127.0.0.1 - "POST /api/generate HTTP/1.1" 200 -
+[03:08:44] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[03:08:45] [web] 10.31.252.165 - "GET / HTTP/1.1" 302 -
+[03:08:45] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[03:08:45] [web] 10.31.252.165 - "GET /app-v44/ HTTP/1.1" 200 -
+[03:08:45] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[03:08:45] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[03:08:45] [web] 10.31.252.165 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[03:08:45] [web] 10.31.252.165 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[03:08:45] [web] 10.31.252.165 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[03:08:45] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[03:08:45] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[03:08:45] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[03:08:45] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[03:08:45] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[03:08:45] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[03:08:45] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[03:08:45] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[03:08:45] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[03:08:45] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[03:08:45] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[03:08:46] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[03:08:46] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[03:08:46] [web] 10.31.252.165 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[03:08:46] [web] 10.31.252.165 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[03:08:46] [web] 10.31.252.165 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[03:08:46] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[03:08:46] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[03:08:46] [web] 10.31.252.165 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[03:08:46] [web] 10.31.252.165 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[03:08:46] [web] 10.31.252.165 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[03:08:46] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:08:46] [web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[03:08:46] [web] 10.31.252.165 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[03:08:46] [web] 10.31.252.165 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[03:08:47] [web] 10.31.252.165 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[03:08:47] [web] 10.31.252.165 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[03:08:47] [web] 10.31.252.165 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[03:08:47] [web] 10.31.252.165 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[03:08:47] [web] 10.31.252.165 - "GET /assets/icon.png HTTP/1.1" 200 -
+[03:08:50] [web] 10.31.252.165 - "GET / HTTP/1.1" 302 -
+[03:08:50] [web] 10.31.252.165 - "GET /app-v44/ HTTP/1.1" 200 -
+[03:08:51] [web] 10.31.252.165 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[03:08:51] [web] 10.31.252.165 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[03:08:51] [web] 10.31.252.165 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[03:08:51] [web] 10.31.252.165 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[03:08:51] [web] 10.31.252.165 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[03:08:51] [web] 10.31.252.165 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[03:08:51] [web] 10.31.252.165 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[03:08:51] [web] 10.31.252.165 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[03:08:51] [web] 10.31.252.165 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[03:08:51] [web] 10.31.252.165 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[03:08:51] [web] 10.31.252.165 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[03:08:51] [web] 10.31.252.165 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[03:08:51] [web] 10.31.252.165 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[03:08:51] [web] 10.31.252.165 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[03:08:51] [web] 10.31.252.165 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[03:08:52] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:08:52] [web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=500 added=500 queue=500
+[03:08:57] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[03:08:58] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:09:01] [web] 10.31.252.165 - "POST /api/scan/start HTTP/1.1" 200 -
+[03:09:01] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:09:02] [web] 127.0.0.1 - "GET / HTTP/1.1" 302 -
+[03:09:02] [web] 127.0.0.1 - "GET /app-v44/ HTTP/1.1" 200 -
+[03:09:07] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[03:09:07] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[03:09:07] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[03:09:07] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[03:09:08] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[03:09:08] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[03:09:08] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[03:09:08] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[03:09:08] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[03:09:08] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[03:09:08] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[03:09:09] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[03:09:09] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[03:09:09] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[03:09:09] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[03:09:09] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[03:09:10] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[03:09:10] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[03:09:10] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[03:09:24] [web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[03:09:34] [web] 10.31.252.165 - "GET /app-v44/ HTTP/1.1" 200 -
+[03:09:35] [web] 10.31.252.165 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[03:09:35] [web] 10.31.252.165 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[03:09:35] [web] 10.31.252.165 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[03:09:35] [web] 10.31.252.165 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[03:09:35] [web] 10.31.252.165 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[03:09:35] [web] 10.31.252.165 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[03:09:35] [web] 10.31.252.165 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[03:09:35] [web] 10.31.252.165 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[03:09:35] [web] 10.31.252.165 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[03:09:35] [web] 10.31.252.165 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[03:09:35] [web] 10.31.252.165 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[03:09:35] [web] 10.31.252.165 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[03:09:35] [web] 10.31.252.165 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[03:09:35] [web] 10.31.252.165 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[03:09:35] [web] 10.31.252.165 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[03:09:36] [web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[03:09:36] [web] 10.31.252.165 - "GET /assets/icon.png HTTP/1.1" 200 -
+[03:09:36] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:09:41] [web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='rarest' -> length=3 mode=rarest underscore=False names=500 added=500 queue=500
+[03:09:43] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[03:09:43] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='rarest' -> length=3 mode=rarest underscore=False names=500 added=500 queue=500
+[03:09:53] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[03:09:53] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='rarest' -> length=3 mode=rarest underscore=False names=500 added=0 queue=302
+[03:09:54] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[03:09:55] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='rarest' -> length=3 mode=rarest underscore=False names=500 added=0 queue=182
+[03:09:55] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[03:09:55] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='rarest' -> length=3 mode=rarest underscore=False names=500 added=0 queue=30
+[03:09:55] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[03:09:56] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='rarest' -> length=3 mode=rarest underscore=False names=500 added=0 queue=30
+[03:09:56] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[03:09:56] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='rarest' -> length=3 mode=rarest underscore=False names=58 added=28 queue=58
+[03:09:56] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[03:09:57] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:10:06] [web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[03:10:07] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:10:12] [web] 10.31.252.165 - "POST /api/scan/stop HTTP/1.1" 200 -
+[03:10:12] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:10:13] [web] 10.31.252.165 - "POST /api/scan/start HTTP/1.1" 200 -
+[03:10:13] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='rarest' -> length=3 mode=rarest underscore=False names=0 added=0 queue=0
+[03:10:27] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[03:10:28] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=4 received_mode='rarest' -> length=4 mode=rarest underscore=False names=500 added=500 queue=500
+[03:10:33] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[03:10:33] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:10:58] [web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[03:10:58] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:10:59] [web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[03:11:00] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:11:01] [web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[03:11:01] [web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[03:11:01] [web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[03:11:01] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:11:02] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:11:02] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:11:03] [web] 10.31.252.165 - "GET /app-v44/ HTTP/1.1" 200 -
+[03:11:03] [web] 10.31.252.165 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[03:11:03] [web] 10.31.252.165 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[03:11:03] [web] 10.31.252.165 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[03:11:03] [web] 10.31.252.165 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[03:11:03] [web] 10.31.252.165 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[03:11:03] [web] 10.31.252.165 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[03:11:03] [web] 10.31.252.165 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[03:11:03] [web] 10.31.252.165 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[03:11:03] [web] 10.31.252.165 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[03:11:03] [web] 10.31.252.165 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[03:11:03] [web] 10.31.252.165 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[03:11:03] [web] 10.31.252.165 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[03:11:03] [web] 10.31.252.165 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[03:11:03] [web] 10.31.252.165 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[03:11:03] [web] 10.31.252.165 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[03:11:04] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:11:04] [web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[03:11:04] [web] 10.31.252.165 - "GET /assets/icon.png HTTP/1.1" 200 -
+[03:11:32] [web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[03:11:32] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:11:39] [web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=500 added=500 queue=500
+[03:11:40] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[03:11:40] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:12:11] [web] 10.31.252.165 - "POST /api/settings HTTP/1.1" 200 -
+[03:12:11] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:12:16] [web] 10.31.252.165 - "POST /api/scan/start HTTP/1.1" 200 -
+[03:12:17] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:12:17] [web] 10.31.252.165 - "POST /api/scan/stop HTTP/1.1" 200 -
+[03:12:17] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=500 added=500 queue=500
+[03:12:25] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[03:12:25] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=500 added=500 queue=500
+[03:12:56] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[03:12:56] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[web] generate keys=['consonants_only', 'count', 'length', 'mode'] received_length=3 received_mode='random' -> length=3 mode=random underscore=False names=2500 added=2500 queue=2502
+[03:13:37] [web] 10.31.252.165 - "POST /api/generate HTTP/1.1" 200 -
+[03:13:37] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:15:44] [web] 10.31.252.165 - "POST /api/queue/clear HTTP/1.1" 200 -
+[03:15:45] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:15:48] [web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[03:15:51] [web] 10.31.252.165 - "POST /api/history/rescan HTTP/1.1" 200 -
+[03:15:52] [web] 10.31.252.165 - "GET /api/state HTTP/1.1" 200 -
+[03:15:55] [web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[03:15:57] [web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[03:15:58] [web] 10.31.252.165 - "GET /api/history?limit=300 HTTP/1.1" 200 -
+[03:23:45] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[03:23:45] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[03:23:46] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[03:23:46] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[03:23:46] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[03:23:46] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[03:23:46] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[03:23:46] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[03:23:46] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[03:23:46] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[03:23:47] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[03:23:49] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[03:23:49] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[03:23:51] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[03:23:51] [web] 10.31.252.152 - "GET /app-v44/ HTTP/1.1" 200 -
+[03:23:51] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[03:23:51] [web] 10.31.252.152 - "GET /static/app.css?v=4.4 HTTP/1.1" 200 -
+[03:23:52] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[03:23:52] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[03:23:52] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[03:23:52] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[03:23:52] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[03:23:52] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[03:23:52] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[03:23:52] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[03:23:52] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[03:23:52] [web] 10.31.252.152 - "GET /static/app.js?v=4.4 HTTP/1.1" 200 -
+[03:23:52] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[03:23:52] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[03:23:52] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[03:23:52] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[03:23:52] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[03:24:24] [web] 10.31.252.165 - "GET /api/events HTTP/1.1" 200 -
+[03:50:05] [WARNING] [VarinSniper.Proxy] Proxy file not found: proxies.txt
+[03:50:10] [web] 127.0.0.1 - "GET / HTTP/1.1" 302 -
+[03:50:10] [web] 127.0.0.1 - "GET /app-v45/ HTTP/1.1" 200 -
+[03:50:10] [web] 127.0.0.1 - "GET /static/app.js?v=4.5 HTTP/1.1" 200 -
+[03:50:10] [web] 127.0.0.1 - "GET /api/dg/state HTTP/1.1" 200 -
+[03:51:29] [web] 127.0.0.1 - "POST /api/dg/generate HTTP/1.1" 200 -
+[03:51:29] [web] 127.0.0.1 - "POST /api/dg/generate HTTP/1.1" 200 -
+[03:51:29] [web] 127.0.0.1 - "POST /api/dg/check HTTP/1.1" 200 -
+[03:51:30] [web] 127.0.0.1 - "POST /api/dg/check HTTP/1.1" 200 -
+[03:54:03] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[03:54:03] [web] 10.31.252.152 - "GET /app-v45/ HTTP/1.1" 200 -
+[03:54:04] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[03:54:04] [web] 10.31.252.152 - "GET /static/app.css?v=4.5 HTTP/1.1" 200 -
+[03:54:04] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[03:54:04] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[03:54:04] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[03:54:04] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[03:54:04] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[03:54:04] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[03:54:04] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[03:54:04] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[03:54:04] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[03:54:04] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[03:54:04] [web] 10.31.252.152 - "GET /static/app.js?v=4.5 HTTP/1.1" 200 -
+[03:54:04] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[03:54:04] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[03:54:07] [WARNING] [VarinSniper.Proxy] Proxy file not found: proxies.txt
+[03:54:20] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[03:54:35] [web] 10.31.252.152 - "GET / HTTP/1.1" 302 -
+[03:54:35] [web] 10.31.252.152 - "GET /app-v45/ HTTP/1.1" 200 -
+[03:54:35] [web] 10.31.252.152 - "GET /assets/logo_small.png HTTP/1.1" 200 -
+[03:54:35] [web] 10.31.252.152 - "GET /static/app.css?v=4.5 HTTP/1.1" 200 -
+[03:54:35] [web] 10.31.252.152 - "GET /assets/icons/nav_checker_hi.png HTTP/1.1" 200 -
+[03:54:35] [web] 10.31.252.152 - "GET /assets/icons/act_sparkle_hi.png HTTP/1.1" 200 -
+[03:54:35] [web] 10.31.252.152 - "GET /assets/icons/nav_settings_hi.png HTTP/1.1" 200 -
+[03:54:35] [web] 10.31.252.152 - "GET /assets/icons/nav_stats_hi.png HTTP/1.1" 200 -
+[03:54:35] [web] 10.31.252.152 - "GET /assets/icons/act_search_hi.png HTTP/1.1" 200 -
+[03:54:36] [web] 10.31.252.152 - "GET /assets/icons/act_clock_hi.png HTTP/1.1" 200 -
+[03:54:36] [web] 10.31.252.152 - "GET /assets/icons/act_export_hi.png HTTP/1.1" 200 -
+[03:54:36] [web] 10.31.252.152 - "GET /assets/icons/act_settings_hi.png HTTP/1.1" 200 -
+[03:54:36] [web] 10.31.252.152 - "GET /assets/icons/act_stats_hi.png HTTP/1.1" 200 -
+[03:54:36] [web] 10.31.252.152 - "GET /assets/icons/nav_history_hi.png HTTP/1.1" 200 -
+[03:54:36] [web] 10.31.252.152 - "GET /assets/icons/act_history_hi.png HTTP/1.1" 200 -
+[03:54:36] [web] 10.31.252.152 - "GET /assets/icons/act_folder_hi.png HTTP/1.1" 200 -
+[03:54:36] [web] 10.31.252.152 - "GET /static/app.js?v=4.5 HTTP/1.1" 200 -
+[03:54:36] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[03:54:36] [web] 10.31.252.152 - "GET /api/events HTTP/1.1" 200 -
+[03:54:51] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[03:55:06] [web] 10.31.252.152 - "GET /api/state HTTP/1.1" 200 -
+[03:55:26] [web] 127.0.0.1 - "POST /api/dg/check HTTP/1.1" 200 -
+[03:55:28] [web] 127.0.0.1 - "POST /api/dg/check HTTP/1.1" 200 -
+[03:55:29] [web] 127.0.0.1 - "POST /api/dg/queue/add HTTP/1.1" 200 -
+[03:55:29] [WARNING] [VarinSniper.Proxy] Proxy file not found: proxies.txt
+[03:55:29] [web] 127.0.0.1 - "POST /api/dg/start HTTP/1.1" 200 -
+[03:55:43] [web] 127.0.0.1 - "POST /api/dg/stop HTTP/1.1" 200 -
+[03:55:43] [web] 127.0.0.1 - "GET /api/dg/state HTTP/1.1" 200 -

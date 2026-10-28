@@ -59,6 +59,7 @@ hiddenimports += [
     "ui.widgets",
     "ui.app",
     "controller",
+    "blocklist",          # daftar 3name.xyz/list + filter inappropriate
 ]
 
 # --- Aset aplikasi (ikon app + set ikon GUI) -------------------------------- #
