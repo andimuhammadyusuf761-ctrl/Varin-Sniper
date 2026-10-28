@@ -1,9 +1,15 @@
 """
 icons.py — pemuat set ikon Varin Sniper (PNG hasil tools/make_icons.py).
 
-Semua ikon di-cache dan dimuat malas (lazy) supaya startup tetap cepat. Kalau
-file aset hilang (mis. exe tidak menyertakan folder assets), fungsi di sini
-mengembalikan None dan UI otomatis jatuh ke tampilan teks saja.
+Ikon untuk widget dikembalikan sebagai `ctk.CTkImage` supaya customtkinter bisa
+menskalakannya di layar HighDPI (kalau dibiarkan `tk.PhotoImage`, CTk hanya
+memberi peringatan dan ikon tampil kecil/buram di scaling >100%). Untuk
+kebutuhan yang memang butuh `PhotoImage` mentah (canvas wallpaper, iconphoto
+jendela) disediakan `_photo()`.
+
+Semua ikon di-cache dan dimuat malas (lazy). Kalau file aset hilang (mis. exe
+tidak menyertakan folder assets), fungsi di sini mengembalikan None dan UI
+otomatis jatuh ke tampilan teks saja.
 """
 from __future__ import annotations
 
@@ -12,7 +18,8 @@ import sys
 import tkinter as tk
 from typing import Dict, Optional, Tuple
 
-_CACHE: Dict[Tuple[str, str], object] = {}
+_RAW: Dict[Tuple[str, str], object] = {}      # tk.PhotoImage mentah
+_CACHE: Dict[Tuple[str, str], object] = {}    # CTkImage untuk widget
 
 _ACT_VARIANT_INDEX = {"hi": 0, "dim": 1, "ink": 2}
 
@@ -25,8 +32,9 @@ def resource_path(*parts: str) -> str:
     return os.path.join(base, *parts)
 
 
-def _load(rel_parts: Tuple[str, ...], key: Tuple[str, str]) -> Optional[object]:
-    cached = _CACHE.get(key)
+def _photo(rel_parts: Tuple[str, ...], key: Tuple[str, str]) -> Optional[object]:
+    """Muat PNG sebagai tk.PhotoImage mentah (di-cache)."""
+    cached = _RAW.get(key)
     if cached is not None:
         return cached
     path = resource_path(*rel_parts)
@@ -36,8 +44,27 @@ def _load(rel_parts: Tuple[str, ...], key: Tuple[str, str]) -> Optional[object]:
         img = tk.PhotoImage(file=path)
     except Exception:  # noqa: BLE001  (Tk tanpa dukungan PNG, file rusak, dll.)
         return None
-    _CACHE[key] = img
+    _RAW[key] = img
     return img
+
+
+def _load(rel_parts: Tuple[str, ...], key: Tuple[str, str]) -> Optional[object]:
+    """Muat ikon sebagai CTkImage; fallback ke PhotoImage bila ctk tak siap."""
+    cached = _CACHE.get(key)
+    if cached is not None:
+        return cached
+    photo = _photo(rel_parts, key)
+    if photo is None:
+        return None
+    image: object = photo
+    try:
+        import customtkinter as ctk
+        image = ctk.CTkImage(light_image=photo, dark_image=photo,
+                             size=(photo.width(), photo.height()))
+    except Exception:  # noqa: BLE001  (root belum ada / versi ctk lama)
+        image = photo
+    _CACHE[key] = image
+    return image
 
 
 def nav_icon(name: str, active: bool = True) -> Optional[object]:
@@ -60,7 +87,8 @@ def logo(size: str = "big") -> Optional[object]:
 
 
 def app_icon_photo() -> Optional[object]:
-    return _load(("assets", "icon.png"), ("app", "png"))
+    """Ikon aplikasi sebagai PhotoImage mentah (untuk iconphoto jendela)."""
+    return _photo(("assets", "icon.png"), ("app", "png"))
 
 
 def set_window_icon(window: object) -> bool:

@@ -283,6 +283,27 @@ def main() -> int:
             fail(f"aset hilang: assets/{name}")
     ok(f"ikon: {len(nav_icons)} nav, {len(action_icons)} aksi direferensikan kode")
 
+    # -- jalur simpan config -------------------------------------------------- #
+    # GUI wajib memakai save_current_config(). utils.save_config(path, config)
+    # butuh dua argumen; pemanggilan satu-argumen dulu hanya error saat runtime
+    # (bahasa & setting tidak pernah tersimpan), jadi dijaga di sini.
+    bad_calls: List[str] = []
+    for key, tree in modules.items():
+        if not key.startswith("ui/"):
+            continue
+        for node in ast.walk(tree):
+            if (isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+                    and node.func.id == "save_config"):
+                bad_calls.append(f"{key}:{node.lineno}")
+    if bad_calls:
+        fail(f"config: ui/ harus memakai save_current_config(), bukan save_config() -> {bad_calls}")
+    utils_tree = modules.get("utils.py")
+    defined = {node.name for node in ast.walk(utils_tree)
+               if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))} if utils_tree else set()
+    if "save_current_config" not in defined:
+        fail("config: utils.save_current_config() tidak ada")
+    ok("config: UI menyimpan setting lewat save_current_config()")
+
     # -- matematika wallpaper + helper tema ---------------------------------- #
     from ui import theme as th
     from ui import wallpaper as wp

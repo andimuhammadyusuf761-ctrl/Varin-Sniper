@@ -315,7 +315,13 @@ def _run_smoke_test(app: Any) -> int:
 
     def check_close() -> str:
         app._on_close()
-        require(not app.winfo_exists(), "jendela masih hidup setelah _on_close()")
+        # Setelah destroy(), Tk menolak perintah "winfo" (TclError). Itu justru
+        # bukti jendelanya sudah hilang, jadi diperlakukan sebagai tertutup.
+        try:
+            alive = bool(app.winfo_exists())
+        except Exception:  # noqa: BLE001
+            alive = False
+        require(not alive, "jendela masih hidup setelah _on_close()")
         return "ditutup rapi"
 
     for name, worker in (

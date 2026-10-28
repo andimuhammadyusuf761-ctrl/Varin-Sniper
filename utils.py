@@ -129,6 +129,18 @@ def save_config(config_path: str, config: dict) -> None:
     except IOError as e:
         logger.error(f"Failed to save config: {e}")
 
+def save_current_config(config: Optional[Dict[str, Any]] = None) -> None:
+    """Simpan config global (ConfigManager) ke disk.
+
+    Satu jalur tulis untuk GUI: memakai lock yang sama dan path yang sama
+    dengan saat config dibaca, sehingga setting yang diubah di UI benar-benar
+    tersimpan (bukan hanya berubah di memori).
+    """
+    if config is not None:
+        _config_manager.config = config
+    _config_manager.save_config()
+
+
 def load_names_from_file(filepath: str) -> List[str]:
     """Load usernames from a text file, one per line"""
     names = []

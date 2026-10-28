@@ -47,7 +47,7 @@ from ui.widgets import (
     Card3D, ListPane, LogView, SegmentedTabs, StatChip3D, Toast, button,
     claim_modal, labeled_entry, slider_row, switch_row,
 )
-from utils import append_to_file, load_names_from_file, save_config
+from utils import append_to_file, load_names_from_file, save_current_config
 
 PAGES: Tuple[str, ...] = ("checker", "sniper", "accounts", "proxies", "history", "settings", "stats")
 
@@ -533,14 +533,14 @@ class VarinSniperApp(ctk.CTk):
         if not i18n.set_language(code):
             return
         self.cfg["language"] = code
-        save_config(self.cfg)
+        save_current_config(self.cfg)
         self._rebuild()
         self._toast_message(t("toast.language", language=LANGUAGE_NAMES.get(code, code)), T.ACCENT)
 
     def _apply_wallpaper(self, enabled: bool) -> None:
         enabled = bool(enabled)
         self.cfg["wallpaper_3d"] = enabled
-        save_config(self.cfg)
+        save_current_config(self.cfg)
         for wall in list(self._wallpapers):
             wall.set_enabled(enabled)
         try:
@@ -562,7 +562,7 @@ class VarinSniperApp(ctk.CTk):
     def _apply_effects(self, enabled: bool) -> None:
         enabled = bool(enabled)
         self.cfg["effects_3d"] = enabled
-        save_config(self.cfg)
+        save_current_config(self.cfg)
         T.set_effects(enabled)
         try:
             if enabled:
@@ -1580,7 +1580,7 @@ class VarinSniperApp(ctk.CTk):
     # ------------------------------------------------------------------ #
     def _save_setting(self, key: str, value: Any) -> None:
         self.cfg[key] = value
-        save_config(self.cfg)
+        save_current_config(self.cfg)
 
     def _collect_settings(self) -> Dict[str, Any]:
         def as_float(entry: ctk.CTkEntry, fallback: float) -> float:
@@ -1605,14 +1605,14 @@ class VarinSniperApp(ctk.CTk):
     def _save_all_settings_quiet(self) -> None:
         try:
             self.cfg.update(self._collect_settings())
-            save_config(self.cfg)
+            save_current_config(self.cfg)
         except Exception as exc:  # noqa: BLE001
             print(f"save settings failed: {exc}")
 
     def _save_all_settings(self) -> None:
         try:
             self.cfg.update(self._collect_settings())
-            save_config(self.cfg)
+            save_current_config(self.cfg)
             self.lbl_saved.configure(text=t("set.saved"), text_color=T.OK)
             self.after(2500, lambda: self.lbl_saved.configure(text=""))
             self._log("ok", t("log.settings_saved"))
