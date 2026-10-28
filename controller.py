@@ -23,7 +23,7 @@ import time
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from checker import Checker, CheckResult, NameStatus
+from checker import BulkLookup, Checker, CheckResult, NameStatus
 from proxy import Proxy, ProxyManager
 import claimer as clm
 from scan_history import (
@@ -91,6 +91,7 @@ class SniperController:
         self.load_history()
         self.notifier = DiscordNotifier(self.config)
         self.scan_history = ScanHistory()
+        self.bulk: Optional[BulkLookup] = None
 
     # -- persistence ------------------------------------------------------- #
     def load_history(self) -> None:
@@ -117,26 +118,35 @@ class SniperController:
             pass
 
     # -- queue ------------------------------------------------------------- #
-    def enqueue(self, name: str) -> bool:
+    def enqueue(self, name: str, force: bool = False) -> bool:
+        """Masukkan nama ke antrian.
+
+        force=True dipakai saat pengguna menempel daftar secara manual:
+        nama yang sudah ada di riwayat tetap dicek ulang (status bisa berubah
+        setelah akun rename), sedangkan duplikat di antrian tetap dilewati.
+        """
         name = (name or "").strip().lower()
         if not (3 <= len(name) <= 16):
             return False
         if not all(ch.isalnum() or ch == "_" for ch in name):
             return False
-        existing = self.scan_history.get_status(name)
-        if existing and existing.get("status") in (STATUS_AVAILABLE, STATUS_TAKEN):
-            return False
+        if not force:
+            existing = self.scan_history.get_status(name)
+            if existing and existing.get("status") in (STATUS_AVAILABLE, STATUS_TAKEN):
+                return False
         with self._lock:
-            if name in self.pending or name in self.taken:
+            if name in self.pending:
+                return False
+            if not force and name in self.taken:
                 return False
             self.pending.add(name)
         self.names_queue.put(name)
         return True
 
-    def enqueue_many(self, names: List[str]) -> int:
+    def enqueue_many(self, names: List[str], force: bool = False) -> int:
         added = 0
         for name in names:
-            if self.enqueue(name):
+            if self.enqueue(name, force=force):
                 added += 1
         return added
 
@@ -189,6 +199,10 @@ class SniperController:
         if names:
             self.enqueue_many(names)
 
+        # Jalur cepat: 10 nama per request resmi. Kalau endpoint membatasi,
+        # worker otomatis kembali ke pemeriksaan per-nama yang ketat.
+        self.bulk = BulkLookup(timeout=float(self.config.get("timeout", 10.0)))
+
         self.workers = []
         for idx in range(n_threads):
             worker = threading.Thread(
@@ -218,54 +232,104 @@ class SniperController:
         self.workers = []
 
     # -- worker ------------------------------------------------------------ #
-    def _worker(self, checker: Checker) -> None:
-        while not self.stop_event.is_set():
+    def _take_batch(self, size: int, timeout: float) -> List[str]:
+        """Ambil satu nama (menunggu), lalu sedot sisanya yang sudah antri."""
+        try:
+            batch = [self.names_queue.get(timeout=timeout)]
+        except queue.Empty:
+            return []
+        while len(batch) < size:
             try:
-                name = self.names_queue.get(timeout=0.3)
+                batch.append(self.names_queue.get_nowait())
             except queue.Empty:
+                break
+        return batch
+
+    def _worker(self, checker: Checker) -> None:
+        """Worker: satu request bulk menyelesaikan sampai 10 nama.
+
+        Kalau bulk tidak tersedia (429/error), batch yang sama diproses
+        per-nama lewat `checker.check()` yang ketat — tidak ada tebakan.
+        """
+        batch_size = self.bulk.batch_size if self.bulk else 1
+        while not self.stop_event.is_set():
+            batch = self._take_batch(batch_size, 0.3)
+            if not batch:
                 if not self.running:
                     break
                 continue
 
             try:
-                result = checker.check(name)
-                self.stats.increment("total")
+                taken: set = set()
+                resolved = False
+                if self.bulk is not None:
+                    taken, resolved = self.bulk.lookup(batch)
 
-                status_map = {
-                    NameStatus.AVAILABLE: STATUS_AVAILABLE,
-                    NameStatus.TAKEN: STATUS_TAKEN,
-                    NameStatus.RATE_LIMITED: STATUS_RATE_LIMITED,
-                }
-                scan_status = status_map.get(result.status, STATUS_ERROR)
-                self.scan_history.record(
-                    name, scan_status,
-                    result.reason.split(":")[0] if result.reason else "",
-                    result.reason or "",
-                )
-
-                if result.status == NameStatus.AVAILABLE:
-                    self.stats.increment("available")
-                    append_to_file(AVAILABLE_FILE, result.name)
-                    self.emit("available", result.name)
-                    self.notifier.notify_available(result.name)
-                    if self.config.get("auto_claim") and self.accounts:
-                        self.try_claim(result.name)
-                elif result.status == NameStatus.TAKEN:
-                    self.stats.increment("taken")
-                    with self._lock:
-                        self.taken.add(result.name)
-                        self.pending.discard(result.name)
-                else:
-                    self.stats.increment("errors")
-                    self.emit("log", ("warn", f"{name}: {result.reason or 'error'}"))
-
-                self.emit("result", result)
-            except Exception as exc:  # noqa: BLE001
-                logger.exception("worker error")
-                self.stats.increment("errors")
-                self.emit("log", ("bad", T("log.worker_error", name=name, error=exc)))
+                for name in batch:
+                    try:
+                        if resolved:
+                            if name in taken:
+                                result = CheckResult(name, NameStatus.TAKEN, 200,
+                                                     "bulk: profile ada")
+                            else:
+                                result = CheckResult(name, NameStatus.AVAILABLE, 200,
+                                                     "bulk: tidak terdaftar")
+                        else:
+                            result = checker.check(name)
+                        self._process_result(name, result)
+                    except Exception as exc:  # noqa: BLE001
+                        logger.exception("worker error")
+                        self.stats.increment("total")
+                        self.stats.increment("errors")
+                        self.emit("log", ("bad", T("log.worker_error", name=name, error=exc)))
+                        self._release(name)
             finally:
-                self.names_queue.task_done()
+                for _name in batch:
+                    self.names_queue.task_done()
+
+    def _release(self, name: str) -> None:
+        """Nama selesai diproses: selalu keluar dari antrian.
+
+        Dulu AVAILABLE/ERROR tidak pernah di-discard, sehingga jumlah antrian
+        membengkak dan nama itu tidak bisa dicek ulang. Sekarang semua jalur
+        (available, taken, error) melepas nama dari `pending`.
+        """
+        with self._lock:
+            self.pending.discard(name)
+
+    def _process_result(self, name: str, result: CheckResult) -> None:
+        try:
+            self.stats.increment("total")
+            status_map = {
+                NameStatus.AVAILABLE: STATUS_AVAILABLE,
+                NameStatus.TAKEN: STATUS_TAKEN,
+                NameStatus.RATE_LIMITED: STATUS_RATE_LIMITED,
+            }
+            scan_status = status_map.get(result.status, STATUS_ERROR)
+            self.scan_history.record(
+                name, scan_status,
+                result.reason.split(":")[0] if result.reason else "",
+                result.reason or "",
+            )
+
+            if result.status == NameStatus.AVAILABLE:
+                self.stats.increment("available")
+                append_to_file(AVAILABLE_FILE, result.name)
+                self.emit("available", result.name)
+                self.notifier.notify_available(result.name)
+                if self.config.get("auto_claim") and self.accounts:
+                    self.try_claim(result.name)
+            elif result.status == NameStatus.TAKEN:
+                self.stats.increment("taken")
+                with self._lock:
+                    self.taken.add(result.name)
+            else:
+                self.stats.increment("errors")
+                self.emit("log", ("warn", f"{name}: {result.reason or 'error'}"))
+
+            self.emit("result", result)
+        finally:
+            self._release(name)
 
     def _watch_loop(self) -> None:
         while not self.stop_event.is_set() and self.running:

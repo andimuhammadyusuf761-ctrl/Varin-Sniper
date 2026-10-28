@@ -41,7 +41,7 @@ import json
 import random
 import re
 from enum import Enum
-from typing import Callable, Dict, List, Optional, Tuple
+from typing import Callable, Dict, List, Optional, Set, Tuple
 
 import requests
 
@@ -56,6 +56,9 @@ ASHCON_URL = "https://api.ashcon.app/mojang/v2/user/{name}"
 NAMEMC_URL = "https://namemc.com/search?q={name}"
 NAMEMC_PROFILE_URL = "https://namemc.com/profile/{name}"
 MCCHECKER_URL = "https://mcchecker.net/check"
+
+BULK_URL = "https://api.minecraftservices.com/minecraft/profile/lookup/bulk/byname"
+BULK_BATCH = 10
 
 BROWSER_HEADERS = {
     "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -497,6 +500,93 @@ _ALL_SOURCES = [
     NameMCSource(),
     McCheckerSource(),
 ]
+
+
+# --------------------------------------------------------------------------- #
+# Resolusi massal — 10 nama per request (endpoint resmi, live)
+# --------------------------------------------------------------------------- #
+class BulkLookup:
+    """Lookup massal resmi: sampai 10 nama dalam satu request.
+
+    Ini jalur cepat utama checker. Satu request menyelesaikan 10 nama,
+    dibanding 1 request per nama di jalur lama (sampai 10x lebih sedikit
+    request untuk beban yang sama). Nama yang tidak muncul di respons
+    berarti tidak punya profil = AVAILABLE, semantik yang sama dengan
+    404 di endpoint single lookup resmi.
+
+    Kalau endpoint membatasi (429) atau error, `lookup()` mengembalikan
+    ok=False dan worker otomatis memakai jalur per-nama yang ketat.
+    """
+
+    batch_size = BULK_BATCH
+    min_interval = 0.20          # 5 request/detik = sampai 50 nama/detik
+    default_cooldown = 60.0
+
+    def __init__(self, timeout: float = 10.0):
+        self.timeout = float(timeout)
+        self.session = requests.Session()
+        adapter = requests.adapters.HTTPAdapter(pool_connections=8, pool_maxsize=32)
+        self.session.mount("https://", adapter)
+        self.pacer = _Pacer(self.min_interval)
+        self.cooldown_until = 0.0
+        self.last_error = ""
+        self._lock = threading.Lock()
+        self._request_lock = threading.Lock()
+
+    def healthy(self) -> bool:
+        return time.time() >= self.cooldown_until
+
+    def _cooldown(self, seconds: float = 60.0, retry_after=None) -> None:
+        dur = seconds
+        if retry_after is not None:
+            try:
+                dur = max(dur, float(retry_after))
+            except (TypeError, ValueError):
+                pass
+        with self._lock:
+            self.cooldown_until = time.time() + min(dur, 900.0)
+
+    def lookup(self, names: List[str]) -> Tuple[Set[str], bool]:
+        """Kembalikan (nama taken lowercase, resolved).
+
+        resolved=False berarti jalur cepat tidak bisa dipakai untuk batch ini
+        dan pemanggil harus memakai pemeriksaan per-nama yang ketat.
+        """
+        batch = [n.strip().lower() for n in names if n and n.strip()][:self.batch_size]
+        if not batch or not self.healthy():
+            return set(), False
+        try:
+            self.pacer.wait()
+            with self._request_lock:
+                resp = self.session.post(
+                    BULK_URL, json=batch, timeout=self.timeout,
+                    headers={"Content-Type": "application/json", **API_HEADERS})
+        except requests.exceptions.RequestException as exc:
+            self.last_error = str(exc)[:80]
+            return set(), False
+
+        if resp.status_code == 429:
+            self._cooldown(retry_after=resp.headers.get("Retry-After"))
+            return set(), False
+        if resp.status_code >= 500 or resp.status_code in (403, 408):
+            self._cooldown(30.0)
+            return set(), False
+        if resp.status_code != 200:
+            return set(), False
+        try:
+            data = resp.json()
+        except ValueError:
+            return set(), False
+        if not isinstance(data, list):
+            return set(), False
+
+        taken: Set[str] = set()
+        for item in data:
+            if isinstance(item, dict):
+                label = str(item.get("name", "")).strip().lower()
+                if label:
+                    taken.add(label)
+        return taken & set(batch), True
 
 
 # --------------------------------------------------------------------------- #

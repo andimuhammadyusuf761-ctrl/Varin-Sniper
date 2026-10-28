@@ -68,23 +68,27 @@ def enumerate_ordered(length: int, use_all_chars: bool = False) -> List[str]:
     names.sort(key=lambda s: (-_calculate_priority_score(s), s))
     return names
 
-def generate_random(count: int, length: int, allowed_chars: str = None) -> List[str]:
+def generate_random(count: int, length: int, allowed_chars: str = None,
+                    exclude: Optional[Set[str]] = None) -> List[str]:
     if allowed_chars is None:
         allowed_chars = ALLOWED
+    excluded = exclude or frozenset()
     seen: Set[str] = set()
     out: List[str] = []
-    max_attempts = count * 100
+    max_attempts = count * 100 + len(excluded) * 4
     attempts = 0
     while len(out) < count and attempts < max_attempts:
         name = "".join(random.choice(allowed_chars) for _ in range(length))
-        if name not in seen and 3 <= len(name) <= 16:
+        if name not in seen and name not in excluded and 3 <= len(name) <= 16:
             seen.add(name)
             out.append(name)
         attempts += 1
     return out
 
-def generate_smart_random(count: int, length: int) -> List[str]:
+def generate_smart_random(count: int, length: int,
+                          exclude: Optional[Set[str]] = None) -> List[str]:
     """Generate with higher chance for good patterns"""
+    excluded = exclude or frozenset()
     seen: Set[str] = set()
     out: List[str] = []
     strategies = []
@@ -105,7 +109,7 @@ def generate_smart_random(count: int, length: int) -> List[str]:
         ]
     
     attempts = 0
-    while len(out) < count and attempts < count * 200:
+    while len(out) < count and attempts < count * 200 + len(excluded) * 4:
         if strategies and random.random() < 0.4:
             # Pick strategy
             r = random.random()
@@ -120,7 +124,8 @@ def generate_smart_random(count: int, length: int) -> List[str]:
         else:
             name = random_combo(length)
         
-        if name not in seen and all(c.isalnum() or c == '_' for c in name):
+        if name not in seen and name not in excluded \
+                and all(c.isalnum() or c == '_' for c in name):
             seen.add(name)
             out.append((name, _calculate_priority_score(name)))
         attempts += 1
@@ -141,6 +146,7 @@ LETTER_RARITY: Dict[str, float] = {
     "u": 3.5, "r": 3.8, "l": 4.2, "d": 4.5, "h": 4.6, "c": 5.0, "m": 5.5,
     "b": 6.5, "p": 6.6, "g": 6.8, "y": 7.0, "f": 7.5, "w": 8.0, "k": 9.0,
     "v": 9.5, "j": 10.5, "x": 11.0, "z": 11.5, "q": 12.0,
+    "_": 8.4,          # underscore: pemisah jarang dipakai di nama OG
 }
 
 # Pasangan/triple huruf yang membuat nama terasa "biasa" di bahasa Inggris.
@@ -211,24 +217,43 @@ def rarity_score(name: str) -> float:
 
 
 _POOL_LIMIT = 60000
-_POOL_CACHE: Dict[Tuple[int, bool, str], Tuple[str, ...]] = {}
+_POOL_CACHE: Dict[Tuple[int, bool, str, bool], Tuple[str, ...]] = {}
+
+
+def _underscore_combos(length: int, chars: str) -> List[str]:
+    """Semua kombinasi `length` karakter dengan tepat satu '_'."""
+    out: List[str] = []
+    for slot in range(length):
+        for rest in itertools.product(chars, repeat=length - 1):
+            out.append("".join(rest[:slot]) + "_" + "".join(rest[slot:]))
+    return out
 
 
 def rare_pool(length: int = 3, allow_vowels: bool = True,
-              chars: str = LOWERCASE) -> Tuple[str, ...]:
+              chars: str = LOWERCASE,
+              underscore: bool = False) -> Tuple[str, ...]:
     """Semua kombinasi `length` terurut dari yang paling langka.
 
-    Kosong kalau ruang kombinasinya terlalu besar (mis. 4L = 194.481 untuk
-    konsonan saja); pemanggil memakai sampling berbobot sebagai gantinya.
+    `underscore=True` membatasi pool ke nama dengan tepat satu '_'
+    (dipakai mode Balanced 3L: h_d, z_x, q_b).
+
+    Kosong kalau ruang kombinasinya terlalu besar (mis. 4L = 456.976
+    kombinasi); pemanggil memakai sampling berbobot sebagai gantinya.
     """
-    key = (int(length), bool(allow_vowels), chars)
+    key = (int(length), bool(allow_vowels), chars, bool(underscore))
     cached = _POOL_CACHE.get(key)
     if cached is not None:
         return cached
-    if len(chars) ** int(length) > _POOL_LIMIT:
+
+    size = int(length)
+    space = size * len(chars) ** (size - 1) if underscore else len(chars) ** size
+    if space > _POOL_LIMIT:
         return ()
 
-    combos = ["".join(t) for t in itertools.product(chars, repeat=int(length))]
+    if underscore:
+        combos = _underscore_combos(size, chars)
+    else:
+        combos = ["".join(t) for t in itertools.product(chars, repeat=size)]
     if not allow_vowels:
         combos = [c for c in combos if not (_VOWEL_SET & set(c))]
     combos = [c for c in combos if c not in BLOCKED_NAMES]
@@ -240,51 +265,83 @@ def rare_pool(length: int = 3, allow_vowels: bool = True,
 
 
 def _sample_rare(count: int, length: int, allow_vowels: bool, chars: str,
-                 rng: random.Random) -> List[str]:
-    """Sampling berbobot untuk ruang kombinasi besar (4L ke atas)."""
+                 rng: random.Random, exclude: Optional[Set[str]] = None,
+                 underscore: bool = False, band: float = 0.45) -> List[str]:
+    """Sampling berbobot untuk ruang kombinasi besar (4L ke atas).
+
+    Oversampling dulu, urutkan, baru ambil dari porsi `band` teratas — jadi
+    mode Rarest (0.45) dan Balanced (0.85) benar-benar menghasilkan wilayah
+    kelangkaan berbeda, persis seperti jalur pool untuk 3L.
+    """
     letters = [c for c in chars if allow_vowels or c not in _VOWEL_SET] or list(chars)
     weights = [max(0.05, LETTER_RARITY.get(c, 6.0)) ** 2 for c in letters]
+    excluded = exclude or frozenset()
+    band = max(0.0, min(1.0, float(band)))
 
+    target = max(count * 3 + 200, 400)
     seen: Set[str] = set()
     out: List[str] = []
     attempts = 0
-    limit = max(2000, count * 300)
-    while len(out) < count and attempts < limit:
-        name = "".join(rng.choices(letters, weights=weights, k=length))
+    limit = target * 40 + len(excluded) * 4
+    while len(out) < target and attempts < limit:
+        body = "".join(rng.choices(letters, weights=weights,
+                                   k=length - 1 if underscore else length))
         attempts += 1
-        if name in seen or name in BLOCKED_NAMES:
+        if underscore:
+            slot = rng.randrange(length)
+            name = body[:slot] + "_" + body[slot:]
+        else:
+            name = body
+        if name in seen or name in BLOCKED_NAMES or name in excluded:
             continue
         seen.add(name)
         out.append(name)
 
+    if not out:
+        return []
     out.sort(key=lambda s: (-rarity_score(s), s))
-    return out
+    take = min(count, len(out))
+    band_size = max(take, int(len(out) * band))
+    picked = rng.sample(out[:band_size], take)
+    picked.sort(key=lambda s: (-rarity_score(s), s))
+    return picked
 
 
 def generate_rare(count: int, length: int = 3, allow_vowels: bool = True,
                   chars: str = LOWERCASE, band: float = 0.45,
-                  seed: Optional[int] = None) -> List[str]:
+                  seed: Optional[int] = None,
+                  exclude: Optional[Set[str]] = None,
+                  underscore: bool = False) -> List[str]:
     """Hasilkan nama dari wilayah terlangka, urut dari yang paling langka.
 
     band = porsi kandidat teratas yang boleh diambil (0.45 = 45% terlangka).
     Sampling acak di dalam band membuat klik berikutnya tidak mengulang nama
     yang sama, sementara urutan hasil tetap dari terlangka ke lebih umum.
+
+    exclude = nama yang sudah pernah dipindai; dilewati supaya setiap
+    generate menghasilkan target baru, bukan mengulang yang sudah diketahui.
+    underscore = mode Balanced 3L: tepat satu '_' di setiap nama.
     """
     count = int(max(0, count))
     if count == 0:
         return []
 
     rng = random.Random(seed)
-    pool = rare_pool(length, allow_vowels, chars)
+    excluded = exclude or frozenset()
+    pool = rare_pool(length, allow_vowels, chars, underscore)
     if pool:
-        take = min(count, len(pool))
+        candidates = [n for n in pool if n not in excluded]
+        if not candidates:
+            return []
+        take = min(count, len(candidates))
         band = max(0.0, min(1.0, float(band)))
-        band_size = max(take, int(len(pool) * band))
-        picked = rng.sample(pool[:band_size], take)
+        band_size = max(take, int(len(candidates) * band))
+        picked = rng.sample(candidates[:band_size], take)
         picked.sort(key=lambda s: (-rarity_score(s), s))
         return picked
 
-    return _sample_rare(count, int(length), allow_vowels, chars, rng)
+    return _sample_rare(count, int(length), allow_vowels, chars, rng,
+                        excluded, underscore, band)
 
 
 def pattern_combo(pattern: str) -> str:
@@ -307,17 +364,20 @@ def pattern_combo(pattern: str) -> str:
             continue
     return ''.join(out)
 
-def generate_pattern(patterns: List[str], count: int) -> List[str]:
+def generate_pattern(patterns: List[str], count: int,
+                     exclude: Optional[Set[str]] = None) -> List[str]:
+    excluded = exclude or frozenset()
     seen: Set[str] = set()
     out: List[str] = []
     valid_patterns = [p for p in patterns if p.strip()]
     if not valid_patterns:
         return out
     attempts = 0
-    while len(out) < count and attempts < count * 50:
+    while len(out) < count and attempts < count * 50 + len(excluded) * 4:
         p = random.choice(valid_patterns)
         name = pattern_combo(p)
-        if name and 3 <= len(name) <= 16 and name not in seen and all(c.isalnum() or c == '_' for c in name):
+        if name and 3 <= len(name) <= 16 and name not in seen and name not in excluded \
+                and all(c.isalnum() or c == '_' for c in name):
             seen.add(name)
             out.append(name)
         attempts += 1
@@ -333,4 +393,5 @@ if __name__ == "__main__":
     print("Full 3L ordered first 5:", enumerate_ordered(3)[:5])
     print("Rarest 3L (vokal boleh) :", generate_rare(10, 3, seed=1))
     print("Rarest 3L (konsonan)    :", generate_rare(10, 3, allow_vowels=False, seed=1))
+    print("Balanced 3L (underscore):", generate_rare(10, 3, band=0.85, underscore=True, seed=1))
     print("Rarest 4L               :", generate_rare(10, 4, allow_vowels=False, seed=1))

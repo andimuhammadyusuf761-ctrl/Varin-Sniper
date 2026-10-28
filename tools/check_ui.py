@@ -235,7 +235,7 @@ def main() -> int:
     for page in ("checker", "sniper", "accounts", "proxies", "history", "settings", "stats"):
         if f"nav.{page}" not in i18n.TRANSLATIONS["en"]:
             fail(f"i18n: kunci dinamis nav.{page} tidak ada")
-    for mode in ("rarest", "balanced", "legacy"):
+    for mode in ("rarest", "balanced", "random", "legacy"):
         for lang in i18n.LANGUAGES:
             if f"checker.gen_mode_{mode}" not in i18n.TRANSLATIONS[lang]:
                 fail(f"i18n[{lang}]: kunci dinamis checker.gen_mode_{mode} tidak ada")
@@ -311,8 +311,8 @@ def main() -> int:
     ok("config: UI menyimpan setting lewat save_current_config()")
 
     # -- generator kelangkaan ------------------------------------------------ #
-    from generator import (BLOCKED_NAMES, LETTER_RARITY, generate_rare,
-                           rarity_score)
+    from generator import (BLOCKED_NAMES, LETTER_RARITY, generate_random,
+                           generate_rare, rarity_score)
 
     rare = generate_rare(300, 3, allow_vowels=True, seed=1234)
     if len(rare) != len(set(rare)):
@@ -335,6 +335,56 @@ def main() -> int:
     if len(set(four)) != 120 or any(len(name) != 4 for name in four):
         fail(f"generator: sampling 4L tidak menghasilkan 120 nama unik ({len(set(four))})")
 
+    # 4L harus jalan di semua mode (rarest, balanced, legacy), bukan hanya 3L,
+    # dan kedua mode tidak boleh menghasilkan wilayah kelangkaan yang sama.
+    rare4 = generate_rare(150, 4, band=0.45, seed=21)
+    bal4 = generate_rare(150, 4, band=0.85, seed=21)
+    for names4, label in ((rare4, "rarest"), (bal4, "balanced")):
+        if len(names4) != 150 or any(len(n) != 4 for n in names4):
+            fail(f"generator: mode {label} 4L tidak menghasilkan 150 nama unik")
+    if rare4 == bal4:
+        fail("generator: mode rarest & balanced 4L menghasilkan daftar identik")
+    mean_rare = sum(rarity_score(n) for n in rare4) / len(rare4)
+    mean_bal = sum(rarity_score(n) for n in bal4) / len(bal4)
+    if mean_rare <= mean_bal:
+        fail(f"generator: 4L rarest tidak lebih langka dari balanced ({mean_rare:.2f} vs {mean_bal:.2f})")
+    random4 = generate_random(80, 4)
+    if len(random4) != 80 or any(len(n) != 4 for n in random4):
+        fail("generator: generate_random 4L tidak menghasilkan 80 nama")
+
+    # Mode Random: a-z, 0-9 dan _ benar-benar dipakai (ig9, hg_, x7z).
+    import random as _random
+    _random.seed(4242)
+    mixed = generate_random(400, 3)
+    if len(mixed) != 400 or any(len(n) != 3 for n in mixed):
+        fail("generator: random 3L tidak menghasilkan 400 nama 3 karakter")
+    if not any(any(ch.isdigit() for ch in n) for n in mixed):
+        fail("generator: random 3L tidak pernah memakai angka")
+    if not any("_" in n for n in mixed):
+        fail("generator: random 3L tidak pernah memakai underscore")
+
+    # Balanced 3L: tepat satu underscore di setiap nama
+    balanced = generate_rare(120, 3, band=0.85, underscore=True, seed=17)
+    if len(balanced) != 120 or len(set(balanced)) != 120:
+        fail(f"generator: balanced 3L underscore tidak unik ({len(set(balanced))})")
+    if any(len(n) != 3 or n.count("_") != 1 for n in balanced):
+        fail(f"generator: balanced 3L wajib 3 karakter dengan satu '_' -> {balanced[:5]}")
+    if balanced != sorted(balanced, key=lambda s: (-rarity_score(s), s)):
+        fail("generator: balanced 3L tidak urut dari yang paling langka")
+
+    # Nama yang sudah dipindai tidak boleh muncul lagi di hasil generate
+    seen_before = set(generate_rare(200, 3, seed=31))
+    fresh = generate_rare(100, 3, seed=33, exclude=seen_before)
+    if set(fresh) & seen_before:
+        fail("generator: exclude tidak bekerja (nama lama masih muncul)")
+    if len(fresh) != 100:
+        fail(f"generator: exclude memotong hasil jadi {len(fresh)} (harus 100)")
+    fresh4 = generate_rare(100, 4, seed=35, exclude=seen_before)
+    if set(fresh4) & seen_before or len(fresh4) != 100:
+        fail("generator: exclude gagal pada sampling 4L")
+    if set(generate_random(40, 3, exclude=seen_before)) & seen_before:
+        fail("generator: exclude gagal pada generate_random")
+
     order = [rarity_score(n) for n in ("zbx", "nfj", "ldm", "hda")]
     if order != sorted(order, reverse=True):
         fail(f"generator: urutan contoh tidak menurun sesuai kelangkaan -> {order}")
@@ -345,6 +395,56 @@ def main() -> int:
     if min(LETTER_RARITY.values()) <= 0:
         fail("generator: bobot huruf harus positif")
     ok(f"generator: {len(rare)} nama 3L terurut terlangka, {len(four)} nama 4L sampling")
+
+    # -- bulk lookup (jalur cepat checker) ----------------------------------- #
+    from checker import BulkLookup
+
+    class _FakeResp:
+        def __init__(self, status, payload, headers=None):
+            self.status_code = status
+            self._payload = payload
+            self.headers = headers or {}
+
+        def json(self):
+            if isinstance(self._payload, Exception):
+                raise self._payload
+            return self._payload
+
+    if BulkLookup.batch_size != 10:
+        fail(f"checker: batch bulk harus 10 nama, bukan {BulkLookup.batch_size}")
+
+    bulk = BulkLookup(timeout=1.0)
+    sent_batches = []
+
+    def _bulk_ok(url, json=None, timeout=None, headers=None):
+        sent_batches.append(list(json or []))
+        return _FakeResp(200, [{"name": "Abc"}, {"name": "zzq"}])
+
+    bulk.session.post = _bulk_ok  # type: ignore[assignment]
+    taken, resolved = bulk.lookup(["abc", "zzz", "qzxw"])
+    if not resolved or taken != {"abc"}:
+        fail(f"checker: bulk lookup salah parse -> {taken!r} resolved={resolved}")
+
+    def _bulk_empty(url, json=None, timeout=None, headers=None):
+        sent_batches.append(list(json or []))
+        return _FakeResp(200, [])
+
+    bulk.session.post = _bulk_empty  # type: ignore[assignment]
+    bulk.lookup([f"name{i:02d}" for i in range(25)])
+    if len(sent_batches[-1]) != 10:
+        fail(f"checker: bulk tidak membatasi batch ke 10 -> {len(sent_batches[-1])}")
+
+    limited = BulkLookup(timeout=1.0)
+    limited.session.post = lambda *a, **k: _FakeResp(429, [], {"Retry-After": "5"})  # type: ignore[assignment]
+    taken_429, resolved_429 = limited.lookup(["abc"])
+    if resolved_429 or taken_429 or limited.healthy():
+        fail("checker: 429 dari bulk harus jadi cooldown + fallback per-nama")
+
+    broken = BulkLookup(timeout=1.0)
+    broken.session.post = lambda *a, **k: _FakeResp(200, ValueError("bad json"))  # type: ignore[assignment]
+    if broken.lookup(["abc"])[1]:
+        fail("checker: body bulk tidak valid harus dianggap gagal resolve")
+    ok("checker: bulk lookup 10 nama/request, 429 -> fallback per-nama")
 
     # -- matematika wallpaper + helper tema ---------------------------------- #
     from ui import theme as th

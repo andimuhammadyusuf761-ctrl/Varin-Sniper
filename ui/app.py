@@ -159,8 +159,8 @@ class HistoryPane(ctk.CTkFrame):
 
 class VarinSniperApp(ctk.CTk):
     # mode generator: terlangka (pool langka), seimbang (band lebih lebar),
-    # legacy (pola lama: aaa, aab, dst.)
-    GEN_MODES = ("rarest", "balanced", "legacy")
+    # random (a-z, 0-9, _ tanpa pola: ig9, hg_, x7z)
+    GEN_MODES = ("rarest", "balanced", "random")
 
     def __init__(self) -> None:
         super().__init__(fg_color=T.BG)
@@ -1295,7 +1295,7 @@ class VarinSniperApp(ctk.CTk):
         name = self.ent_check.get().strip().lower()
         if not name:
             return
-        if self.controller.enqueue(name):
+        if self.controller.enqueue(name, force=True):
             self._log("info", t("log.queued", name=name))
             self.ent_check.delete(0, "end")
         else:
@@ -1305,7 +1305,7 @@ class VarinSniperApp(ctk.CTk):
         name = self.ent_watch.get().strip().lower()
         if not name:
             return
-        if self.controller.enqueue(name):
+        if self.controller.enqueue(name, force=True):
             self._watch.append(name)
             try:
                 self.watch_box.append(name)
@@ -1323,16 +1323,37 @@ class VarinSniperApp(ctk.CTk):
         if not path:
             return
         names = load_names_from_file(path)
-        added = self.controller.enqueue_many(names)
+        added = self.controller.enqueue_many(names, force=True)
         base = os.path.basename(path)
         self._log("ok", t("log.names_loaded", n=added, file=base))
         self._toast_message(t("toast.loaded", n=added, file=base), T.OK, 2600)
 
+    def _known_names(self) -> set:
+        """Nama yang sudah pernah dipindai (supaya hasil generate selalu baru)."""
+        try:
+            return set(self.controller.scan_history.distinct_names())
+        except Exception:  # noqa: BLE001
+            return set()
+
     def _gen_names(self, length: int) -> None:
-        names = generate_random(500, length)
+        """Tombol 3L / 4L: ikut mode yang dipilih."""
+        mode = self.cfg.get("gen_mode", "rarest")
+        if mode == "legacy":
+            mode = "random"
+        consonants_only = bool(self.cfg.get("gen_consonants_only", False))
+        known = self._known_names()
+        if mode == "random":
+            names = generate_random(500, length, exclude=known)
+        else:
+            names = generate_rare(500, length, allow_vowels=not consonants_only,
+                                  band=0.45 if mode == "rarest" else 0.85,
+                                  exclude=known,
+                                  underscore=(mode == "balanced" and length == 3))
         added = self.controller.enqueue_many(names)
-        self._log("ok", t("log.gen_names", n=added, length=length))
-        self._toast_message(t("toast.gen", n=added, length=length), T.ACCENT, 2600)
+        label = t(f"checker.gen_mode_{mode}")
+        self._log("ok", t("log.gen_rare", n=added, length=length, mode=label))
+        self._toast_message(t("toast.gen_rare", n=added, length=length, mode=label),
+                            T.ACCENT, 2600)
 
     def _gen_full_3l(self) -> None:
         names = enumerate_ordered(3)
@@ -1343,6 +1364,8 @@ class VarinSniperApp(ctk.CTk):
     def _style_gen_modes(self) -> None:
         """Tandai chip mode yang aktif tanpa membangun ulang UI."""
         active = self.cfg.get("gen_mode", "rarest")
+        if active == "legacy":
+            active = "random"
         for mode, chip in getattr(self, "_gen_mode_buttons", {}).items():
             on = mode == active
             try:
@@ -1367,7 +1390,9 @@ class VarinSniperApp(ctk.CTk):
     def _gen_smart_rare(self) -> None:
         mode = self.cfg.get("gen_mode", "rarest")
         if mode == "legacy":
-            names = generate_smart_random(500, 3)
+            mode = "random"
+        if mode == "random":
+            names = generate_random(500, 3, exclude=self._known_names())
             added = self.controller.enqueue_many(names)
             self._log("ok", t("log.gen_smart", n=added))
             self._toast_message(t("toast.gen_smart", n=added), T.ACCENT, 2600)
@@ -1375,7 +1400,9 @@ class VarinSniperApp(ctk.CTk):
 
         consonants_only = bool(self.cfg.get("gen_consonants_only", False))
         names = generate_rare(500, 3, allow_vowels=not consonants_only,
-                              band=0.45 if mode == "rarest" else 0.85)
+                              band=0.45 if mode == "rarest" else 0.85,
+                              exclude=self._known_names(),
+                              underscore=(mode == "balanced"))
         added = self.controller.enqueue_many(names)
         label = t(f"checker.gen_mode_{mode}")
         self._log("ok", t("log.gen_rare", n=added, length=3, mode=label))
@@ -1387,7 +1414,7 @@ class VarinSniperApp(ctk.CTk):
         if not pattern:
             self._toast_message(t("toast.pattern_missing"), T.WARN, 2600)
             return
-        names = generate_pattern([pattern], 500)
+        names = generate_pattern([pattern], 500, exclude=self._known_names())
         added = self.controller.enqueue_many(names)
         self._log("ok", t("log.gen_pattern", pattern=pattern, n=added))
         self._toast_message(t("toast.pattern_done", pattern=pattern, n=added), T.ACCENT, 2600)
