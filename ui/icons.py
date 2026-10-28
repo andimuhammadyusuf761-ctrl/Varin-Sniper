@@ -48,21 +48,40 @@ def _photo(rel_parts: Tuple[str, ...], key: Tuple[str, str]) -> Optional[object]
     return img
 
 
+def _ctk_image(path: str) -> Optional[object]:
+    """CTkImage dari PIL Image (satu-satunya tipe yang diterima customtkinter).
+
+    CTkImage menyimpan PIL.Image lalu membuat ulang PhotoImage untuk setiap
+    faktor skala, jadi ikon tetap tajam di layar HighDPI. Memberi tk.PhotoImage
+    ke CTkImage akan ditolak (ValueError), karena itu PNG dibaca lewat PIL.
+    """
+    try:
+        from PIL import Image
+        import customtkinter as ctk
+    except Exception:  # noqa: BLE001  (Pillow/ctk belum siap)
+        return None
+    try:
+        with Image.open(path) as handle:
+            pil_image = handle.convert("RGBA")
+        return ctk.CTkImage(light_image=pil_image, dark_image=pil_image,
+                            size=pil_image.size)
+    except Exception:  # noqa: BLE001  (file rusak / versi ctk lama)
+        return None
+
+
 def _load(rel_parts: Tuple[str, ...], key: Tuple[str, str]) -> Optional[object]:
-    """Muat ikon sebagai CTkImage; fallback ke PhotoImage bila ctk tak siap."""
+    """Muat ikon sebagai CTkImage; fallback ke PhotoImage bila PIL/ctk tak ada."""
     cached = _CACHE.get(key)
     if cached is not None:
         return cached
-    photo = _photo(rel_parts, key)
-    if photo is None:
+    path = resource_path(*rel_parts)
+    if not os.path.exists(path):
         return None
-    image: object = photo
-    try:
-        import customtkinter as ctk
-        image = ctk.CTkImage(light_image=photo, dark_image=photo,
-                             size=(photo.width(), photo.height()))
-    except Exception:  # noqa: BLE001  (root belum ada / versi ctk lama)
-        image = photo
+    image = _ctk_image(path)
+    if image is None:
+        image = _photo(rel_parts, key)
+    if image is None:
+        return None
     _CACHE[key] = image
     return image
 
